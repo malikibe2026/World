@@ -29,3 +29,6 @@ data/logs/*.jsonl
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Netlify CLI local state
+.netlify/
