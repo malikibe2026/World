@@ -1,0 +1,7 @@
+# WorldStat Atlas data pipeline (Python ≥ 3.10)
+rdata>=1.1      # read the UN WPP 2024 R data files (.rda) without R
+pandas>=2.2
+pyarrow>=15     # parquet work tables
+numpy>=1.26
+shapely>=2.0    # spatial joins (profiles, search hierarchy)
+pyproj>=3.6     # geodesic areas (WGS84)

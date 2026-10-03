@@ -1,0 +1,31 @@
+# dependencies
+node_modules/
+scripts/pipeline/node_modules/
+
+# build
+dist/
+*.tsbuildinfo
+.vite/
+
+# environment & secrets — NEVER commit real keys
+.env
+.env.*
+!.env.example
+supabase/.temp/
+supabase/.branches/
+
+# raw downloads & intermediate pipeline output (re-creatable via `npm run pipeline`)
+data/raw/
+data/work/
+data/exports/
+__pycache__/
+*.pyc
+
+# logs: keep the latest summary, ignore bulky per-run logs
+data/logs/*.jsonl
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json

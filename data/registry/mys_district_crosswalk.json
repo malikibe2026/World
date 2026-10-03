@@ -1,0 +1,9 @@
+{
+  "description": "Name crosswalk from geoBoundaries MYS ADM2 'shapeName' to the district spelling used by DOSM/OpenDOSM. Only spellings that are unambiguous are listed; any other name that fails to match a DOSM district during the OpenDOSM step is written to the import log for manual review. Do not guess: add a mapping only after checking the DOSM district list.",
+  "geoboundaries_to_dosm": {
+    "Ulu Langat": "Hulu Langat",
+    "Ulu Selangor": "Hulu Selangor",
+    "Kulaijaya": "Kulai",
+    "Ledang": "Tangkak"
+  }
+}

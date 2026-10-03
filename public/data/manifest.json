@@ -1,0 +1,240 @@
+{
+  "app": "WorldStat Atlas",
+  "snapshot_built_at": "2026-10-03T16:58:40Z",
+  "run_id": "20261003T165226Z",
+  "datasets": [
+    {
+      "source_id": "un_wpp_2024",
+      "version": "WPP 2024 (wpp2024 R package 1.1-3)",
+      "reference": "Estimates 1950–2023, projections 2024–2100 (medium variant)",
+      "files": [
+        {
+          "file": "wpp/popAge1dt.rda",
+          "bytes": 15514714,
+          "sha256": "232b0a9c2a5a5b524e95dd11353ad27fbfa82560a831b34525a59bf05523a2a8"
+        },
+        {
+          "file": "wpp/popprojAge1dt.rda",
+          "bytes": 34158364,
+          "sha256": "a07104a9ea1ee994249178d688fc54306e73c475e339027bb1b3ddf39edcea95"
+        },
+        {
+          "file": "wpp/misc1dt.rda",
+          "bytes": 464506,
+          "sha256": "bde4c18dd0d9e0d615745ea31100f4f9a19740e46c6fac167b0a385df8895252"
+        },
+        {
+          "file": "wpp/miscproj1dt.rda",
+          "bytes": 445188,
+          "sha256": "36072bac3e2b4af22bddf9f69009979d9a8ab8d43179b5c826952d0cd614c1c5"
+        },
+        {
+          "file": "wpp/e01dt.rda",
+          "bytes": 196148,
+          "sha256": "dc4d15e14b734a3d208eb29ea0dabfdf4a900ef552acf7b41829a62cf862e2ba"
+        },
+        {
+          "file": "wpp/e0proj1dt.rda",
+          "bytes": 655238,
+          "sha256": "5b968479ec6ec2a202ac77e49ef9191485833f3d24d4c04b15bbc16f310f8029"
+        },
+        {
+          "file": "wpp/tfr1dt.rda",
+          "bytes": 123640,
+          "sha256": "b48ae026ccf489892c69564bc243a1535464085e5801eea13584c62ea7a89fa9"
+        },
+        {
+          "file": "wpp/tfrproj1dt.rda",
+          "bytes": 462491,
+          "sha256": "e8ddfe823843ffd90e9a610fe66ae8f925477c762e6efad8e5426e1cdefbc5e3"
+        },
+        {
+          "file": "wpp/sexRatio1dt.rda",
+          "bytes": 21360,
+          "sha256": "88bab48c8c80e8116ba53b967e2965dcfbeaef458b33ecd44067d54cb23bebe8"
+        },
+        {
+          "file": "wpp/mig1dt.rda",
+          "bytes": 70797,
+          "sha256": "88fa78f6b23c4e18af7716ac7b1ec84bea0f191fac958c066ef48ed6fae97db9"
+        },
+        {
+          "file": "wpp/migproj1dt.rda",
+          "bytes": 344209,
+          "sha256": "62418fb608d8240a1f41baef874be2a019f91763024f7a734b220d4ecb3ce972"
+        },
+        {
+          "file": "wpp/UNlocations.txt",
+          "bytes": 48400,
+          "sha256": "9d8cc77383c4dbd368a4c2cbbeeeff9dfc7037ace7c8ecb709ff17a0786be6eb"
+        }
+      ]
+    },
+    {
+      "source_id": "natural_earth",
+      "version": "natural-earth-vector master (5.2.0-pre)",
+      "files": [
+        {
+          "file": "ne/ne_110m_admin_0_countries.geojson",
+          "bytes": 838726,
+          "sha256": "6866c877d39cba9c357620878839b336d569f8c662d3cfab4cb1dbe2d39c977f"
+        },
+        {
+          "file": "ne/ne_50m_admin_0_countries.geojson",
+          "bytes": 3083490,
+          "sha256": "3e458fc036ad0a66411f2c1e6cac49c5d7bfb81cb1123bc513b22511a2b7fdeb"
+        },
+        {
+          "file": "ne/ne_10m_admin_0_countries.geojson",
+          "bytes": 13287234,
+          "sha256": "239eec57ac17f100a11e2536cffc56752c318b50ae765b0918ff7aab4ce8f255"
+        },
+        {
+          "file": "ne/ne_10m_admin_1_states_provinces.geojson",
+          "bytes": 40726851,
+          "sha256": "22d0e3ad85eb3e27f17cabf8ba2d50e554fbc27a87796ff891d958185da62fb5"
+        },
+        {
+          "file": "ne/ne_10m_populated_places_simple.geojson",
+          "bytes": 4932147,
+          "sha256": "fd3fa867a320cbd5c5b6bb5bc550afeec2939fb2cef688e508007282a55ac42f"
+        }
+      ]
+    },
+    {
+      "source_id": "geoboundaries",
+      "version": "gbOpen MYS ADM1/ADM2, build Dec 12, 2023 (boundary year 2020)",
+      "files": [
+        {
+          "file": "gb/MYS_ADM1.geojson",
+          "bytes": 583194,
+          "sha256": "fb0f76f0f987c748b732ef02049113946db2dd5fc604130d4a0fbab4e74d4012"
+        },
+        {
+          "file": "gb/MYS_ADM2.geojson",
+          "bytes": 1161210,
+          "sha256": "2370e1df1da8e8db2d582ea404d2bcb538127a01785dd994cbe4c1bbf33a951f"
+        }
+      ]
+    },
+    {
+      "source_id": "world_countries",
+      "version": "5.1.0",
+      "files": [
+        {
+          "file": "work/reference/world-countries.json",
+          "sha256": "120f795047da44078391d4d8b105a2741f3a883d85f55b3e4d729d629bcdfed6"
+        }
+      ]
+    },
+    {
+      "source_id": "iana_tz",
+      "version": "3.10.0",
+      "files": [
+        {
+          "file": "work/reference/timezones.json",
+          "sha256": "6bf44962295a47537648550b447e57c2484662072e29f5f7153beb9c34b78d54"
+        }
+      ]
+    },
+    {
+      "source_id": "geonames",
+      "version": "3.1.0",
+      "files": [
+        {
+          "file": "work/reference/geonames-places.json",
+          "sha256": "1830d9b2ae2e85327a9431bce2d8beafe06dc2f4769086d2335ac1bd32243b9f"
+        }
+      ]
+    },
+    {
+      "source_id": "dosm_opendosm",
+      "version": "catalogue metadata",
+      "datasets": {
+        "population_malaysia": {
+          "last_updated": "2026-07-31 12:00",
+          "next_update": "2027-07-31 12:00"
+        },
+        "population_state": {
+          "last_updated": "2026-07-31 12:00",
+          "next_update": "2027-07-31 12:00"
+        },
+        "population_district": {
+          "last_updated": "2025-10-02 12:00",
+          "next_update": "2026-10-31 12:00"
+        },
+        "births_district_sex": {
+          "last_updated": "2025-10-16 12:00",
+          "next_update": "2026-10-16 12:30"
+        },
+        "deaths_state": {
+          "last_updated": "2025-10-16 12:00",
+          "next_update": "2026-10-15 12:30"
+        },
+        "deaths_district_sex": {
+          "last_updated": "2025-10-16 12:00",
+          "next_update": "2026-10-15 12:30"
+        },
+        "marriages": {
+          "last_updated": "2023-11-23 12:00",
+          "next_update": "2024-11-21 12:00"
+        },
+        "fertility_state": {
+          "last_updated": "2025-10-16 12:00",
+          "next_update": "2026-10-15 12:30"
+        },
+        "fertility": {
+          "last_updated": "2025-10-16 12:00",
+          "next_update": "2026-10-15 12:30"
+        },
+        "lfs_district": {
+          "last_updated": "2025-06-30 12:00",
+          "next_update": "2026-12-31 12:00"
+        },
+        "lfs_year": {
+          "last_updated": "2024-02-09 12:00",
+          "next_update": "2025-02-09 12:00"
+        },
+        "hh_income_state": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_income_district": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_poverty_state": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_poverty_district": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "gdp_state_real_supply": {
+          "last_updated": "2026-07-01 12:30",
+          "next_update": "2027-07-01 12:30"
+        },
+        "gdp_lookup": {
+          "last_updated": "2024-05-17 12:00",
+          "next_update": "—"
+        }
+      },
+      "data_loaded": false
+    },
+    {
+      "source_id": "wb_wdi",
+      "mode": "live"
+    },
+    {
+      "source_id": "wikidata",
+      "mode": "live"
+    }
+  ],
+  "available": {
+    "wpp": true,
+    "wb_snapshot": false,
+    "dosm_snapshot": false,
+    "landmarks_snapshot": false
+  }
+}
