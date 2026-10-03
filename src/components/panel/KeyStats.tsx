@@ -24,7 +24,9 @@ export function KeyStats({ b, wb, pref, codes = KEY_INDICATORS }: { b: LocationB
   const inds = catalog.indicators;
   return (
     <div className="stat-grid">
-      {codes.map((code) => {
+      {codes.map((c0) => {
+        // official land-area density (FAO/WB) beats the geometry-derived one when it is available
+        const code = c0 === 'density' && resolveSeries('density_wb', b, wb, inds, pref) ? 'density_wb' : c0;
         const ind: Indicator | undefined = inds[code];
         const s = resolveSeries(code, b, wb, inds, pref);
         const p = latest(s, year, projection);

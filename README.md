@@ -11,6 +11,14 @@ dan tarikh kemas kini**. Data yang tiada **tidak direka** — UI memaparkan *“
 > Contoh laluan: `DUNIA › Asia › Malaysia › Selangor › Hulu Langat › Kajang`
 > (`?geo=MY-10-hulu-langat`)
 
+![Paparan dunia](docs/img/world.jpg)
+
+| Malaysia | Perbandingan | Kajang (breadcrumb penuh) |
+|---|---|---|
+| ![Malaysia](docs/img/malaysia.jpg) | ![Perbandingan](docs/img/compare.jpg) | ![Kajang](docs/img/kajang.jpg) |
+| **Mod unjuran 2060** | **Mod gelap + carian pintar** | |
+| ![Unjuran](docs/img/projection.jpg) | ![Gelap](docs/img/dark-search.jpg) | |
+
 ---
 
 ## Ciri utama
@@ -119,6 +127,9 @@ docs/             seni bina, kamus data, sumber, pipeline, Supabase, deployment,
 3. **Perceraian** dan **perkahwinan global** tiada siri rasmi terbuka yang boleh dibaca mesin.
 4. **Iklim**: hanya purata kerpasan (FAO via WB); klasifikasi Köppen tidak dimuatkan.
 5. **Puncak/sungai** dalam profil geografi ialah ciri yang tersenarai dalam Natural Earth sahaja.
+   **Keluasan geometri** (dan kepadatan terbitan) boleh tersasar bagi negara kecil/pulau — cth.
+   Singapura 511 km² dalam Natural Earth 1:10m berbanding ~735 km² rasmi. Apabila data World Bank
+   tersedia, panel menggunakan kepadatan rasmi berasaskan keluasan tanah FAO (`EN.POP.DNST`).
 6. **Sempadan** mengikut pandangan lalai Natural Earth (*de facto*), bukan pengesahan mana-mana tuntutan.
 7. Jubin peta asas pihak ketiga (CARTO, Esri, OpenTopoMap) tertakluk kepada terma masing-masing;
    tukar kepada akaun berlesen untuk produksi (`VITE_BASEMAP_*`).
