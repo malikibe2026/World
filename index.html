@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="WorldStat Atlas — Global Geography • Population • Economy • History • Tourism Intelligence. Official statistics with full provenance on an interactive world map." />
+    <meta name="theme-color" content="#0d1b2e" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>WorldStat Atlas</title>
+    <script>
+      // Apply the saved theme before first paint (no flash).
+      try {
+        var t = localStorage.getItem('wsa.theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>WorldStat Atlas requires JavaScript.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

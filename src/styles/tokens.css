@@ -1,0 +1,125 @@
+/* WorldStat Atlas — design tokens. Light and dark are each *selected* (not auto-inverted). */
+:root {
+  color-scheme: light;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* surfaces */
+  --page: #f4f6f9;
+  --surface-1: #ffffff;
+  --surface-2: #f7f8fa;
+  --surface-3: #eef1f5;
+  --glass: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --border: rgba(15, 23, 42, 0.10);
+  --border-strong: rgba(15, 23, 42, 0.18);
+
+  /* ink */
+  --text-primary: #0b1220;
+  --text-secondary: #4b5563;
+  --text-muted: #7b8494;
+  --text-inverse: #ffffff;
+
+  /* brand */
+  --accent: #1c5cab;
+  --accent-strong: #104281;
+  --accent-soft: #e6effb;
+  --accent-ink: #0d366b;
+  --brand-navy: #0d1b2e;
+  --highlight: #d97706;
+
+  /* status (reserved meaning; always icon + label) */
+  --good: #0ca30c;
+  --warning: #b77900;
+  --serious: #c2552a;
+  --critical: #d03b3b;
+
+  /* quality classes */
+  --q-official-bg: #e7f6ec; --q-official-fg: #106b34;
+  --q-estimate-bg: #e8f0fb; --q-estimate-fg: #1c5cab;
+  --q-projection-bg: #f4ecfb; --q-projection-fg: #6b3fa0;
+  --q-derived-bg: #f3f1ea; --q-derived-fg: #6a5f45;
+
+  /* charts (dataviz reference palette, light) */
+  --chart-surface: #fcfcfb;
+  --chart-grid: #e1e0d9;
+  --chart-axis: #c3c2b7;
+  --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --series-4: #eda100;
+  --series-5: #e87ba4; --series-6: #008300; --series-7: #4a3aa7; --series-8: #e34948;
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 1px rgba(15, 23, 42, 0.04);
+  --shadow-2: 0 8px 28px rgba(15, 23, 42, 0.12);
+  --shadow-3: 0 24px 64px rgba(15, 23, 42, 0.22);
+  --blur: saturate(160%) blur(14px);
+
+  --sidebar-w: 300px;
+  --panel-w: 400px;
+  --topbar-h: 58px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #070c14;
+    --surface-1: #0f1621;
+    --surface-2: #141c28;
+    --surface-3: #1b2533;
+    --glass: rgba(14, 21, 32, 0.82);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --border: rgba(255, 255, 255, 0.09);
+    --border-strong: rgba(255, 255, 255, 0.18);
+    --text-primary: #f3f6fa;
+    --text-secondary: #c3cad4;
+    --text-muted: #8a93a1;
+    --accent: #5598e7;
+    --accent-strong: #86b6ef;
+    --accent-soft: rgba(85, 152, 231, 0.14);
+    --accent-ink: #cde2fb;
+    --highlight: #ffd166;
+    --q-official-bg: rgba(12, 163, 12, 0.16); --q-official-fg: #7fdc8f;
+    --q-estimate-bg: rgba(85, 152, 231, 0.16); --q-estimate-fg: #9ec5f4;
+    --q-projection-bg: rgba(144, 133, 233, 0.18); --q-projection-fg: #c2b9ff;
+    --q-derived-bg: rgba(195, 194, 183, 0.14); --q-derived-fg: #d8d2bf;
+    --chart-surface: #1a1a19;
+    --chart-grid: #2c2c2a;
+    --chart-axis: #383835;
+    --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500;
+    --series-5: #d55181; --series-6: #008300; --series-7: #9085e9; --series-8: #e66767;
+    --shadow-2: 0 8px 28px rgba(0, 0, 0, 0.45);
+    --shadow-3: 0 24px 64px rgba(0, 0, 0, 0.6);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #070c14;
+  --surface-1: #0f1621;
+  --surface-2: #141c28;
+  --surface-3: #1b2533;
+  --glass: rgba(14, 21, 32, 0.82);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --text-primary: #f3f6fa;
+  --text-secondary: #c3cad4;
+  --text-muted: #8a93a1;
+  --accent: #5598e7;
+  --accent-strong: #86b6ef;
+  --accent-soft: rgba(85, 152, 231, 0.14);
+  --accent-ink: #cde2fb;
+  --highlight: #ffd166;
+  --q-official-bg: rgba(12, 163, 12, 0.16); --q-official-fg: #7fdc8f;
+  --q-estimate-bg: rgba(85, 152, 231, 0.16); --q-estimate-fg: #9ec5f4;
+  --q-projection-bg: rgba(144, 133, 233, 0.18); --q-projection-fg: #c2b9ff;
+  --q-derived-bg: rgba(195, 194, 183, 0.14); --q-derived-fg: #d8d2bf;
+  --chart-surface: #1a1a19;
+  --chart-grid: #2c2c2a;
+  --chart-axis: #383835;
+  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500;
+  --series-5: #d55181; --series-6: #008300; --series-7: #9085e9; --series-8: #e66767;
+  --shadow-2: 0 8px 28px rgba(0, 0, 0, 0.45);
+  --shadow-3: 0 24px 64px rgba(0, 0, 0, 0.6);
+}

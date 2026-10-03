@@ -1,0 +1,52 @@
+{
+  "name": "worldstat-atlas",
+  "private": true,
+  "version": "0.1.0",
+  "description": "WorldStat Atlas — Global Geography • Population • Economy • History • Tourism Intelligence",
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run",
+    "pipeline": "tsx scripts/pipeline/run.ts",
+    "pipeline:wpp": "python3 scripts/pipeline/python/wpp_extract.py",
+    "pipeline:geo": "tsx scripts/pipeline/run.ts --only geo",
+    "pipeline:worldbank": "tsx scripts/pipeline/run.ts --only worldbank",
+    "pipeline:opendosm": "tsx scripts/pipeline/run.ts --only opendosm",
+    "pipeline:wikidata": "tsx scripts/pipeline/run.ts --only wikidata",
+    "pipeline:quality": "tsx scripts/pipeline/run.ts --only quality",
+    "supabase:seed": "tsx scripts/supabase/seed.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.117.2",
+    "echarts": "^6.1.0",
+    "fuse.js": "^7.5.0",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8",
+    "maplibre-gl": "^6.11.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "topojson-client": "^3.1.0",
+    "write-excel-file": "^2.3.10",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/topojson-client": "^3.1.5",
+    "@types/topojson-specification": "^1.0.5",
+    "@vitejs/plugin-react": "^5.2.0",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.6",
+    "vitest": "4.1.11"
+  }
+}

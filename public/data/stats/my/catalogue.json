@@ -1,0 +1,869 @@
+{
+  "source_id": "dosm_opendosm",
+  "datasets": {
+    "population_malaysia": {
+      "title_en": "Population Table: Malaysia",
+      "title_ms": "Jadual Penduduk: Malaysia",
+      "description_en": "Population at national level from 1970 to 2026, by sex, age group and ethnicity. The preview table shows data for the latest year only, but you may download the data in full.",
+      "description_ms": "Jumlah penduduk di peringkat nasional dari 1970 ke 2026, mengikut jantina, kumpulan umur dan kumpulan etnik. Jadual pratonton hanya menunjukkan data bagi tahun terkini, tetapi data penuh boleh dimuat turun.",
+      "methodology_en": "Values for 1970, 1980, 1991, 2000, 2010 and 2020 are based on adjusted data from the Population Censuses conducted in those years. Values for all other years are intercensal mid-year population estimates. The intercensal estimates were generated using the cohort-component method, which estimates the latest year's population by taking the previous year's value, then adding births, subtracting deaths, and adding net migration. For a deeper understanding of the methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/population-technotes).",
+      "methodology_ms": "Angka bagi 1970, 1980, 1991, 2000, 2010 dan 2020 adalah berdasarkan data daripada Banci Penduduk yang dilaksanakan pada tahun tersebut. Angka bagi semua tahun lain adalah anggaran pertengahan tahun antara banci. Anggaran antara banci dihasilkan dengan kaedah komponen kohort, yang menganggarkan angka bagi tahun terkini dengan mengambil angka bagi tahun sebelumnya, kemudian tambah kelahiran, tolak kematian, dan tambah migrasi bersih. Untuk mendapat pemahaman metodologi yang lebih mendalam, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/population-technotes).",
+      "caveat_en": "Values for breakdowns may be slightly different to totals when summed, due to rounding to one decimal place. Furthermore, caution should be exercised when using the dataset in full because the granularity of Malaysia's population data has been deepened over the years. Specficially, there are 3 differing ranges of granularity as follows:\n - The data from 1991 onwards is the most granular, with ethnic group breakdowns providing differentiation between Malay and Other Bumiputera, as well as Other Citizen and Other Non-Citizen. Furthermore, the oldest age category is 85+, i.e. 85 years and above.\n - The data from 1980-1990 contains a breakdown by ethnic group, but without differentiation between Malay and Other Bumiputera (i.e. there is only one Bumiputera category), or Other Citizen and Other Non-Citizen (i.e. there is only one residual category, Other). Furthermore, the 85+ age group is not present; the oldest age category is 80+. \n - For data from 1970-1979, there is no breakdown by ethnic group. Furthermore, the 75+, 80+ and 85+ age groups are not present; the oldest age category is 70+.",
+      "caveat_ms": "Angka-angka terperinci mungkin sedikit berbeza dengan angka keseluruhan apabila terjumlah, disebabkan oleh penggenapan kepada satu titik perpuluhan. Tambahan, set data ini harus diguna dengan berhati-hati sekiranya digunakan sepenuhnya kerana tahap perincian data penduduk Malaysia telah diperdalam sejak banci-banci terdahulu. Khususnya, terdapat 3 julat perincian yang berbeza seperti berikut:\n - Data dari tahun 1991 dan selanjutnya adalah yang paling terperinci, dengan pecahan kumpulan etnik yang membezakan Melayu dan Bumiputera lain, serta Lain-lain Warganegara dan Lain-lain Bukan Warganegara. Selain itu, kategori umur tertua adalah 85+, iaitu 85 tahun ke atas.\n - Data dari tahun 1980-1990 mengandungi pecahan mengikut kumpulan etnik, tetapi tidak membezakan Melayu dan Bumiputera lain (maka hanya ada satu kategori Bumiputera), atau Lain-lain Warganegara dan Lain-lain Bukan Warganegara (maka hanya ada satu kategori, Lain-lain). Selain itu, tiada data bagi kumpulan umur 85+; kategori umur tertua adalah 80+.\n - Untuk data dari tahun 1970-1979, tidak ada pecahan mengikut kumpulan etnik. Selain itu, tiada data bagi kumpulan umur 75+, 80+ dan 85+; kategori umur tertua adalah 70+.",
+      "data_as_of": "2026",
+      "last_updated": "2026-07-31 12:00",
+      "next_update": "2027-07-31 12:00",
+      "link_csv": "https://storage.dosm.gov.my/population/population_malaysia.csv",
+      "link_parquet": "https://storage.dosm.gov.my/population/population_malaysia.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [
+        "SEX",
+        "ETHNICITY",
+        "AGE"
+      ],
+      "dataset_begin": 1970,
+      "dataset_end": 2026,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/population_malaysia.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as this is annual data"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')"
+        },
+        {
+          "name": "age",
+          "description_en": "[Categorical] Either all age groups ('overall') or five-year age groups e.g. 0-4, 5-9, 10-14, etc. 85+ is the oldest category."
+        },
+        {
+          "name": "ethnicity",
+          "description_en": "[Categorical] All ethnic groups ('overall'), Malay ('bumi_malay'), other Bumiputera ('bumi_other'), Chinese ('chinese'), Indian ('indian'), other citizens ('other_citizen'), or non-citizen residents ('other_noncitizen')."
+        },
+        {
+          "name": "population",
+          "description_en": "[Float] Thousands of people ('000 people)"
+        }
+      ]
+    },
+    "population_state": {
+      "title_en": "Population Table: States",
+      "title_ms": "Jadual Penduduk: Negeri",
+      "description_en": "Population at state level from 1970 to 2026, by sex, age group and ethnicity. The preview table shows data for the latest year only, but you may download the data in full.",
+      "description_ms": "Jumlah penduduk di peringkat negeri dari 1970 ke 2026, mengikut jantina, kumpulan umur dan kumpulan etnik. Jadual pratonton hanya menunjukkan data bagi tahun terkini, tetapi data penuh boleh dimuat turun.",
+      "methodology_en": "Values for 1970, 1980, 1991, 2000, 2010 and 2020 are based on adjusted data from the Population Censuses conducted in those years. Values for all other years are intercensal mid-year population estimates. The intercensal estimates were generated using the cohort-component method, which estimates the latest year's population by taking the previous year's value, then adding births, subtracting deaths, and adding net migration. For a deeper understanding of the methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/population-technotes). Finally, it should be noted that:\n - Data for W.P. Kuala Lumpur is only available from 1980 onwards. Prior to 1980, the population residing in W.P. Kuala Lumpur was counted under Selangor.\n - Data for W.P. Labuan is only available from 1991 onwards. Prior to 1991, the population residing in W.P. Labuan was counted under Sabah.\n - Data for W.P. Putrajaya is only available from 2010 onwards. Prior to 2010, the population residing in W.P. Putrajaya was counted under Selangor.",
+      "methodology_ms": "Angka bagi 1970, 1980, 1991, 2000, 2010 dan 2020 adalah berdasarkan data daripada Banci Penduduk yang dilaksanakan pada tahun tersebut. Angka bagi semua tahun lain adalah anggaran pertengahan tahun antara banci. Anggaran antara banci dihasilkan dengan kaedah komponen kohort, yang menganggarkan angka bagi tahun terkini dengan mengambil angka bagi tahun sebelumnya, kemudian tambah kelahiran, tolak kematian, dan tambah migrasi bersih. Untuk mendapat pemahaman metodologi yang lebih mendalam, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/population-technotes). Akhirnya, harus diambil perhatian bahawa:\n - Data bagi W.P. Kuala Lumpur hanya tersedia bagi tahun 1980 dan seterusnya. Sebelum 1980, penduduk di W.P. Kuala Lumpur dikira sebagai penduduk Selangor.\n - Data bagi W.P. Labuan hanya tersedia bagi tahun 1991 dan seterusnya. Sebelum 1991, penduduk di W.P. Labuan dikira sebagai penduduk Sabah.\n - Data bagi W.P. Putrajaya hanya tersedia bagi tahun 2010 dan seterusnya. Sebelum 2010, data penduduk di W.P. Putrajaya dikira sebagai penduduk Selangor.",
+      "caveat_en": "Values for breakdowns may be slightly different to totals when summed, due to rounding to one decimal place. Furthermore, caution should be exercised when using the dataset in full because the granularity of Malaysia's population data has been deepened over the years. Specficially, there are 3 differing ranges of granularity as follows:\n - The data from 1991 onwards is the most granular, with ethnic group breakdowns providing differentiation between Malay and Other Bumiputera, as well as Other Citizen and Other Non-Citizen. Furthermore, the oldest age category is 85+, i.e. 85 years and above.\n - The data from 1980-1990 contains a breakdown by ethnic group, but without differentiation between Malay and Other Bumiputera (i.e. there is only one Bumiputera category), or Other Citizen and Other Non-Citizen (i.e. there is only one residual category, Other). Furthermore, the 85+ age group is not present; the oldest age category is 80+. \n - For data from 1970-1979, there is no breakdown by ethnic group. Furthermore, the 75+, 80+ and 85+ age groups are not present; the oldest age category is 70+.",
+      "caveat_ms": "Angka-angka terperinci mungkin sedikit berbeza dengan angka keseluruhan apabila terjumlah, disebabkan oleh penggenapan kepada satu titik perpuluhan. Tambahan, set data ini harus diguna dengan berhati-hati sekiranya digunakan sepenuhnya kerana tahap perincian data penduduk Malaysia telah diperdalam sejak banci-banci terdahulu. Khususnya, terdapat 3 julat perincian yang berbeza seperti berikut:\n - Data dari tahun 1991 dan selanjutnya adalah yang paling terperinci, dengan pecahan kumpulan etnik yang membezakan Melayu dan Bumiputera lain, serta Lain-lain Warganegara dan Lain-lain Bukan Warganegara. Selain itu, kategori umur tertua adalah 85+, iaitu 85 tahun ke atas.\n - Data dari tahun 1980-1990 mengandungi pecahan mengikut kumpulan etnik, tetapi tidak membezakan Melayu dan Bumiputera lain (maka hanya ada satu kategori Bumiputera), atau Lain-lain Warganegara dan Lain-lain Bukan Warganegara (maka hanya ada satu kategori, Lain-lain). Selain itu, tiada data bagi kumpulan umur 85+; kategori umur tertua adalah 80+.\n - Untuk data dari tahun 1970-1979, tidak ada pecahan mengikut kumpulan etnik. Selain itu, tiada data bagi kumpulan umur 75+, 80+ dan 85+; kategori umur tertua adalah 70+.",
+      "data_as_of": "2026",
+      "last_updated": "2026-07-31 12:00",
+      "next_update": "2027-07-31 12:00",
+      "link_csv": "https://storage.dosm.gov.my/population/population_state.csv",
+      "link_parquet": "https://storage.dosm.gov.my/population/population_state.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE"
+      ],
+      "demography": [
+        "SEX",
+        "ETHNICITY",
+        "AGE"
+      ],
+      "dataset_begin": 1970,
+      "dataset_end": 2026,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/population_state.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as this is annual data"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')"
+        },
+        {
+          "name": "age",
+          "description_en": "[Categorical] Either all age groups ('overall') or five-year age groups e.g. 0-4, 5-9, 10-14, etc. 85+ is the oldest category."
+        },
+        {
+          "name": "ethnicity",
+          "description_en": "[Categorical] All ethnic groups ('overall'), Malay ('bumi_malay'), other Bumiputera ('bumi_other'), Chinese ('chinese'), Indian ('indian'), other citizens ('other_citizen'), or non-citizen residents ('other_noncitizen')."
+        },
+        {
+          "name": "population",
+          "description_en": "[Float] Thousands of people ('000 people)"
+        }
+      ]
+    },
+    "population_district": {
+      "title_en": "Population Table: Administrative Districts",
+      "title_ms": "Jadual Penduduk: Daerah Pentadbiran",
+      "description_en": "Population at district level from 2020 to 2024, by sex, age group and ethnicity. The preview table shows data for the latest year only, but you may download the data in full.",
+      "description_ms": "Jumlah penduduk di peringkat daerah dari 2020 ke 2024, mengikut jantina, kumpulan umur dan kumpulan etnik. Jadual pratonton hanya menunjukkan data bagi tahun terkini, tetapi data penuh boleh dimuat turun.",
+      "methodology_en": "Values for 2020 are based on adjusted data from the Population Censuses conducted in that year. Values for all other years are intercensal mid-year population estimates. The intercensal estimates were generated using the cohort-component method, which estimates the latest year's population by taking the previous year's value, then adding births, subtracting deaths, and adding net migration. For a deeper understanding of the methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/population-technotes).",
+      "methodology_ms": "Angka bagi 2020 adalah berdasarkan data daripada Banci Penduduk yang dilaksanakan pada tahun tersebut. Angka bagi semua tahun lain adalah anggaran pertengahan tahun antara banci. Anggaran antara banci dihasilkan dengan kaedah komponen kohort, yang menganggarkan angka bagi tahun terkini dengan mengambil angka bagi tahun sebelumnya, kemudian tambah kelahiran, tolak kematian, dan tambah migrasi bersih. Untuk mendapat pemahaman metodologi yang lebih mendalam, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/population-technotes).",
+      "caveat_en": "Values for breakdowns may be slightly different to totals when summed, due to rounding to one decimal place.",
+      "caveat_ms": "Angka-angka terperinci mungkin sedikit berbeza dengan angka keseluruhan apabila terjumlah, disebabkan oleh penggenapan kepada satu titik perpuluhan.",
+      "data_as_of": "2025",
+      "last_updated": "2025-10-02 12:00",
+      "next_update": "2026-10-31 12:00",
+      "link_csv": "https://storage.dosm.gov.my/population/population_district.csv",
+      "link_parquet": "https://storage.dosm.gov.my/population/population_district.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DISTRICT"
+      ],
+      "demography": [
+        "SEX",
+        "ETHNICITY",
+        "AGE"
+      ],
+      "dataset_begin": 2020,
+      "dataset_end": 2025,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/population_district.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as this is annual data"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 160 administrative districts, including the 4 states (Perlis and the 3 Federal Territories) which do not have subdivisions"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')"
+        },
+        {
+          "name": "age",
+          "description_en": "[Categorical] Either all age groups ('overall') or five-year age groups e.g. 0-4, 5-9, 10-14, etc. 85+ is the oldest category."
+        },
+        {
+          "name": "ethnicity",
+          "description_en": "[Categorical] All ethnic groups ('overall'), Malay ('bumi_malay'), other Bumiputera ('bumi_other'), Chinese ('chinese'), Indian ('indian'), other citizens ('other_citizen'), or non-citizen residents ('other_noncitizen')."
+        },
+        {
+          "name": "population",
+          "description_en": "[Float] Thousands of people ('000 people)"
+        }
+      ]
+    },
+    "births_district_sex": {
+      "title_en": "Annual Live Births by District & Sex",
+      "title_ms": "Kelahiran Hidup Tahunan mengikut Daerah & Jantina",
+      "description_en": "Annual number of births with signs of life upon delivery, by district and sex.",
+      "description_ms": "Jumlah kelahiran tahunan yang bernyawa semasa dilahirkan, mengikut daerah dan jantina.",
+      "methodology_en": "A live birth is a birth with signs of life upon delivery, even if only for a short while. The data on live births by state is tabulated based on information reported during the births registration process, specifically in the in Register of Birth Form (JPN.LM01). In particular, the 'district' reported in this dataset is based on the place of usual residence of the mother, not the geographical location in which the baby was born. For example, a baby born in a hospital in Petaling to a family who resides in Sepang will be counted as a live birth for Sepang. For a deeper understanding of the methodology and associated definition, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/vitalstats-technotes).",
+      "methodology_ms": "Kelahiran hidup adalah kelahiran yang bernyawa semasa dilahirkan, walaupun hanya untuk seketika. Data mengenai kelahiran hidup di Malaysia dihasilkan berdasarkan maklumat yang dilaporkan semasa proses pendaftaran kelahiran, khususnya dalam Borang Pendaftaran Kelahiran (JPN.LM01). Khususnya, medan 'daerah' yang dilaporkan dalam set data ini adalah berdasarkan tempat kediaman ibu dan bukannya lokasi geografi di mana bayi itu dilahirkan. Sebagai contoh, bayi yang dilahirkan di sebuah hospital di Petaling kepada ibu yang menetap di Sepang akan dikira sebagai kelahiran hidup bagi Sepang. Untuk memahami metodologi dengan lebih terperinci, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/vitalstats-technotes).",
+      "caveat_en": "This data is derived based on births registered with JPN. Accordingly, if a birth is not registered with JPN (for instance, if a foreigner chooses to register their child in their home country, or if a resident in a remote area does not register the birth of their child), it will not count in this dataset.\n\nFurthermore, it should be noted that the number of administrative districts increased from 147 to 160 in 2021, due to the creation of new districts in Kelantan (1), Perak (1), Sabah (2), and Sarawak (9).",
+      "caveat_ms": "Data ini dihasilkan berdasarkan kelahiran yang didaftarkan dengan JPN. Oleh itu, sekiranya kelahiran itu tidak didaftarkan dengan JPN (contohnya sekiranya rakyat asing hanya mendaftar kelahiran anaknya di negara asal, ataupun penduduk di kawasan yang sangat terpencil belum mendaftarkan anaknya) maka ia tidak terkandung dalam set data ini.\n\nTambahan lagi, harus diambil perhatian bahawa bilangan daerah pentadbiran telah bertambah dari 147 ke 160 pada tahun 2021, kerana pengwujudan daerah pentadbiran baru di Kelantan (1), Perak (1), Sabah (2), dan Sarawak (9).",
+      "data_as_of": "2024",
+      "last_updated": "2025-10-16 12:00",
+      "next_update": "2026-10-16 12:30",
+      "link_csv": "https://storage.dosm.gov.my/demography/birth_district_sex.csv",
+      "link_parquet": "https://storage.dosm.gov.my/demography/birth_district_sex.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL",
+        "STATE",
+        "DISTRICT"
+      ],
+      "demography": [
+        "SEX"
+      ],
+      "dataset_begin": 2020,
+      "dataset_end": 2024,
+      "data_source": [
+        "JPN",
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/births_district_sex.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 160 administrative districts"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')"
+        },
+        {
+          "name": "abs",
+          "description_en": "[Integer] Number of live births in that year"
+        },
+        {
+          "name": "rate",
+          "description_en": "[Float] Number of live births per 1000 population"
+        }
+      ]
+    },
+    "deaths_state": {
+      "title_en": "Annual Deaths by State",
+      "title_ms": "Kematian Tahunan mengikut Negeri",
+      "description_en": "Annual number of deaths registered with JPN, by state.",
+      "description_ms": "Jumlah kematian tahunan yang didaftarkan dengan JPN, mengikut negeri.",
+      "methodology_en": "The data on deaths in Malaysia is tabulated based on information reported during the deaths registration process, specifically in the in Register of Death Form (JPN.LM02). The 'state' reported in this dataset is based on the place of usual residence of the deceased, not the geographical location in which the deceased passed away. For example, a person who passes away at a hospital in Kuala Lumpur but resided in Selangor will be recorded as a death for Selangor. For a deeper understanding of the methodology and associated definition, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/vitalstats-technotes).",
+      "methodology_ms": "Data mengenai kematian di Malaysia dihasilkan berdasarkan maklumat yang dilaporkan semasa proses pendaftaran kelahiran, khususnya dalam Borang Daftar Kematian (JPN.LM02). Medan 'negeri' yang dilaporan dalam set data ini adalah berdasarkan tempat kediaman biasa simati dan bukannya lokasi geografi di mana simati telah meninggal dunia. Sebagai contoh, jika seseorang itu telah meninggal dunia di sebuah hospital di Kuala Lumpur tetapi telah menetap di Selangor, maka kematian tersebut akan direkodkan sebagai kematian bagi Selangor. Untuk memahami metodologi dengan lebih terperinci, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/vitalstats-technotes).",
+      "caveat_en": "This data is derived based on deaths registered with JPN. Therefore, if a death is not registered with JPN (for instance, if the death of a foreigner is registered in their home country, or the death of resident in a remote area is not registered), it will generally not count in this dataset. However, adjustment has been made to the number of deaths in Sabah to account for the under-reporting of deaths detected based on the 'Study of Under Reporting of Deaths in Sabah', which was conducted by DOSM and approved by the Steering Committee on Implementation of Civil Registration and Vital Statistics in 2016.",
+      "caveat_ms": "Data ini dihasilkan berdasarkan kematian yang didaftarkan dengan JPN. Oleh itu, sekiranya kematian itu tidak didaftarkan dengan JPN (contohnya sekiranya kematian rakyat asing hanya didaftarkan di negara asal, ataupun kematian penduduk di kawasan yang sangat terpencil tidak didaftarkan) maka ia secara am tidak terkandung dalam set data ini. Namun, penyesuaian data kematian di Sabah telah dilaksanakan kerana kurang liputan pendaftaran yang didapati berdasarkan 'Kajian Kurang Liputan Pendaftaran Kematian di Sabah' yang telah dijalankan oleh DOSM dan diluluskan oleh Jawatankuasa Induk Pelaksanaan _Civil Registration and Vital Statistics_ pada tahun 2016.",
+      "data_as_of": "2024",
+      "last_updated": "2025-10-16 12:00",
+      "next_update": "2026-10-15 12:30",
+      "link_csv": "https://storage.dosm.gov.my/demography/death_state.csv",
+      "link_parquet": "https://storage.dosm.gov.my/demography/death_state.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE"
+      ],
+      "demography": [],
+      "dataset_begin": 2000,
+      "dataset_end": 2024,
+      "data_source": [
+        "JPN",
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/deaths_state.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "abs",
+          "description_en": "[Integer] Number of deaths in that year"
+        },
+        {
+          "name": "rate",
+          "description_en": "[Float] Number of deaths per 1000 population"
+        }
+      ]
+    },
+    "deaths_district_sex": {
+      "title_en": "Annual Deaths by District & Sex",
+      "title_ms": "Kematian Tahunan mengikut Daerah & Jantina",
+      "description_en": "Annual number and rate of deaths by administrative district and sex.",
+      "description_ms": "Jumlah dan kadar kematian tahunan mengikut daerah pentadbiran dan jantina.",
+      "methodology_en": "The data on deaths in Malaysia is tabulated based on information reported during the deaths registration process, specifically in the in Register of Death Form (JPN.LM02). The 'district' reported in this dataset is based on the place of usual residence of the deceased, not the geographical location in which the deceased passed away. For example, a person who passes away at a hospital in Petaling but resided in Sepang will be recorded as a death for Sepang. For a deeper understanding of the methodology and associated definition, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/vitalstats-technotes).",
+      "methodology_ms": "Data mengenai kematian di Malaysia dihasilkan berdasarkan maklumat yang dilaporkan semasa proses pendaftaran kelahiran, khususnya dalam Borang Daftar Kematian (JPN.LM02). Medan 'daerah' yang dilaporan dalam set data ini adalah berdasarkan tempat kediaman biasa simati dan bukannya lokasi geografi di mana simati telah meninggal dunia. Sebagai contoh, jika seseorang itu telah meninggal dunia di sebuah hospital di Petaling tetapi telah menetap di Sepang, maka kematian tersebut akan direkodkan sebagai kematian bagi Selangor. Untuk memahami metodologi dengan lebih terperinci, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/vitalstats-technotes).",
+      "caveat_en": "This data is derived based on deaths registered with JPN. Therefore, if a death is not registered with JPN (for instance, if the death of a foreigner is registered in their home country, or the death of resident in a remote area is not registered), it will generally not count in this dataset. However, adjustment has been made to the number of deaths in Sabah to account for the under-reporting of deaths detected based on the 'Study of Under Reporting of Deaths in Sabah', which was conducted by DOSM and approved by the Steering Committee on Implementation of Civil Registration and Vital Statistics in 2016.\n\nFurthermore, it should be noted that the number of administrative districts increased from 147 to 160 in 2021, due to the creation of new districts in Kelantan (1), Perak (1), Sabah (2), and Sarawak (9).",
+      "caveat_ms": "Data ini dihasilkan berdasarkan kematian yang didaftarkan dengan JPN. Oleh itu, sekiranya kematian itu tidak didaftarkan dengan JPN (contohnya sekiranya kematian rakyat asing hanya didaftarkan di negara asal, ataupun kematian penduduk di kawasan yang sangat terpencil tidak didaftarkan) maka ia secara am tidak terkandung dalam set data ini. Namun, penyesuaian data kematian di Sabah telah dilaksanakan kerana kurang liputan pendaftaran yang didapati berdasarkan 'Kajian Kurang Liputan Pendaftaran Kematian di Sabah' yang telah dijalankan oleh DOSM dan diluluskan oleh Jawatankuasa Induk Pelaksanaan _Civil Registration and Vital Statistics_ pada tahun 2016.\n\nTambahan lagi, harus diambil perhatian bahawa bilangan daerah pentadbiran telah bertambah dari 147 ke 160 pada tahun 2021, kerana pengwujudan daerah pentadbiran baru di Kelantan (1), Perak (1), Sabah (2), dan Sarawak (9).",
+      "data_as_of": "2024",
+      "last_updated": "2025-10-16 12:00",
+      "next_update": "2026-10-15 12:30",
+      "link_csv": "https://storage.dosm.gov.my/demography/death_district_sex.csv",
+      "link_parquet": "https://storage.dosm.gov.my/demography/death_district_sex.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL",
+        "STATE",
+        "DISTRICT"
+      ],
+      "demography": [
+        "SEX"
+      ],
+      "dataset_begin": 2020,
+      "dataset_end": 2024,
+      "data_source": [
+        "JPN",
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/deaths_district_sex.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 160 administrative districts"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')"
+        },
+        {
+          "name": "abs",
+          "description_en": "[Integer] Number of deaths in that year"
+        },
+        {
+          "name": "rate",
+          "description_en": "[Float] Number of deaths per 1000 population"
+        }
+      ]
+    },
+    "marriages": {
+      "title_en": "Annual Marriages",
+      "title_ms": "Perkahwinan Tahunan",
+      "description_en": "Number of marriages registered annually in Malaysia, including marriage rates per 1,000 unmarried population.",
+      "description_ms": "Jumlah perkahwinan yang didaftarkan setiap tahun di Malaysia, termasuk kadar perkahwinan bagi setiap 1,000 penduduk yang tidak berkahwin.",
+      "methodology_en": "In Malaysia, there are two parallel systems for marriage registration; non-Muslim marriages are registered with the National Registration Department (JPN), while Muslim marriages are registered with the Syariah Court. This dataset is tabulated from the transactional administrative data collected by both administrative systems.",
+      "methodology_ms": "Di Malaysia, terdapat dua sistem untuk pendaftaran perkahwinan; perkahwinan bagi orang bukan Islam didaftarkan dengan Jabatan Pendaftaran Negara (JPN), manakala perkahwinan bagi orang Islam didaftarkan dengan Mahkamah Syariah. Set data ini dihasilkan daripada rekod pentadbiran yang dikumpulkan oleh kedua-dua sistem administratif tersebut.",
+      "caveat_en": "The data represents registered marriages only. Unregistered marriages (including couples originally registered outside Malaysia who have not yet registered their marriage with local authorities) are not included in this dataset.",
+      "caveat_ms": "Set data ini hanya mewakili perkahwinan yang didaftarkan. Perkahwinan yang tidak didaftarkan (termasuk pasangan yang didaftarkan di luar Malaysia yang belum lagi daftarkan perkahwinan mereka dengan kerajaan Malaysia) tidak terkandung dalam set data ini.",
+      "data_as_of": "2022-12-31 23:59",
+      "last_updated": "2023-11-23 12:00",
+      "next_update": "2024-11-21 12:00",
+      "link_csv": "https://storage.dosm.gov.my/demography/marriages.csv",
+      "link_parquet": "https://storage.dosm.gov.my/demography/marriages.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [],
+      "dataset_begin": 2017,
+      "dataset_end": 2022,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/marriages.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date of marriage registration in YYYY-MM-DD format, with MM-DD set to 01-01 as this is annual data"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either male ('male') or female ('female')"
+        },
+        {
+          "name": "abs",
+          "description_en": "[Integer] Number of marriages registered in that year"
+        },
+        {
+          "name": "rate",
+          "description_en": "[Float] Number of marriages per 1000 currently unmarried population of the same sex (including widowers and divorcees)"
+        }
+      ]
+    },
+    "fertility_state": {
+      "title_en": "TFR and ASFR by State",
+      "title_ms": "TFR dan ASFR mengikut Negeri",
+      "description_en": "Total fertility rate (TFR) and age-specific fertility rates (ASFR) by state.",
+      "description_ms": "Kadar kesuburan keseluruhan (TFR) dan kadar kesuburan mengikut umur (ASFR) mengikut negeri.",
+      "methodology_en": "An age-specific fertility rate (ASFR) is the average number of births per 1,000 women in a specific age group. The ASFRs shown in this dataset are computed from administrative records of births registered with JPN (which record the age of the mother), as well as population data from DOSM as the denominator.\n\nThe total fertility rate (TFR)  is the average number of children born to a woman who goes through her child-bearing years experiencing the ASFR of each age group. It is computed by:\n - Summing the ASFRs of all age groups, then\n - Multiplying the number by 5 to account for the size of each age group, and finally\n - Dividing by 1000 (to convert the figure from per 1000 women to per woman.",
+      "methodology_ms": "Kadar kesuburan mengikut umur (ASFR) adalah purata jumlah kelahiran per 1,000 wanita dalam kumpulan umur tertentu. ASFR yang dipaparkan dalam set data ini dihitung berdasarkan rekod pentadbiran kelahiran yang didaftarkan dengan JPN (yang mencatatkan umur ibu), serta data penduduk dari DOSM sebagai denominator.\n\nKadar kesuburan keseluruhan (TFR) adalah purata jumlah anak yang dilahirkan kepada seorang wanita yang melalui hidupnya dengan mengalami ASFR setiap kumpulan umur. Ia dihitung dengan:\n - Menjumlahkan ASFR semua kumpulan umur, kemudian\n - Mengalikan jumlah dengan 5 untuk mengambil kira julat setiap kumpulan umur, dan akhirnya\n - Membahagikan dengan 1000 untuk mengubah angka dari angka bagi setiap 1000 wanita kepada angka bagi seorang wanita.",
+      "caveat_en": "ASFR values are based on the actual number of live births per 1000 women in each 5-year age group. However, when interpreting TFR values, it is important to note that the TFR is based on a hypothetical woman who goes through her child-bearing years experiencing the ASFR of each age group. This is not equivalent to the actual average number of children born to currently-living female citizens aged 15-49, as this number would be a reflection of past rather than current ASFR values.",
+      "caveat_ms": "Nilai ASFR berdasarkan jumlah kelahiran hidup sebenar bagi setiap 1000 wanita dalam setiap kumpulan umur 5 tahun. Walau bagaimanapun, dalam mentafsirkan nilai TFR, perlu diingati bahawa TFR berdasarkan unjuran seorang wanita yang melalui hidupnya dengan mengalami ASFR setiap kumpulan umur. Ini tidak sama dengan purata sebenar jumlah anak yang dilahirkan kepada penduduk wanita berumur 15-49 tahun, kerana angka tersebut sebenarnya dipengaruhi oleh nilai ASFR masa lalu dan bukannya nilai ASFR semasa.",
+      "data_as_of": "2024",
+      "last_updated": "2025-10-16 12:00",
+      "next_update": "2026-10-15 12:30",
+      "link_csv": "https://storage.dosm.gov.my/demography/fertility_state.csv",
+      "link_parquet": "https://storage.dosm.gov.my/demography/fertility_state.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [],
+      "dataset_begin": 2001,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/fertility_state.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The year of the recorded fertility rate in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency."
+        },
+        {
+          "name": "age_group",
+          "description_en": "[Categorical] 5-year age group for fertility rates (15-19, 20-24,...,45-49), or the Total Fertility Rate ('tfr')."
+        },
+        {
+          "name": "fertility_rate",
+          "description_en": "[Float] Fertility rate for the specific age group (ASFRs) or the total fertility rate (TFR). ASFR values are the number of live births per 1000 women in the age group, whereas TFR values are the average number of children born to a woman who goes through her child-bearing years experiencing the ASFR of each age group."
+        }
+      ]
+    },
+    "fertility": {
+      "title_en": "TFR and ASFR",
+      "title_ms": "TFR dan ASFR",
+      "description_en": "Total fertility rate (TFR) and age-specific fertility rates (ASFR) from 1958 to the present at national level.",
+      "description_ms": "Kadar kesuburan keseluruhan (TFR) dan kadar kesuburan mengikut umur (ASFR) dari 1958 hingga kini di peringkat nasional.",
+      "methodology_en": "An age-specific fertility rate (ASFR) is the average number of births per 1,000 women in a specific age group. The ASFRs shown in this dataset are computed from administrative records of births registered with JPN (which record the age of the mother), as well as population data from DOSM as the denominator.\n\nThe total fertility rate (TFR)  is the average number of children born to a woman who goes through her child-bearing years experiencing the ASFR of each age group. It is computed by:\n - Summing the ASFRs of all age groups, then\n - Multiplying the number by 5 to account for the size of each age group, and finally\n - Dividing by 1000 (to convert the figure from per 1000 women to per woman.",
+      "methodology_ms": "Kadar kesuburan mengikut umur (ASFR) adalah purata jumlah kelahiran per 1,000 wanita dalam kumpulan umur tertentu. ASFR yang dipaparkan dalam set data ini dihitung berdasarkan rekod pentadbiran kelahiran yang didaftarkan dengan JPN (yang mencatatkan umur ibu), serta data penduduk dari DOSM.\n\nKadar kesuburan keseluruhan (TFR) adalah purata jumlah anak yang dilahirkan kepada seorang wanita yang melalui hidupnya dengan mengalami ASFR setiap kumpulan umur. Ia dihitung dengan:\n - Menjumlahkan ASFR semua kumpulan umur, kemudian\n - Mengalikan jumlah dengan 5 untuk mengambil kira julat setiap kumpulan umur, dan akhirnya\n - Membahagikan dengan 1000 untuk mengubah angka dari angka bagi setiap 1000 wanita kepada angka bagi seorang wanita.",
+      "caveat_en": "ASFR values are based on the actual number of live births per 1000 women in each 5-year age group. However, when interpreting TFR values, it is important to note that the TFR is based on a hypothetical woman who goes through her child-bearing years experiencing the ASFR of each age group. This is not equivalent to the actual average number of children born to currently-living female citizens aged 15-49, as this number would be a reflection of past rather than current ASFR values.",
+      "caveat_ms": "Nilai ASFR berdasarkan jumlah kelahiran hidup sebenar bagi setiap 1000 wanita dalam setiap kumpulan umur 5 tahun. Walau bagaimanapun, dalam mentafsirkan nilai TFR, perlu diingati bahawa TFR berdasarkan unjuran seorang wanita yang melalui hidupnya dengan mengalami ASFR setiap kumpulan umur. Ini tidak sama dengan purata sebenar jumlah anak yang dilahirkan kepada penduduk wanita berumur 15-49 tahun, kerana angka tersebut sebenarnya dipengaruhi oleh nilai ASFR masa lalu dan bukannya nilai ASFR semasa.",
+      "data_as_of": "2024",
+      "last_updated": "2025-10-16 12:00",
+      "next_update": "2026-10-15 12:30",
+      "link_csv": "https://storage.dosm.gov.my/demography/fertility.csv",
+      "link_parquet": "https://storage.dosm.gov.my/demography/fertility.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [],
+      "dataset_begin": 1958,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/fertility.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The year of the recorded fertility rate in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency."
+        },
+        {
+          "name": "age_group",
+          "description_en": "[Categorical] 5-year age group for fertility rates (15-19, 20-24,...,45-49), or the Total Fertility Rate ('tfr')."
+        },
+        {
+          "name": "fertility_rate",
+          "description_en": "[Float] Fertility rate for the specific age group (ASFRs) or the total fertility rate (TFR). ASFR values are the number of live births per 1000 women in the age group, whereas TFR values are the average number of children born to a woman who goes through her child-bearing years experiencing the ASFR of each age group."
+        }
+      ]
+    },
+    "lfs_district": {
+      "title_en": "Annual Principal Labour Force Statistics by District",
+      "title_ms": "Statistik Tenaga Buruh Tahunan Utama mengikut Daerah",
+      "description_en": "Annual principal labour force statistics at district level, including unemployment and participation rates.",
+      "description_ms": "Statistik tahunan utama berkaitan tenaga buruh di peringkat daerah pentadbiran, termasuk kadar pengangguran dan penyertaan.",
+      "methodology_en": "This data is produced based on the Labour Force Survey (LFS), which is designed to collect representative data on the labour force at national and state level. Consistency in methodology has been maintained to ensure that the data is comparable over time. Survey findings are a monthly, quarterly and annual basis. For a full description of the methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/lfs-technotes).",
+      "methodology_ms": "Data ini dihasilkan berdasarkan Survei Tenaga Buruh (STB), yang bertujuan untuk mengumpul data tentang tenaga buruh di peringkat nasional dan negeri. Metodologi survei ini dipastikan konsisten untuk mendapatkan perbandingan statistik siri masa. Data daripada survei ini diterbitkan secara bulanan, suku tahunan dan tahunan. Untuk mendapat perincian metodologi yang penuh, sila merujuk kepada [Nota Teknikal](https://open.dosm.gov.my/publications/technical-notes/lfs-technotes).",
+      "caveat_en": "Data for 1991 and 1994 are not available at all due to limitations in the sample data from those years; data for W.P. Labuan and W.P. Putrajaya begin in 1992 and 2011 respectively. Furthermore, the sum of each category may not always equal to the totals shown in related tables because of independent rounding to one decimal place. However, the differences are not obvious.",
+      "caveat_ms": "Data bagi 1991 dan 1994 tidak dapat dihasilkan akibat kekangan dalam data survei bagi tahun tersebut; data bagi W.P. Labuan dan W.P. Putrajaya hanya bermula pada 1992 dan 2011. Selain itu, hasil tambah bagi sesuatu kategori mungkin tidak sentiasa sama dengan jumlah yang ditunjukkan dalam jadual yang berkaitan kerana pembundaran secara bebas kepada satu titik perpuluhan. Walau bagaimanapun, perbezaan ini tidak ketara.",
+      "data_as_of": "2024",
+      "last_updated": "2025-06-30 12:00",
+      "next_update": "2026-12-31 12:00",
+      "link_csv": "https://storage.dosm.gov.my/labour/lfs_district.csv",
+      "link_parquet": "https://storage.dosm.gov.my/labour/lfs_district.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE",
+        "DISTRICT"
+      ],
+      "demography": [],
+      "dataset_begin": 2018,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/lfs_district.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 160 administrative districts; however, it should be noted that only 140 administrative districts are represented in this dataset due to constraints on data availability at district level for more remote areas."
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "lf",
+          "description_en": "[Float, '000] The number (in thousands) of employed and unemployed individuals. This figure also represents the number of people participating in the labour force."
+        },
+        {
+          "name": "lf_employed",
+          "description_en": "[Float, '000] The number (in thousands) of people who worked at least one hour for pay, profit or family gain, in thousands of people"
+        },
+        {
+          "name": "lf_unemployed",
+          "description_en": "[Float, '000] The number (in thousands) of people who did not work but were looking for work or available to work"
+        },
+        {
+          "name": "lf_outside",
+          "description_en": "[Float, '000] The number (in thousands) of people not classified as employed or unemployed, including housewives, students, early retired, disabled persons and those not interested in looking for a job"
+        },
+        {
+          "name": "u_rate",
+          "description_en": "[Float] Ratio of unemployed to labour force size"
+        },
+        {
+          "name": "p_rate",
+          "description_en": "[Float] Ratio of the labour force size to the working-age (15-64) population"
+        },
+        {
+          "name": "ep_ratio",
+          "description_en": "[Float] Ratio of the number of employed people to the working-age (15-64) population"
+        }
+      ]
+    },
+    "lfs_year": {
+      "title_en": "Annual Principal Labour Force Statistics",
+      "title_ms": "Statistik Tenaga Buruh Tahunan Utama",
+      "description_en": "Annual principal labour force statistics, including unemployment and participation rates.",
+      "description_ms": "Statistik tahunan utama berkaitan tenaga buruh, termasuk kadar pengangguran dan penyertaan.",
+      "methodology_en": "This data is produced based on the Labour Force Survey (LFS), which is designed to collect representative data on the labour force at national and state level. Consistency in methodology has been maintained to ensure that the data is comparable over time. Survey findings are a monthly, quarterly and annual basis. For a full description of the methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/lfs-technotes).",
+      "methodology_ms": "Data ini dihasilkan berdasarkan Survei Tenaga Buruh (STB), yang bertujuan untuk mengumpul data tentang tenaga buruh di peringkat nasional dan negeri. Metodologi survei ini dipastikan konsisten untuk mendapatkan perbandingan statistik siri masa. Data daripada survei ini diterbitkan secara bulanan, suku tahunan dan tahunan. Untuk mendapat perincian metodologi yang penuh, sila merujuk kepada [Nota Teknikal](https://open.dosm.gov.my/publications/technical-notes/lfs-technotes).",
+      "caveat_en": "Data for 1991 and 1994 are not available due to limitations in the sample data from those years. Furthermore, the sum of each category may not always equal to the totals shown in related tables because of independent rounding to one decimal place. However, the differences are not obvious.",
+      "caveat_ms": "Data bagi 1991 dan 1994 tidak dapat dihasilkan akibat kekangan dalam data survei bagi tahun tersebut. Selain itu, hasil tambah bagi sesuatu kategori mungkin tidak sentiasa sama dengan jumlah yang ditunjukkan dalam jadual yang berkaitan kerana pembundaran secara bebas kepada satu titik perpuluhan. Walau bagaimanapun, perbezaan ini tidak ketara.",
+      "data_as_of": "2023",
+      "last_updated": "2024-02-09 12:00",
+      "next_update": "2025-02-09 12:00",
+      "link_csv": "https://storage.dosm.gov.my/labour/lfs_year.csv",
+      "link_parquet": "https://storage.dosm.gov.my/labour/lfs_year.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [],
+      "dataset_begin": 1982,
+      "dataset_end": 2023,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/lfs_year.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "lf",
+          "description_en": "[Float] The number (in thousands) of employed and unemployed individuals. This figure also represents the number of people participating in the labour force."
+        },
+        {
+          "name": "lf_employed",
+          "description_en": "[Float] The number (in thousands) of people who worked at least one hour for pay, profit or family gain, in thousands of people"
+        },
+        {
+          "name": "lf_unemployed",
+          "description_en": "[Float] The number (in thousands) of people who did not work but were looking for work or available to work"
+        },
+        {
+          "name": "lf_outside",
+          "description_en": "[Float] The number (in thousands) of people not classified as employed or unemployed, including housewives, students, early retired, disabled persons and those not interested in looking for a job"
+        },
+        {
+          "name": "u_rate",
+          "description_en": "[Float] Ratio of unemployed to labour force size"
+        },
+        {
+          "name": "p_rate",
+          "description_en": "[Float] Ratio of the labour force size to the working-age (15-64) population"
+        },
+        {
+          "name": "ep_ratio",
+          "description_en": "[Float] Ratio of the number of employed people to the working-age (15-64) population"
+        }
+      ]
+    },
+    "hh_income_state": {
+      "title_en": "Household Income by State",
+      "title_ms": "Pendapatan Isi Rumah Mengikut Negeri",
+      "description_en": "Mean and median gross monthly household income by state from 1970 to 2024.",
+      "description_ms": "Purata dan penengah pendapatan kasar bulanan isi rumah mengikut negeri dari 1970 hingga 2024.",
+      "methodology_en": "Data on individual salaries and wages [in the formal economy](https://open.dosm.gov.my/dashboard/formal-sector-wages) is easy to obtain from administrative records. However, data on household income is more difficult to tabulate, as it requires the correct definition of a statistical household, as well as the inclusion of non-salary sources of income such as property income, dividends, and interest. For this reason, it requires the use of a representative survey or census.\n\n In Malaysia, data on household income (as well as expenditure and access to basic amenities) is collected through the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. The data shown here was tabulated from household-level HIES records spanning 1970 to 2024 (the latest edition). For a full description of the methodology, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Data mengenai gaji dan upah individu [dalam ekonomi formal](https://open.dosm.gov.my/ms-MY/dashboard/formal-sector-wages) mudah diperoleh daripada rekod pentadbiran. Sebaliknya, data mengenai pendapatan isi rumah lebih sukar untuk dihasilkan, kerana ia memerlukan definisi statistik yang tepat bagi isi rumah, serta sumber pendapatan bukan gaji seperti pendapatan hartanah, dividen, dan faedah. Oleh itu, ia memerlukan penggunaan survei atau banci.\n\nDi Malaysia, data mengenai pendapatan isi rumah (serta perbelanjaan dan akses kepada kemudahan asas) dikumpul melalui Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Data yang dipaparkan di sini telah dihasilkan daripada rekod HIES peringkat isi rumah dari tahun 1970 hingga 2024 (edisi terkini). Untuk mendapat perincian metodologi yang penuh, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "This data presents nominal values, i.e. they have not been adjusted for inflation. Furthermore, given that the data is produced from surveys spanning over half a century, the following methodological changes should be noted:\n - Data for 1970 and 1974 refers to Peninsular Malaysia only. 1976 was the first year in which Sabah and Sarawak were included in the survey.\n - Data from 1989 onwards refers to Malaysian citizens only. Although non-citizens are also included in the surveys, the official statistics (which form the basis for national welfare policy) are based on citizens only\n - Kuala Lumpur was gazzeted as a Federal Territory on 1 February 1974. Accordingly, data for W.P. Kuala Lumpur is only available from 1976. Prior to that, data for residents of W.P. Kuala Lumpur was included under Selangor.\n - Labuan was gazetted as a Federal Territory on 16 April 1984. However, due to limitations in sampling, data for W.P. Labuan is only available from 2007. Prior to that, data for residents of W.P. Labuan was included under Sabah.\n - Putrajaya was gazzeted as a Federal Territory on 1 February 2001. However, due to limitations in sampling, data for W.P. Putrajaya is only available from 2007. Prior to that, data for residents of W.P. Putrajaya was included under Selangor.",
+      "caveat_ms": "Data ini menunjukkan nilai nominal, iaitu mereka tidak diselaraskan untuk inflasi. Selain itu, memandangkan bahawa data ini dihasilkan daripada survey yang menjangkau lebih dari setengah abad, perubahan metodologi berikut harus diberi perhatian:\n - Data untuk 1970 dan 1974 merujuk kepada Semenanjung Malaysia sahaja. Tahun 1976 adalah tahun pertama di mana Sabah dan Sarawak disekalikan dalam tinjauan.\n - Mulai 1989, data merujuk kepada warganegara Malaysia sahaja. Walaupun warga asing juga disekalikan dalam tinjauan, statistik rasmi (yang menjadi asas untuk dasar nasional) hanya berdasarkan warganegara sahaja.\n - Kuala Lumpur diwartakan sebagai Wilayah Persekutuan pada 1 Februari 1974. Oleh itu, data untuk W.P. Kuala Lumpur hanya tersedia mulai 1976. Sebelum itu, data untuk penduduk W.P. Kuala Lumpur adalah sebahagian daripada Selangor.\n Labuan diwartakan sebagai Wilayah Persekutuan pada 16 April 1984. Namun, disebabkan oleh kekangan dalam pengsampelan, data bagi W.P. Labuan hanya tersedia mulai 2007. Sebelum itu, data untuk penduduk W.P. Labuan adalah sebahagian daripada Sabah.\n - Putrajaya diwartakan sebagai Wilayah Persekutuan pada 1 Februari 2001. Namun, disebabkan oleh kekangan dalam pengsampelan, data bagi W.P. Putrajaya hanya tersedia mulai 2007. Sebelum itu, data untuk penduduk W.P. Putrajaya adalah sebahagian daripada Selangor.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_income_state.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_income_state.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE"
+      ],
+      "demography": [],
+      "dataset_begin": 1970,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_income_state.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, including the 3 Federal Territories"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "income_mean",
+          "description_en": "[Integer, RM] Average gross monthly household income"
+        },
+        {
+          "name": "income_median",
+          "description_en": "[Integer, RM] Median gross monthly household income; this is generally less than the mean income due to the right-skewed distribution of income"
+        }
+      ]
+    },
+    "hh_income_district": {
+      "title_en": "Household Income by Administrative District",
+      "title_ms": "Pendapatan Isi Rumah Mengikut Daerah Pentadbiran",
+      "description_en": "Mean and median gross monthly household income by administrative district from 2019 to 2024.",
+      "description_ms": "Purata dan penengah pendapatan kasar bulanan isi rumah mengikut daerah pentadbiran dari 2019 hingga 2024.",
+      "methodology_en": "Data on individual salaries and wages [in the formal economy](https://open.dosm.gov.my/dashboard/formal-sector-wages) is easy to obtain from administrative records. However, data on household income is more difficult to tabulate, as it requires the correct definition of a statistical household, as well as the inclusion of non-salary sources of income such as property income, dividends, and interest. For this reason, it requires the use of a representative survey or census.\n\n In Malaysia, data on household income (as well as expenditure and access to basic amenities) is collected through the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. The data shown here was tabulated from household-level HIES records spanning 1970 to 2024 (the latest edition). For a full description of the methodology, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Data mengenai gaji dan upah individu [dalam ekonomi formal](https://open.dosm.gov.my/ms-MY/dashboard/formal-sector-wages) mudah diperoleh daripada rekod pentadbiran. Sebaliknya, data mengenai pendapatan isi rumah lebih sukar untuk dihasilkan, kerana ia memerlukan definisi statistik yang tepat bagi isi rumah, serta sumber pendapatan bukan gaji seperti pendapatan hartanah, dividen, dan faedah. Oleh itu, ia memerlukan penggunaan survei atau banci.\n\nDi Malaysia, data mengenai pendapatan isi rumah (serta perbelanjaan dan akses kepada kemudahan asas) dikumpul melalui Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Data yang dipaparkan di sini telah dihasilkan daripada rekod HIES peringkat isi rumah dari tahun 1970 hingga 2024 (edisi terkini). Untuk mendapat perincian metodologi yang penuh, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "This data presents nominal values, i.e. they have not been adjusted for inflation. Furthermore, district-level data is only published from 2019 (relative to [state-level data](https://open.dosm.gov.my/data-catalogue/hh_income_state) which is available from 1970) as prior HIES samples were not sufficient to support district-level granularity.",
+      "caveat_ms": "Data ini menunjukkan nilai nominal, iaitu mereka tidak diselaraskan untuk inflasi. Selain itu, data daerah hanya diterbitkan mulai 2019 (berbanding dengan [data negeri](https://open.dosm.gov.my/data-catalogue/hh_income_state) yang tersedia dari 1970) kerana sampel HIES sebelumnya tidak mencukupi untuk membolehkan pecahan mengikut daerah.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_income_district.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_income_district.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DISTRICT"
+      ],
+      "demography": [],
+      "dataset_begin": 2019,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_income_district.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, including the 3 Federal Territories"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 160 administrative districts, including the 4 states (Perlis and the 3 Federal Territories) which do not have subdivisions"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "income_mean",
+          "description_en": "[Integer, RM] Average gross monthly household income"
+        },
+        {
+          "name": "income_median",
+          "description_en": "[Integer, RM] Median gross monthly household income; this is generally less than the mean income due to the right-skewed distribution of income"
+        }
+      ]
+    },
+    "hh_poverty_state": {
+      "title_en": "Poverty by State",
+      "title_ms": "Kemiskinan Mengikut Negeri",
+      "description_en": "Poverty rates by state from 1970 to 2024.",
+      "description_ms": "Kadar kemiskinan mengikut negeri dari 1970 hingga 2024.",
+      "methodology_en": "In general, poverty is defined as having household income below a specific benchmark. Accordingly, statistics on poverty in Malaysia are produced and published together with statistics on household income derived from the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. This dataset presents 3 definitions of poverty:\n 1. **Absolute Poverty**: A household is considered to be in absolute poverty if their gross monthly household income is below the Poverty Line Income (PLI). This indicates that the household does not earn sufficient income to meet basic needs for a dignified life. \n 2. **Hardcore Poverty**: A household is considered to be in hardcore poverty if their gross monthly household income is below the Food Poverty Line Income (Food PLI). This indicates that the household does not earn sufficient income to meet basic calorie requirements. It should be noted that hardcore poverty is a subset of absolute poverty. \n 3. **Relative Poverty**: A household is considered to be in relative poverty if their gross monthly household income is below half the state median income. This measure is used to assess relative deprivation within the country, especially as absolute and hardcore poverty rates approach 0, as is the case for Malaysia.\n\n For full details on the methodology, especially the computation of the PLI and its evolution and nuances, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Secara am, definisi kemiskinan adalah pendapatan isi rumah di bawah sesuatu aras pendapatan. Oleh itu, statistik mengenai kemiskinan di Malaysia dihasilkan dan diterbitkan bersama dengan statistik pendapatan isi rumah yang dihasilkan daripada Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Set data ini memaparkan 3 definisi kemiskinan:\n 1. **Kemiskinan Mutlak**: Sebuah isi rumah dianggap berada dalam kemiskinan mutlak jika pendapatan kasar bulanan isi rumah mereka berada di bawah Pendapatan Garis Kemiskinan (PGK). Ini menunjukkan bahawa isi rumah tersebut tidak mempunyai pendapatan yang cukup untuk memenuhi keperluan asas.\n 2. **Kemiskinan Tegar**: Sebuah isi rumah dianggap berada dalam kemiskinan tegar jika pendapatan kasar bulanan isi rumah mereka berada di bawah Pendapatan Garis Kemiskinan Makanan (PGK Makanan). Ini menunjukkan bahawa isi rumah tersebut tidak mempunyai pendapatan yang cukup untuk memenuhi keperluan kalorie asas. Kemiskinan tegar adalah subset kepada kemiskinan mutlak.\n 3. **Kemiskinan Relatif**: Sebuah isi rumah dianggap berada dalam kemiskinan relatif jika pendapatan kasar bulanan isi rumah mereka berada di bawah separuh pendapatan penengah negeri. Indikator ini digunakan untuk menganalisis ketersisihan relatif dalam negara, terutamanya apabila kadar kemiskinan mutlak dan tegar semakin mendekati kosong seperti mana yang berlaku di Malaysia.\n\n Untuk mendapat perincian metodologi yang penuh, terutamanya mengenai pengiraan PGK serta evolusi dan nuansanya, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "Given that the data is produced from surveys spanning over half a century, the following methodological changes should be noted:\n - Data for 1970 and 1974 refers to Peninsular Malaysia only. 1976 was the first year in which Sabah and Sarawak were included in the survey.\n - Data from 1989 onwards refers to Malaysian citizens only. Although non-citizens are also included in the surveys, the official statistics (which form the basis for national welfare policy) are based on citizens only\n - Kuala Lumpur was gazzeted as a Federal Territory on 1 February 1974. Accordingly, data for W.P. Kuala Lumpur is only available from 1976. Prior to that, data for residents of W.P. Kuala Lumpur was included under Selangor.\n - Labuan was gazetted as a Federal Territory on 16 April 1984. However, due to limitations in sampling, data for W.P. Labuan is only available from 2004. Prior to that, data for residents of W.P. Labuan was included under Sabah.\n - Putrajaya was gazzeted as a Federal Territory on 1 February 2001. However, due to limitations in sampling, data for W.P. Putrajaya is only available from 2007. Prior to that, data for residents of W.P. Putrajaya was included under Selangor.",
+      "caveat_ms": "Memandangkan bahawa data ini dihasilkan daripada survey yang menjangkau lebih dari setengah abad, perubahan metodologi berikut harus diberi perhatian:\n - Data untuk 1970 dan 1974 merujuk kepada Semenanjung Malaysia sahaja. Tahun 1976 adalah tahun pertama di mana Sabah dan Sarawak disekalikan dalam tinjauan.\n - Mulai 1989, data merujuk kepada warganegara Malaysia sahaja. Walaupun warga asing juga disekalikan dalam tinjauan, statistik rasmi (yang menjadi asas untuk dasar nasional) hanya berdasarkan warganegara sahaja.\n - Kuala Lumpur diwartakan sebagai Wilayah Persekutuan pada 1 Februari 1974. Oleh itu, data untuk W.P. Kuala Lumpur hanya tersedia mulai 1976. Sebelum itu, data untuk penduduk W.P. Kuala Lumpur adalah sebahagian daripada Selangor.\n Labuan diwartakan sebagai Wilayah Persekutuan pada 16 April 1984. Namun, disebabkan oleh kekangan dalam pengsampelan, data bagi W.P. Labuan hanya tersedia mulai 2004. Sebelum itu, data untuk penduduk W.P. Labuan adalah sebahagian daripada Sabah.\n - Putrajaya diwartakan sebagai Wilayah Persekutuan pada 1 Februari 2001. Namun, disebabkan oleh kekangan dalam pengsampelan, data bagi W.P. Putrajaya hanya tersedia mulai 2007. Sebelum itu, data untuk penduduk W.P. Putrajaya adalah sebahagian daripada Selangor.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_poverty_state.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_poverty_state.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE"
+      ],
+      "demography": [],
+      "dataset_begin": 1970,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_poverty_state.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, including the 3 Federal Territories"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "poverty_absolute",
+          "description_en": "[Float] Proportion of households with monthly income below the Poverty Line Income (PLI)"
+        },
+        {
+          "name": "poverty_hardcore",
+          "description_en": "[Float] Proportion of households with monthly income below the Food Poverty Line Income (Food PLI)"
+        },
+        {
+          "name": "poverty_relative",
+          "description_en": "[Float] Proportion of households with monthly income below half the state median income"
+        }
+      ]
+    },
+    "hh_poverty_district": {
+      "title_en": "Poverty by Administrative District",
+      "title_ms": "Kemiskinan mengikut Daerah Pentadbiran",
+      "description_en": "Poverty rates by administrative district from 2019 to 2024.",
+      "description_ms": "Kadar kemiskinan mengikut daerah pentadbiran dari 2019 hingga 2024.",
+      "methodology_en": "In general, poverty is defined as having household income below a specific benchmark. Accordingly, statistics on poverty in Malaysia are produced and published together with statistics on household income derived from the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. This dataset presents 2 definitions of poverty:\n 1. **Absolute Poverty**: A household is considered to be in absolute poverty if their gross monthly household income is below the Poverty Line Income (PLI). This indicates that the household does not earn sufficient income to meet basic needs for a dignified life.\n 2. **Relative Poverty**: A household is considered to be in relative poverty if their gross monthly household income is below half the national median income. This measure is used to assess relative deprivation within the district, especially as absolute and hardcore poverty rates approach 0, as is the case for Malaysia.\n\n For full details on the methodology, especially the computation of the PLI and its evolution and nuances, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Secara am, definisi kemiskinan adalah pendapatan isi rumah di bawah sesuatu aras pendapatan. Oleh itu, statistik mengenai kemiskinan di Malaysia dihasilkan dan diterbitkan bersama dengan statistik pendapatan isi rumah yang dihasilkan daripada Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Set data ini memaparkan 3 definisi kemiskinan:\n 1. **Kemiskinan Mutlak**: Sebuah isi rumah dianggap berada dalam kemiskinan mutlak jika pendapatan kasar bulanan isi rumah mereka berada di bawah Pendapatan Garis Kemiskinan (PGK). Ini menunjukkan bahawa isi rumah tersebut tidak mempunyai pendapatan yang cukup untuk memenuhi keperluan asas.\n 2 **Kemiskinan Relatif**: Sebuah isi rumah dianggap berada dalam kemiskinan relatif jika pendapatan kasar bulanan isi rumah mereka berada di bawah separuh pendapatan penengah daerah. Indikator ini digunakan untuk menganalisis ketersisihan relatif dalam negara, terutamanya apabila kadar kemiskinan mutlak dan tegar semakin mendekati kosong seperti mana yang berlaku di Malaysia.\n\n Untuk mendapat perincian metodologi yang penuh, terutamanya mengenai pengiraan PGK serta evolusi dan nuansanya, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "Data on hardcore poverty is not available at district level. Furthermore, district-level data is only published from 2019 (relative to [state-level data](https://open.dosm.gov.my/data-catalogue/hh_poverty_state) which is available from 1970) as prior HIES samples were not sufficient to support district-level granularity.",
+      "caveat_ms": "Data mengenai kadar kemiskinan tegar tidak dapat disediakan di peringkat daerah. Selain itu, data daerah hanya diterbitkan mulai 2019 (berbanding dengan [data negeri](https://open.dosm.gov.my/data-catalogue/hh_poverty_state) yang tersedia dari 1970) kerana sampel HIES sebelumnya tidak mencukupi untuk membolehkan pecahan mengikut daerah.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_poverty_district.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_poverty_district.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DISTRICT"
+      ],
+      "demography": [],
+      "dataset_begin": 2019,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_poverty_district.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, including the 3 Federal Territories"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 160 administrative districts, including the 4 states (Perlis and the 3 Federal Territories) which do not have subdivisions"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "poverty_absolute",
+          "description_en": "[Float] Proportion of households with monthly income below the Poverty Line Income (PLI)"
+        },
+        {
+          "name": "poverty_relative",
+          "description_en": "[Float] Proportion of households with monthly income below half the district median income"
+        }
+      ]
+    },
+    "gdp_state_real_supply": {
+      "title_en": "Annual Real GDP by State & Economic Sector",
+      "title_ms": "KDNK Sebenar Tahunan mengikut Negeri & Sektor Ekonomi",
+      "description_en": "Annual state-level gross domestic product (GDP) at constant 2015 prices for the 5 main economic sectors.",
+      "description_ms": "Keluaran dalam negeri kasar (KDNK) tahunan peringkat negeri pada harga malar 2015 bagi 5 sektor ekonomi utama.",
+      "methodology_en": "Gross domestic product (GDP) is the total value of goods and services produced within that year, after deducting the cost of goods and services used in production, but before deducting the consumption of fixed capital. In Malaysia, GDP is estimated in compliance with the [System of National Accounts (2008)](https://storage.dosm.gov.my/technotes/sna_2008.pdf).\n\nIn general, GDP can be measured via 3 approaches, namely production, expenditure, and income. Because the measurement employs double entry accounting, the overall value must be the same across all 3 approaches. However, the different approaches allow GDP to be analysed in different ways. The GDP estimates in this dataset were produced using the production method (also known as the value added approach), which allows insight into the specific contribution of each economic sector. For that reason, the results of the production approach are often referenced in economic writing as supply-side GDP. The values were measured at constant 2015 prices, i.e. with price effects removed relative to a base year (2015 = 100). For a full description of the methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/gdp-technotes).",
+      "methodology_ms": "Keluaran dalam negeri kasar (KDNK) adalah jumlah nilai barangan dan perkhidmatan yang dihasilkan dalam tahun tersebut, selepas ditolak kos barangan dan perkhidmatan yang digunakan dalam proses pengeluaran, tetapi sebelum ditolak penggunaan modal tetap. Di Malaysia, anggaran KDNK dihasilkan selaras dengan [Sistem Akaun Nasional (2008)](https://storage.dosm.gov.my/technotes/sna_2008.pdf).\n\nSecara am, KDNK boleh diukur melalui 3 kaedah, iaitu pengeluaran, perbelanjaan, dan pendapatan. Memandangkan bahawa pengukurannya menggunakan sistem perakaunan catatan bergu, angka keseluruhan mesti sama bagi ketiga-tiga kaedah tersebut. Namun, kaedah yang berbeza itu membolehkan analisis KDNK yang berlainan. Anggaran KDNK dalam set data ini dihasilkan melalui kaedah pengeluaran (juga dikenali sebagai kaedah nilai ditambah), yang membolehkan perincian sumbangan setiap sektor ekonomi kepada KDNK keseluruhan. Oleh itu, hasil daripada kaedah pengeluaran juga dirujuk dalam tulisan ekonomi sebagai KDNK dari segi penawaran (_supply-side GDP_). Angka-angka diukur pada harga malar 2015, iaitu dengan mengeluarkan kesan harga berbanding tahun asas (2015 = 100). Untuk mendapat perincian metodologi yang penuh, sila merujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/gdp-technotes).",
+      "caveat_en": "There are several caveats to note:\n- Values for W.P. Putrajaya are subsumed under values for W.P. Kuala Lumpur due to difficulty in separating the attribution of economic value.\n- Values for 2022 and 2023 may be revised in future releases.\n- The sum of GDP for all sectors may not always equal to the values for overall GDP because of independent rounding to one decimal place. However, the differences are not obvious.",
+      "caveat_ms": "Terdapat beberapa perkara yang perlu diberi perhatian:\n- Nilai bagi W.P. Putrajaya dimasukkan bawah nilai W.P. Kuala Lumpur kerana kesukaran dalam membezakan punca nilai ekonomi.\n- Angka bagi 2022 dan 2023 mungkin disemak semula dalam penerbitan akan datang.\n- Hasil tambah nilai KDNK bagi semua sektor mungkin tidak sentiasa sama dengan nilai KDNK keseluruhan kerana pembundaran secara bebas. Walau bagaimanapun, perbezaan ini tidak ketara.",
+      "data_as_of": "2025",
+      "last_updated": "2026-07-01 12:30",
+      "next_update": "2027-07-01 12:30",
+      "link_csv": "https://storage.dosm.gov.my/gdp/gdp_state_real_supply.csv",
+      "link_parquet": "https://storage.dosm.gov.my/gdp/gdp_state_real_supply.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE"
+      ],
+      "demography": [],
+      "dataset_begin": 2015,
+      "dataset_end": 2025,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/gdp_state_real_supply.json",
+      "fields": [
+        {
+          "name": "series",
+          "description_en": "[String] Series type, either absolute values ('abs') or annual growth ('growth_yoy')"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 15 states (W.P. Putrajaya is subsumed under W.P. Kuala Lumpur), or 'Supranational', which is a catch-all category for GDP data that cannot be attributed to a specific state, especially in the mining and quarrying sector."
+        },
+        {
+          "name": "sector",
+          "description_en": "[String] Code for the economic sector, to be mapped using the [Lookup Table](https://open.dosm.gov.my/data-catalogue/gdp_lookup). The lookup table will give you the English and Malay definitions."
+        },
+        {
+          "name": "value",
+          "description_en": "[Float] Either the value of GDP in RM millions (for rows with series type 'abs') or GDP growth as a percentage (for rows with series type 'growth_yoy')"
+        }
+      ]
+    },
+    "gdp_lookup": {
+      "title_en": "Lookup Table: GDP",
+      "title_ms": "Jadual Carian: KDNK",
+      "description_en": "Lookup table, to be left-joined against other GDP datasets if specified.",
+      "description_ms": "Jadual carian, untuk dipadankan (left-join) dengan set data KDNK lain sekiranya diperlukan.",
+      "methodology_en": "This lookup table is not part of any standardised data dictionary; it was custom-made to serve the GDP datasets made available via data.gov.my and OpenDOSM only. Furthermore, the coding employed here is similar to (but not the same as) the coding used in DOSM's GDP publications, because it has been calibrated to ensure consistency across annual and quarterly GDP publications, as well as national and state GDP publications.",
+      "methodology_ms": "Jadual carian ini bukan sebahagian daripada mana-mana _dictionary_ data; ia dihasilkan khas untuk memenuhi keperluan set data GDP yang dibekalkan melalui data.gov.my dan OpenDOSM sahaja. Tambahan, kod yang terkandung dalam jadual carian ini tidak sama dengan kod yang digunakan dalam penerbitan KDNK oleh DOSM, kerana ia telah disesuaikan untuk memastikan penggunaan secara konsisten merentas penerbitan KDNK tahunan dan suku tahunan, serta penerbitan KDNK negara dan negeri.",
+      "caveat_en": "—",
+      "caveat_ms": "—",
+      "data_as_of": "2024-Q1",
+      "last_updated": "2024-05-17 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/gdp/gdp_lookup.csv",
+      "link_parquet": "https://storage.dosm.gov.my/gdp/gdp_lookup.parquet",
+      "frequency": "INFREQUENT",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [],
+      "dataset_begin": 2024,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/gdp_lookup.json",
+      "fields": [
+        {
+          "name": "method",
+          "description_en": "[Categorical] Either the production approach ('production'), expenditure approach ('expenditure'), or income approach ('income')"
+        },
+        {
+          "name": "code",
+          "description_en": "[String] Reference for the variable as contained within the dataset"
+        },
+        {
+          "name": "variable_en",
+          "description_en": "[String] Definition of the variable in English"
+        },
+        {
+          "name": "variable_bm",
+          "description_en": "[String] Definition of the variable in Malay"
+        }
+      ]
+    }
+  }
+}

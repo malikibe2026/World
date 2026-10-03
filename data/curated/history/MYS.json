@@ -1,0 +1,266 @@
+{
+  "id": "MYS",
+  "source_id": "worldstat_curated",
+  "last_reviewed": "2026-10-03",
+  "editor_note_en": "Editorial summary for orientation, not an authoritative history. Dates given as 'circa' are approximate; events marked 'contested' have competing dates or interpretations, listed under each event. Coordinates are approximate locations for the map.",
+  "editor_note_ms": "Ringkasan editorial untuk panduan, bukan sejarah berautoriti. Tarikh bertanda 'sekitar' adalah anggaran; peristiwa bertanda 'dipertikaikan' mempunyai tarikh atau tafsiran berbeza yang disenaraikan. Koordinat ialah lokasi anggaran untuk peta.",
+  "eras": [
+    {"id": "ancient", "name_en": "Ancient period", "name_ms": "Zaman purba", "start": -40000, "end": 1399},
+    {"id": "kingdoms", "name_en": "Kingdoms & sultanates", "name_ms": "Kerajaan & kesultanan", "start": 1400, "end": 1510},
+    {"id": "colonial", "name_en": "Colonial period", "name_ms": "Zaman penjajahan", "start": 1511, "end": 1956},
+    {"id": "independence", "name_en": "Independence & formation", "name_ms": "Kemerdekaan & pembentukan", "start": 1957, "end": 1965},
+    {"id": "modern", "name_en": "Modern era", "name_ms": "Era moden", "start": 1966, "end": 2100}
+  ],
+  "events": [
+    {
+      "id": "niah", "era": "ancient", "year": -40000, "precision": "circa",
+      "title_en": "Human presence at the Niah Caves", "title_ms": "Kehadiran manusia di Gua Niah",
+      "summary_en": "Remains found at the Great Cave of Niah (Sarawak), including the 'Deep Skull', are among the oldest evidence of modern humans in Southeast Asia, dated to roughly 40,000 years ago.",
+      "summary_ms": "Tinggalan di Gua Besar Niah (Sarawak), termasuk 'Deep Skull', antara bukti terawal manusia moden di Asia Tenggara, bertarikh kira-kira 40,000 tahun dahulu.",
+      "coord": [113.78, 3.82], "place": "Niah, Sarawak",
+      "refs": [{"title": "Niah National Park — Wikipedia", "url": "https://en.wikipedia.org/wiki/Niah_National_Park"}]
+    },
+    {
+      "id": "perak-man", "era": "ancient", "year": -9000, "precision": "circa",
+      "title_en": "'Perak Man' burial, Lenggong Valley", "title_ms": "Pengebumian 'Perak Man', Lembah Lenggong",
+      "summary_en": "A near-complete skeleton found at Gua Gunung Runtuh in the Lenggong Valley, dated to around 10,000–11,000 years ago. The valley's archaeological heritage is a UNESCO World Heritage Site (2012).",
+      "summary_ms": "Rangka hampir lengkap ditemui di Gua Gunung Runtuh, Lembah Lenggong, bertarikh sekitar 10,000–11,000 tahun dahulu. Warisan arkeologi lembah ini disenaraikan sebagai Tapak Warisan Dunia UNESCO (2012).",
+      "coord": [100.97, 5.11], "place": "Lenggong, Perak",
+      "refs": [{"title": "Archaeological Heritage of the Lenggong Valley — UNESCO", "url": "https://whc.unesco.org/en/list/1396"}, {"title": "Perak Man — Wikipedia", "url": "https://en.wikipedia.org/wiki/Perak_Man"}]
+    },
+    {
+      "id": "bujang", "era": "ancient", "year": 300, "precision": "century",
+      "title_en": "Bujang Valley trading settlements (Kedah)", "title_ms": "Penempatan perdagangan Lembah Bujang (Kedah)",
+      "summary_en": "Iron-smelting, port and Hindu-Buddhist religious sites in the Bujang Valley show early participation in Indian Ocean trade during the first millennium CE.",
+      "summary_ms": "Tapak peleburan besi, pelabuhan dan keagamaan Hindu-Buddha di Lembah Bujang menunjukkan penglibatan awal dalam perdagangan Lautan Hindi pada alaf pertama Masihi.",
+      "coord": [100.42, 5.74], "place": "Lembah Bujang, Kedah",
+      "contested": true,
+      "interpretations_en": ["Some researchers date the Sungai Batu complex to the mid-first millennium BCE; others consider those dates insufficiently established. Both positions are reported here rather than one single date."],
+      "interpretations_ms": ["Sebahagian penyelidik mentarikhkan kompleks Sungai Batu kepada pertengahan alaf pertama SM; yang lain menganggap tarikh itu belum cukup kukuh. Kedua-dua pandangan dicatat di sini, bukan satu tarikh tunggal."],
+      "refs": [{"title": "Bujang Valley — Wikipedia", "url": "https://en.wikipedia.org/wiki/Bujang_Valley"}]
+    },
+    {
+      "id": "srivijaya", "era": "ancient", "year": 700, "precision": "century",
+      "title_en": "Srivijaya's maritime influence", "title_ms": "Pengaruh maritim Srivijaya",
+      "summary_en": "From about the 7th century, the Sumatra-based thalassocracy of Srivijaya exerted influence over trade ports on the Malay Peninsula.",
+      "summary_ms": "Sejak kira-kira abad ke-7, kerajaan maritim Srivijaya yang berpusat di Sumatera mempengaruhi pelabuhan dagang di Semenanjung Tanah Melayu.",
+      "refs": [{"title": "Srivijaya — Wikipedia", "url": "https://en.wikipedia.org/wiki/Srivijaya"}]
+    },
+    {
+      "id": "melaka-sultanate", "era": "kingdoms", "year": 1400, "precision": "circa",
+      "title_en": "Founding of the Melaka Sultanate", "title_ms": "Pembukaan Kesultanan Melayu Melaka",
+      "summary_en": "Melaka was founded around 1400 and grew into the leading entrepôt of the Straits, spreading Islam and a Malay court culture across the region.",
+      "summary_ms": "Melaka dibuka sekitar tahun 1400 dan berkembang menjadi pelabuhan entrepot utama di Selat, menyebarkan Islam dan budaya istana Melayu ke seluruh rantau.",
+      "coord": [102.25, 2.19], "place": "Melaka",
+      "contested": true,
+      "interpretations_en": ["The founding year is given variously as c. 1400 or 1402.", "Sources differ on whether Parameswara and Iskandar Shah were the same person."],
+      "interpretations_ms": ["Tahun pembukaan dicatat sama ada sekitar 1400 atau 1402.", "Sumber berbeza sama ada Parameswara dan Iskandar Shah ialah orang yang sama."],
+      "refs": [{"title": "Malacca Sultanate — Wikipedia", "url": "https://en.wikipedia.org/wiki/Malacca_Sultanate"}]
+    },
+    {
+      "id": "portuguese-melaka", "era": "colonial", "year": 1511, "precision": "year",
+      "title_en": "Portuguese capture of Melaka", "title_ms": "Portugis menawan Melaka",
+      "summary_en": "Forces under Afonso de Albuquerque took Melaka in 1511. The sultanate's court moved south, later giving rise to the Johor Sultanate.",
+      "summary_ms": "Angkatan di bawah Afonso de Albuquerque menawan Melaka pada 1511. Istana kesultanan berpindah ke selatan dan kemudiannya membentuk Kesultanan Johor.",
+      "coord": [102.25, 2.19], "place": "Melaka",
+      "refs": [{"title": "Capture of Malacca (1511) — Wikipedia", "url": "https://en.wikipedia.org/wiki/Capture_of_Malacca_(1511)"}]
+    },
+    {
+      "id": "dutch-melaka", "era": "colonial", "year": 1641, "precision": "year",
+      "title_en": "Dutch (VOC) take Melaka", "title_ms": "Belanda (VOC) menawan Melaka",
+      "summary_en": "The Dutch East India Company, allied with Johor, captured Melaka from the Portuguese in 1641.",
+      "summary_ms": "Syarikat Hindia Timur Belanda, bersekutu dengan Johor, menawan Melaka daripada Portugis pada 1641.",
+      "coord": [102.25, 2.19], "place": "Melaka",
+      "refs": [{"title": "Dutch Malacca — Wikipedia", "url": "https://en.wikipedia.org/wiki/Dutch_Malacca"}]
+    },
+    {
+      "id": "penang-1786", "era": "colonial", "year": 1786, "date": "1786-08-11", "precision": "day",
+      "title_en": "British settlement on Penang", "title_ms": "Penempatan British di Pulau Pinang",
+      "summary_en": "Francis Light established a British East India Company settlement on Penang Island, the first British foothold in the Malay states.",
+      "summary_ms": "Francis Light membuka penempatan Syarikat Hindia Timur British di Pulau Pinang, tapak pertama British di negeri-negeri Melayu.",
+      "coord": [100.34, 5.41], "place": "George Town, Pulau Pinang",
+      "contested": true,
+      "interpretations_en": ["Kedah's sultanate regarded the arrangement as a conditional lease tied to military protection that was not honoured; British accounts treat it as a cession."],
+      "interpretations_ms": ["Kesultanan Kedah menganggap perjanjian itu pajakan bersyarat berkait perlindungan ketenteraan yang tidak ditunaikan; catatan British menganggapnya penyerahan."],
+      "refs": [{"title": "Penang — History (Wikipedia)", "url": "https://en.wikipedia.org/wiki/History_of_Penang"}]
+    },
+    {
+      "id": "anglo-dutch-1824", "era": "colonial", "year": 1824, "date": "1824-03-17", "precision": "day",
+      "title_en": "Anglo-Dutch Treaty", "title_ms": "Perjanjian Inggeris-Belanda",
+      "summary_en": "Britain and the Netherlands divided their spheres of influence along the Straits of Malacca; Melaka passed to Britain.",
+      "summary_ms": "Britain dan Belanda membahagikan lingkungan pengaruh di sepanjang Selat Melaka; Melaka diserahkan kepada Britain.",
+      "refs": [{"title": "Anglo-Dutch Treaty of 1824 — Wikipedia", "url": "https://en.wikipedia.org/wiki/Anglo-Dutch_Treaty_of_1824"}]
+    },
+    {
+      "id": "straits-settlements", "era": "colonial", "year": 1826, "precision": "year",
+      "title_en": "Straits Settlements formed", "title_ms": "Negeri-Negeri Selat dibentuk",
+      "summary_en": "Penang, Melaka and Singapore were grouped as the Straits Settlements under the East India Company (a Crown colony from 1867).",
+      "summary_ms": "Pulau Pinang, Melaka dan Singapura disatukan sebagai Negeri-Negeri Selat di bawah Syarikat Hindia Timur (tanah jajahan Mahkota mulai 1867).",
+      "refs": [{"title": "Straits Settlements — Wikipedia", "url": "https://en.wikipedia.org/wiki/Straits_Settlements"}]
+    },
+    {
+      "id": "brooke-1841", "era": "colonial", "year": 1841, "precision": "year",
+      "title_en": "James Brooke becomes Rajah of Sarawak", "title_ms": "James Brooke menjadi Rajah Sarawak",
+      "summary_en": "The Brunei sultanate granted Sarawak to James Brooke, beginning a century of rule by the 'White Rajahs'.",
+      "summary_ms": "Kesultanan Brunei menyerahkan Sarawak kepada James Brooke, memulakan pemerintahan 'Rajah Putih' selama satu abad.",
+      "coord": [110.35, 1.55], "place": "Kuching, Sarawak",
+      "refs": [{"title": "Raj of Sarawak — Wikipedia", "url": "https://en.wikipedia.org/wiki/Raj_of_Sarawak"}]
+    },
+    {
+      "id": "pangkor-1874", "era": "colonial", "year": 1874, "date": "1874-01-20", "precision": "day",
+      "title_en": "Pangkor Treaty", "title_ms": "Perjanjian Pangkor",
+      "summary_en": "The treaty introduced a British Resident in Perak whose advice had to be followed on all matters except Malay religion and custom — the start of indirect rule in the peninsula.",
+      "summary_ms": "Perjanjian ini memperkenalkan Residen British di Perak yang nasihatnya wajib diikuti kecuali dalam hal agama dan adat Melayu — permulaan pemerintahan tidak langsung di Semenanjung.",
+      "coord": [100.56, 4.22], "place": "Pulau Pangkor, Perak",
+      "refs": [{"title": "Pangkor Treaty of 1874 — Wikipedia", "url": "https://en.wikipedia.org/wiki/Pangkor_Treaty_of_1874"}]
+    },
+    {
+      "id": "north-borneo-1881", "era": "colonial", "year": 1881, "precision": "year",
+      "title_en": "British North Borneo Company chartered", "title_ms": "Syarikat Borneo Utara British diberi piagam",
+      "summary_en": "A royal charter allowed the British North Borneo Company to administer North Borneo (today's Sabah).",
+      "summary_ms": "Piagam diraja membenarkan Syarikat Borneo Utara British mentadbir Borneo Utara (Sabah hari ini).",
+      "coord": [116.07, 5.98], "place": "Sabah",
+      "contested": true,
+      "interpretations_en": ["The 1878 agreement with the Sultanate of Sulu is read as a cession by some and as a lease by others; the Philippines maintains a territorial claim to eastern Sabah, which Malaysia rejects."],
+      "interpretations_ms": ["Perjanjian 1878 dengan Kesultanan Sulu ditafsir sebagai penyerahan oleh sesetengah pihak dan pajakan oleh pihak lain; Filipina mengekalkan tuntutan wilayah ke atas Sabah timur, yang ditolak Malaysia."],
+      "refs": [{"title": "North Borneo Chartered Company — Wikipedia", "url": "https://en.wikipedia.org/wiki/North_Borneo_Chartered_Company"}, {"title": "North Borneo dispute — Wikipedia", "url": "https://en.wikipedia.org/wiki/North_Borneo_dispute"}]
+    },
+    {
+      "id": "fms-1896", "era": "colonial", "year": 1896, "precision": "year",
+      "title_en": "Federated Malay States", "title_ms": "Negeri-Negeri Melayu Bersekutu",
+      "summary_en": "Perak, Selangor, Negeri Sembilan and Pahang were federated under a Resident-General, with Kuala Lumpur as the administrative centre.",
+      "summary_ms": "Perak, Selangor, Negeri Sembilan dan Pahang disatukan di bawah Residen Jeneral, dengan Kuala Lumpur sebagai pusat pentadbiran.",
+      "coord": [101.69, 3.14], "place": "Kuala Lumpur",
+      "refs": [{"title": "Federated Malay States — Wikipedia", "url": "https://en.wikipedia.org/wiki/Federated_Malay_States"}]
+    },
+    {
+      "id": "anglo-siamese-1909", "era": "colonial", "year": 1909, "precision": "year",
+      "title_en": "Anglo-Siamese Treaty", "title_ms": "Perjanjian Bangkok (Inggeris-Siam)",
+      "summary_en": "Siam transferred its claims over Kedah, Kelantan, Terengganu and Perlis to Britain; these became the Unfederated Malay States together with Johor.",
+      "summary_ms": "Siam menyerahkan tuntutannya ke atas Kedah, Kelantan, Terengganu dan Perlis kepada Britain; negeri-negeri ini bersama Johor menjadi Negeri-Negeri Melayu Tidak Bersekutu.",
+      "refs": [{"title": "Anglo-Siamese Treaty of 1909 — Wikipedia", "url": "https://en.wikipedia.org/wiki/Anglo-Siamese_Treaty_of_1909"}]
+    },
+    {
+      "id": "japanese-occupation", "era": "colonial", "year": 1941, "date": "1941-12-08", "precision": "day", "end_year": 1945,
+      "title_en": "Japanese invasion and occupation", "title_ms": "Pendudukan Jepun",
+      "summary_en": "Japanese forces landed at Kota Bharu on 8 December 1941; Malaya and Borneo were occupied until Japan's surrender in 1945.",
+      "summary_ms": "Tentera Jepun mendarat di Kota Bharu pada 8 Disember 1941; Tanah Melayu dan Borneo diduduki sehingga Jepun menyerah kalah pada 1945.",
+      "coord": [102.24, 6.13], "place": "Kota Bharu, Kelantan",
+      "refs": [{"title": "Japanese occupation of Malaya — Wikipedia", "url": "https://en.wikipedia.org/wiki/Japanese_occupation_of_Malaya"}]
+    },
+    {
+      "id": "malayan-union", "era": "colonial", "year": 1946, "date": "1946-04-01", "precision": "day",
+      "title_en": "Malayan Union and the founding of UMNO", "title_ms": "Malayan Union dan penubuhan UMNO",
+      "summary_en": "Britain's Malayan Union reduced the rulers' sovereignty and offered broad citizenship; Malay opposition led to the founding of UMNO (May 1946) and the scheme's replacement.",
+      "summary_ms": "Malayan Union oleh Britain mengurangkan kedaulatan raja-raja dan menawarkan kerakyatan yang luas; bantahan orang Melayu membawa kepada penubuhan UMNO (Mei 1946) dan penggantian skim itu.",
+      "refs": [{"title": "Malayan Union — Wikipedia", "url": "https://en.wikipedia.org/wiki/Malayan_Union"}]
+    },
+    {
+      "id": "federation-1948", "era": "colonial", "year": 1948, "date": "1948-02-01", "precision": "day",
+      "title_en": "Federation of Malaya", "title_ms": "Persekutuan Tanah Melayu",
+      "summary_en": "The Federation of Malaya replaced the Malayan Union, restoring the position of the Malay rulers.",
+      "summary_ms": "Persekutuan Tanah Melayu menggantikan Malayan Union dan mengembalikan kedudukan raja-raja Melayu.",
+      "refs": [{"title": "Federation of Malaya — Wikipedia", "url": "https://en.wikipedia.org/wiki/Federation_of_Malaya"}]
+    },
+    {
+      "id": "emergency", "era": "colonial", "year": 1948, "precision": "year", "end_year": 1960,
+      "title_en": "Malayan Emergency", "title_ms": "Darurat Tanah Melayu",
+      "summary_en": "An armed conflict between Commonwealth forces and the Malayan National Liberation Army; the state of emergency was lifted in July 1960.",
+      "summary_ms": "Konflik bersenjata antara pasukan Komanwel dan Tentera Pembebasan Nasional Malaya; darurat ditamatkan pada Julai 1960.",
+      "contested": true,
+      "interpretations_en": ["Termed an 'Emergency' by the colonial government (with insurance and legal implications); the communist side called it an anti-British national liberation war."],
+      "interpretations_ms": ["Dinamakan 'Darurat' oleh kerajaan kolonial (berkait implikasi insurans dan undang-undang); pihak komunis menggelarnya perang pembebasan nasional anti-British."],
+      "refs": [{"title": "Malayan Emergency — Wikipedia", "url": "https://en.wikipedia.org/wiki/Malayan_Emergency"}]
+    },
+    {
+      "id": "merdeka", "era": "independence", "year": 1957, "date": "1957-08-31", "precision": "day",
+      "title_en": "Independence of the Federation of Malaya", "title_ms": "Kemerdekaan Persekutuan Tanah Melayu",
+      "summary_en": "Tunku Abdul Rahman proclaimed independence at Stadium Merdeka, Kuala Lumpur, on 31 August 1957.",
+      "summary_ms": "Tunku Abdul Rahman mengisytiharkan kemerdekaan di Stadium Merdeka, Kuala Lumpur, pada 31 Ogos 1957.",
+      "coord": [101.70, 3.14], "place": "Stadium Merdeka, Kuala Lumpur",
+      "refs": [{"title": "Malayan Declaration of Independence — Wikipedia", "url": "https://en.wikipedia.org/wiki/Malayan_Declaration_of_Independence"}]
+    },
+    {
+      "id": "sarawak-self-gov", "era": "independence", "year": 1963, "date": "1963-07-22", "precision": "day",
+      "title_en": "Self-government of Sarawak", "title_ms": "Kerajaan sendiri Sarawak",
+      "summary_en": "Sarawak attained self-government on 22 July 1963, commemorated as Sarawak Day; North Borneo followed on 31 August 1963.",
+      "summary_ms": "Sarawak mencapai pemerintahan sendiri pada 22 Julai 1963, diraikan sebagai Hari Sarawak; Borneo Utara menyusul pada 31 Ogos 1963.",
+      "coord": [110.35, 1.55], "place": "Kuching, Sarawak",
+      "refs": [{"title": "Sarawak — Formation of Malaysia (Wikipedia)", "url": "https://en.wikipedia.org/wiki/Sarawak"}]
+    },
+    {
+      "id": "malaysia-day", "era": "independence", "year": 1963, "date": "1963-09-16", "precision": "day",
+      "title_en": "Formation of Malaysia", "title_ms": "Pembentukan Malaysia",
+      "summary_en": "Malaya, Singapore, North Borneo (Sabah) and Sarawak federated as Malaysia under the Malaysia Agreement 1963 (MA63).",
+      "summary_ms": "Tanah Melayu, Singapura, Borneo Utara (Sabah) dan Sarawak bersekutu sebagai Malaysia di bawah Perjanjian Malaysia 1963 (MA63).",
+      "coord": [101.69, 3.14], "place": "Kuala Lumpur",
+      "contested": true,
+      "interpretations_en": ["The scope of Sabah's and Sarawak's rights under MA63 remains the subject of ongoing federal–state negotiation.", "Indonesia opposed the federation (Konfrontasi, 1963–1966) and the Philippines maintained its claim to Sabah."],
+      "interpretations_ms": ["Skop hak Sabah dan Sarawak di bawah MA63 masih dirunding antara kerajaan Persekutuan dan negeri.", "Indonesia menentang pembentukan persekutuan (Konfrontasi, 1963–1966) dan Filipina mengekalkan tuntutannya ke atas Sabah."],
+      "refs": [{"title": "Malaysia Agreement — Wikipedia", "url": "https://en.wikipedia.org/wiki/Malaysia_Agreement"}, {"title": "Formation of Malaysia — Wikipedia", "url": "https://en.wikipedia.org/wiki/Formation_of_Malaysia"}]
+    },
+    {
+      "id": "singapore-separation", "era": "independence", "year": 1965, "date": "1965-08-09", "precision": "day",
+      "title_en": "Separation of Singapore", "title_ms": "Pemisahan Singapura",
+      "summary_en": "Singapore left the federation and became an independent republic on 9 August 1965.",
+      "summary_ms": "Singapura keluar daripada persekutuan dan menjadi republik merdeka pada 9 Ogos 1965.",
+      "coord": [103.82, 1.35], "place": "Singapore",
+      "refs": [{"title": "Singapore in Malaysia — Wikipedia", "url": "https://en.wikipedia.org/wiki/Singapore_in_Malaysia"}]
+    },
+    {
+      "id": "may13", "era": "modern", "year": 1969, "date": "1969-05-13", "precision": "day",
+      "title_en": "13 May 1969 incident", "title_ms": "Peristiwa 13 Mei 1969",
+      "summary_en": "Sectarian violence in Kuala Lumpur after the general election led to a national emergency and parliament's suspension until 1971.",
+      "summary_ms": "Rusuhan kaum di Kuala Lumpur selepas pilihan raya umum membawa kepada darurat negara dan penggantungan Parlimen sehingga 1971.",
+      "coord": [101.69, 3.15], "place": "Kuala Lumpur",
+      "contested": true,
+      "interpretations_en": ["The official death toll was 196; other accounts give substantially higher figures. Causes and responsibility are debated by historians."],
+      "interpretations_ms": ["Angka rasmi kematian ialah 196; catatan lain memberikan angka yang jauh lebih tinggi. Punca dan tanggungjawab masih dibahaskan oleh ahli sejarah."],
+      "refs": [{"title": "13 May incident — Wikipedia", "url": "https://en.wikipedia.org/wiki/13_May_incident"}]
+    },
+    {
+      "id": "nep", "era": "modern", "year": 1971, "precision": "year",
+      "title_en": "New Economic Policy", "title_ms": "Dasar Ekonomi Baru",
+      "summary_en": "The NEP set the twin goals of eradicating poverty and restructuring society to reduce the identification of race with economic function.",
+      "summary_ms": "DEB menetapkan matlamat serampang dua mata: membasmi kemiskinan dan menyusun semula masyarakat bagi menghapuskan pengenalan kaum dengan fungsi ekonomi.",
+      "refs": [{"title": "Malaysian New Economic Policy — Wikipedia", "url": "https://en.wikipedia.org/wiki/Malaysian_New_Economic_Policy"}]
+    },
+    {
+      "id": "kl-ft", "era": "modern", "year": 1974, "date": "1974-02-01", "precision": "day",
+      "title_en": "Kuala Lumpur becomes a Federal Territory", "title_ms": "Kuala Lumpur menjadi Wilayah Persekutuan",
+      "summary_en": "Kuala Lumpur was separated from Selangor and placed under federal administration. Labuan (1984) and Putrajaya (2001) followed.",
+      "summary_ms": "Kuala Lumpur dipisahkan daripada Selangor dan diletakkan di bawah pentadbiran Persekutuan. Labuan (1984) dan Putrajaya (2001) menyusul.",
+      "coord": [101.69, 3.14], "place": "Kuala Lumpur",
+      "refs": [{"title": "Federal Territories (Malaysia) — Wikipedia", "url": "https://en.wikipedia.org/wiki/Federal_Territories_(Malaysia)"}]
+    },
+    {
+      "id": "afc-1997", "era": "modern", "year": 1997, "precision": "year",
+      "title_en": "Asian Financial Crisis", "title_ms": "Krisis Kewangan Asia",
+      "summary_en": "The ringgit fell sharply; in September 1998 Malaysia pegged the ringgit and imposed selective capital controls.",
+      "summary_ms": "Nilai ringgit jatuh mendadak; pada September 1998 Malaysia menambat ringgit dan mengenakan kawalan modal terpilih.",
+      "refs": [{"title": "1997 Asian financial crisis — Wikipedia", "url": "https://en.wikipedia.org/wiki/1997_Asian_financial_crisis"}]
+    },
+    {
+      "id": "putrajaya", "era": "modern", "year": 2001, "date": "2001-02-01", "precision": "day",
+      "title_en": "Putrajaya becomes a Federal Territory", "title_ms": "Putrajaya menjadi Wilayah Persekutuan",
+      "summary_en": "The planned federal administrative centre was declared a Federal Territory.",
+      "summary_ms": "Pusat pentadbiran Persekutuan yang dirancang diisytiharkan sebagai Wilayah Persekutuan.",
+      "coord": [101.69, 2.93], "place": "Putrajaya",
+      "refs": [{"title": "Putrajaya — Wikipedia", "url": "https://en.wikipedia.org/wiki/Putrajaya"}]
+    },
+    {
+      "id": "ge14", "era": "modern", "year": 2018, "date": "2018-05-09", "precision": "day",
+      "title_en": "14th General Election: first change of federal government", "title_ms": "PRU-14: pertukaran kerajaan Persekutuan pertama",
+      "summary_en": "The Pakatan Harapan coalition won the election, the first change of federal government since independence.",
+      "summary_ms": "Gabungan Pakatan Harapan memenangi pilihan raya, pertukaran kerajaan Persekutuan pertama sejak merdeka.",
+      "refs": [{"title": "2018 Malaysian general election — Wikipedia", "url": "https://en.wikipedia.org/wiki/2018_Malaysian_general_election"}]
+    },
+    {
+      "id": "census-2020", "era": "modern", "year": 2020, "precision": "year",
+      "title_en": "Population and Housing Census of Malaysia 2020", "title_ms": "Banci Penduduk dan Perumahan Malaysia 2020",
+      "summary_en": "DOSM conducted the 2020 census, the first in Malaysia to use online self-enumeration at scale; it is the benchmark for current population estimates.",
+      "summary_ms": "DOSM melaksanakan Banci 2020, banci pertama di Malaysia yang menggunakan banci kendiri dalam talian secara meluas; ia menjadi tanda aras anggaran penduduk semasa.",
+      "refs": [{"title": "DOSM — Population and Housing Census 2020", "url": "https://www.dosm.gov.my/"}, {"title": "2020 Malaysian census — Wikipedia", "url": "https://en.wikipedia.org/wiki/2020_Malaysian_census"}]
+    }
+  ]
+}

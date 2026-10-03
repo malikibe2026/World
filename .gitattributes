@@ -1,0 +1,3 @@
+# Generated snapshot: excluded from language stats and diffs collapsed on GitHub
+public/data/** linguist-generated=true -diff
+public/fonts/** binary
