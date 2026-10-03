@@ -1,0 +1,57 @@
+name: Deploy to Netlify
+
+# Auto-deploy: production on every push to main, a preview for every PR.
+# Requires the repository secret NETLIFY_AUTH_TOKEN (Netlify → User settings →
+# Applications → Personal access tokens). Without it the job is skipped.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: netlify-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NETLIFY_SITE_ID: 90045eca-674e-48d2-accd-63f8cd7ee626   # worldstat-atlas (not a secret)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for Netlify token
+        id: token
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: |
+          if [ -z "$NETLIFY_AUTH_TOKEN" ]; then
+            echo "NETLIFY_AUTH_TOKEN is not set; skipping deploy."
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.token.outputs.present == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.token.outputs.present == 'true'
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+        if: steps.token.outputs.present == 'true'
+      - run: npm run build
+        if: steps.token.outputs.present == 'true'
+      - name: Deploy
+        if: steps.token.outputs.present == 'true'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            npx -y netlify-cli@17 deploy --dir=dist --prod --site "$NETLIFY_SITE_ID" --message "main ${GITHUB_SHA::7}"
+          else
+            npx -y netlify-cli@17 deploy --dir=dist --site "$NETLIFY_SITE_ID" --alias "pr-${{ github.event.number }}" --message "PR #${{ github.event.number }}"
+          fi
