@@ -42,3 +42,12 @@ style-src 'self' 'unsafe-inline';
 ## CI
 
 `.github/workflows/ci.yml` menjalankan semakan jenis, ujian unit dan build pada setiap push/PR.
+
+## Auto-deploy ke Netlify (GitHub Actions)
+
+`.github/workflows/deploy-netlify.yml` deploy ke projek Netlify `worldstat-atlas`:
+production pada setiap push ke `main`, pratonton (`pr-<nombor>--worldstat-atlas.netlify.app`) untuk setiap PR.
+
+Sekali sahaja: cipta *Personal access token* di Netlify (User settings → Applications) dan simpan sebagai
+secret repositori **`NETLIFY_AUTH_TOKEN`** (GitHub → Settings → Secrets and variables → Actions).
+Tanpa secret itu, kerja deploy dilangkau (CI tidak gagal). Alternatif: pautkan repo terus dalam Netlify UI.
