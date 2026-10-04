@@ -14,12 +14,15 @@ export interface RasterBasemap {
 export function streetBasemap(theme: Theme): RasterBasemap {
   const custom = theme === 'dark' ? env.VITE_BASEMAP_STREET_DARK_URL : env.VITE_BASEMAP_STREET_URL;
   if (custom) return { tiles: [custom], attribution: env.VITE_BASEMAP_ATTRIBUTION || '', maxzoom: 19, terms: '' };
-  const style = theme === 'dark' ? 'dark_all' : 'rastertiles/voyager';
+  // Esri tiles need no key (CARTO's free tiles now watermark "API KEY REQUIRED" on public domains)
+  const service = theme === 'dark' ? 'Canvas/World_Dark_Gray_Base' : 'World_Street_Map';
   return {
-    tiles: ['a', 'b', 'c', 'd'].map((s) => `https://${s}.basemaps.cartocdn.com/${style}/{z}/{x}/{y}@2x.png`),
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
-    maxzoom: 19,
-    terms: 'https://carto.com/legal/',
+    tiles: [`https://server.arcgisonline.com/ArcGIS/rest/services/${service}/MapServer/tile/{z}/{y}/{x}`],
+    attribution: theme === 'dark'
+      ? 'Basemap © Esri, HERE, Garmin, © OpenStreetMap contributors, and the GIS User Community'
+      : 'Basemap © Esri, HERE, Garmin, USGS, Intermap, NGA, © OpenStreetMap contributors, and the GIS User Community',
+    maxzoom: theme === 'dark' ? 16 : 19,
+    terms: 'https://www.esri.com/en-us/legal/terms/full-master-agreement',
   };
 }
 

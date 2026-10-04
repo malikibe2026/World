@@ -27,7 +27,7 @@ pipeline di mesin anda atau CI (sebagai *secret*), bukan dalam repositori.
 default-src 'self';
 script-src 'self';
 worker-src 'self' blob:;
-img-src 'self' data: blob: https://*.basemaps.cartocdn.com https://server.arcgisonline.com https://*.tile.opentopomap.org https://s3.amazonaws.com https://commons.wikimedia.org https://upload.wikimedia.org;
+img-src 'self' data: blob: https://server.arcgisonline.com https://*.tile.opentopomap.org https://s3.amazonaws.com https://commons.wikimedia.org https://upload.wikimedia.org;
 connect-src 'self' https://api.worldbank.org https://query.wikidata.org https://www.wikidata.org https://en.wikipedia.org https://*.supabase.co https://s3.amazonaws.com;
 style-src 'self' 'unsafe-inline';
 ```

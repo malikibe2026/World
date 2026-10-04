@@ -26,7 +26,7 @@ dan tarikh kemas kini**. Data yang tiada **tidak direka** — UI memaparkan *“
 | Modul | Apa yang ada | Sumber |
 |---|---|---|
 | Peta dunia interaktif | MapLibre GL (glob/rata), zum & pan lancar, klik negara/negeri/daerah, tooltip, breadcrumb, skrin penuh, LOD automatik ikut zum (1:110m → 1:50m → 1:10m, negeri dimuat malas per negara, daerah Malaysia) | Natural Earth, geoBoundaries |
-| Lapisan peta | Statistik (vektor sendiri), Jalan, Satelit, Rupa bumi + peta ketinggian (hillshade + color-relief) | CARTO/OSM, Esri, OpenTopoMap, AWS Terrain Tiles (boleh ditukar melalui `.env`) |
+| Lapisan peta | Statistik (vektor sendiri), Jalan, Satelit, Rupa bumi + peta ketinggian (hillshade + color-relief) | Esri, OpenTopoMap, AWS Terrain Tiles (boleh ditukar melalui `.env`) |
 | Ciri peta | Sempadan negara/negeri/daerah, ibu negara, bandar, sungai, tasik, gunung, pulau & bentuk muka bumi, lautan, jalan utama, kawasan metropolitan, lapangan terbang, pelabuhan, mercu tanda | Natural Earth, Wikidata |
 | Population Intelligence | Jumlah, lelaki, perempuan, nisbah jantina, kepadatan, keluasan, pertumbuhan, bandar/luar bandar, umur median, 0–14/15–64/65+, piramid penduduk interaktif, siri masa | UN WPP 2024, World Bank (WUP), DOSM |
 | Statistik vital | Kelahiran, kematian, CBR, CDR, TFR, IMR, jangka hayat, pertambahan semula jadi, migrasi; perkahwinan (Malaysia, DOSM); perceraian → *Data tidak tersedia* (tiada siri rasmi terbuka) | UN WPP 2024, UN IGME via WB, DOSM |
@@ -137,7 +137,7 @@ docs/             seni bina, kamus data, sumber, pipeline, Supabase, deployment,
    Singapura 511 km² dalam Natural Earth 1:10m berbanding ~735 km² rasmi. Apabila data World Bank
    tersedia, panel menggunakan kepadatan rasmi berasaskan keluasan tanah FAO (`EN.POP.DNST`).
 6. **Sempadan** mengikut pandangan lalai Natural Earth (*de facto*), bukan pengesahan mana-mana tuntutan.
-7. Jubin peta asas pihak ketiga (CARTO, Esri, OpenTopoMap) tertakluk kepada terma masing-masing;
+7. Jubin peta asas pihak ketiga (Esri, OpenTopoMap) tertakluk kepada terma masing-masing;
    tukar kepada akaun berlesen untuk produksi (`VITE_BASEMAP_*`).
 8. Belum ada pengesahan bahawa API World Bank / OpenDOSM / Wikidata membenarkan CORS dari domain
    anda; jika tidak, aktifkan edge function `data-proxy`.
