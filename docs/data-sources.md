@@ -23,7 +23,7 @@ menyimpan metadata masing-masing.
 
 | Lapisan | Lalai | Terma |
 |---|---|---|
-| Jalan | CARTO Voyager / Dark Matter (data © OpenStreetMap) | <https://carto.com/legal/> |
+| Jalan | Esri World Street Map / Dark Gray Canvas (data termasuk © OpenStreetMap) | <https://www.esri.com/en-us/legal/terms/full-master-agreement> |
 | Satelit | Esri World Imagery | <https://www.esri.com/en-us/legal/terms/full-master-agreement> |
 | Rupa bumi | OpenTopoMap (CC-BY-SA) | <https://opentopomap.org/about> |
 | Ketinggian | AWS Terrain Tiles (Terrarium) | <https://registry.opendata.aws/terrain-tiles/> |
