@@ -39,6 +39,14 @@ KEEP = {"PPL", "PPLA", "PPLA2", "PPLA3", "PPLA4", "PPLC", "PPLF", "PPLG", "PPLL"
 SNAP_DEG = 0.05  # ≈ 5.5 km at the equator
 
 
+def alt_spelling(name: str) -> list[str]:
+    """Old and new spellings, so a search for "Kampung X" also finds "Kampong X" (and back)."""
+    for old, new in (("Kampong ", "Kampung "), ("Kampung ", "Kampong ")):
+        if name.startswith(old):
+            return [new + name[len(old):]]
+    return []
+
+
 def parse(text: str) -> list[dict]:
     rows = []
     for line in text.splitlines():
@@ -136,7 +144,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
         for gid, name, fcode, lon, lat, did in items:
             if gid in known:
                 continue
-            search_rows.append(["village", f"gn:{gid}", name, [], "MYS", [*root, sid] + ([did] if did != sid else []), round(lon, 4), round(lat, 4), 12 if fcode == "PPLX" else 15])
+            search_rows.append(["village", f"gn:{gid}", name, alt_spelling(name), "MYS", [*root, sid] + ([did] if did != sid else []), round(lon, 4), round(lat, 4), 12 if fcode == "PPLX" else 15])
     write_json(out / "index.json", {"source_id": "geonames", "source_url": prov["url"], "retrieved_at": prov.get("retrieved_at"),
                                     "license": "CC BY 4.0", "fields": ["gid", "name", "fcode", "lon", "lat", "district"], "states": index, "names": names})
     size = write_json(PUBLIC_DATA / "search" / "villages-my.json",

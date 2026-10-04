@@ -6,6 +6,7 @@ import { indicatorName, t } from '../utils/i18n';
 import { countryRef, regionBBox, regionRef } from '../utils/geoRefs';
 import type { SearchEntry } from '../types';
 
+const TYPE_LABEL_MS: Record<string, string> = { continent: 'benua', country: 'negara', admin1: 'negeri / wilayah', admin2: 'daerah', city: 'bandar', town: 'pekan', village: 'kampung / penempatan', peak: 'gunung', physical: 'ciri fizikal', sea: 'laut', airport: 'lapangan terbang', port: 'pelabuhan', landmark: 'mercu tanda' };
 const TYPE_ICON: Record<string, string> = { continent: '🌐', country: '🏳️', admin1: '🗺️', admin2: '📍', city: '🏙️', town: '🏘️', village: '🏡', peak: '🏔️', physical: '🏝️', sea: '🌊', airport: '✈️', port: '⚓', landmark: '⭐' };
 
 interface WdHit { id: string; label: string; description?: string }
@@ -83,6 +84,14 @@ export function SearchBox() {
     flyTo({ center: [loc.lon, loc.lat], zoom: 12 });
   };
 
+  // "Hulu Langat, Selangor" for places inside a state, so same-named villages can be told apart
+  const pathLabel = (e: SearchEntry): string => {
+    if (e.type === 'country') return catalog?.countries[e.id]?.subregion ?? '';
+    const country = e.country ? catalog?.countries[e.country]?.name ?? '' : '';
+    const i = e.country ? e.parents.indexOf(e.country) : -1;
+    const below = i >= 0 ? e.parents.slice(i + 1).reverse().map((id) => findById(id)?.name ?? '').filter(Boolean) : [];
+    return below.length ? below.join(', ') : country;
+  };
   const items = results;
   return (
     <div className={`search ${open ? 'open' : ''}`} role="combobox" aria-expanded={open} aria-haspopup="listbox">
@@ -121,7 +130,7 @@ export function SearchBox() {
                 <button key={e.id} role="option" aria-selected={i === active} className={`search-item ${i === active ? 'active' : ''}`} onMouseDown={(ev) => ev.preventDefault()} onClick={() => pick(e)} onMouseEnter={() => setActive(i)}>
                   <span className="search-item-icon" aria-hidden="true">{TYPE_ICON[e.type] ?? '•'}</span>
                   <span className="search-item-name">{e.name}</span>
-                  <span className="search-item-path">{e.type === 'country' ? (catalog?.countries[e.id]?.subregion ?? '') : e.country ? catalog?.countries[e.country]?.name ?? '' : ''} · {e.type}</span>
+                  <span className="search-item-path">{pathLabel(e)} · {lang === 'ms' ? TYPE_LABEL_MS[e.type] ?? e.type : e.type}</span>
                 </button>
               ))}
             </div>
