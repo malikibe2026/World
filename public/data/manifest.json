@@ -1,7 +1,7 @@
 {
   "app": "WorldStat Atlas",
-  "snapshot_built_at": "2026-10-03T16:58:40Z",
-  "run_id": "20261003T165226Z",
+  "snapshot_built_at": "2026-10-04T00:32:32Z",
+  "run_id": "20261004T003232Z",
   "datasets": [
     {
       "source_id": "un_wpp_2024",
@@ -220,21 +220,21 @@
           "next_update": "—"
         }
       },
-      "data_loaded": false
+      "data_loaded": true
     },
     {
       "source_id": "wb_wdi",
-      "mode": "live"
+      "mode": "snapshot"
     },
     {
       "source_id": "wikidata",
-      "mode": "live"
+      "mode": "snapshot"
     }
   ],
   "available": {
     "wpp": true,
-    "wb_snapshot": false,
-    "dosm_snapshot": false,
-    "landmarks_snapshot": false
+    "wb_snapshot": true,
+    "dosm_snapshot": true,
+    "landmarks_snapshot": true
   }
 }

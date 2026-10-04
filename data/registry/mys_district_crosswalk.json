@@ -5,5 +5,32 @@
     "Ulu Selangor": "Hulu Selangor",
     "Kulaijaya": "Kulai",
     "Ledang": "Tangkak"
+  },
+  "dosm_aliases_description": "Spelling variants used in some OpenDOSM releases, mapped to the canonical DOSM district name, per state. Each was checked against the raw CSVs (same district, different release spelling). Districts created after the geoBoundaries ADM2 vintage (e.g. Sarawak's Gedong, Lingga, Pantu, Sebuyau, Siburan; Sabah's Membakut) have no polygon and stay unmatched in the import log on purpose.",
+  "dosm_aliases": {
+    "Pahang": {
+      "Cameron Highland": "Cameron Highlands"
+    },
+    "Perak": {
+      "Larut & Matang": "Larut dan Matang",
+      "Manjung (Dinding)": "Manjung"
+    },
+    "Pulau Pinang": {
+      "S.P. Selatan": "Seberang Perai Selatan",
+      "Sp Selatan": "Seberang Perai Selatan",
+      "S.P.Tengah": "Seberang Perai Tengah",
+      "Sp Tengah": "Seberang Perai Tengah",
+      "S.P.Utara": "Seberang Perai Utara",
+      "Sp Utara": "Seberang Perai Utara"
+    },
+    "Sabah": {
+      "Nabawan": "Nabawan / Persiangan"
+    },
+    "Sarawak": {
+      "Tanjong Manis": "Tanjung Manis"
+    },
+    "Terengganu": {
+      "Hulu": "Hulu Terengganu"
+    }
   }
 }

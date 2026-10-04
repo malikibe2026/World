@@ -65,10 +65,12 @@ python3 scripts/pipeline/run.py                 # penuh (langkah rangkaian gagal
 python3 scripts/pipeline/run.py --skip-network  # luar talian
 ```
 
-Lihat [`docs/pipeline.md`](docs/pipeline.md). **Penting:** snapshot dalam repositori ini **belum**
-mengandungi statistik negeri/daerah DOSM, snapshot World Bank, dan mercu tanda Wikidata, kerana
-persekitaran pembinaan menyekat `storage.dosm.gov.my`, `api.worldbank.org` dan `query.wikidata.org`.
-Jalankan pipeline pada mesin yang mempunyai akses Internet untuk memuatkannya.
+Lihat [`docs/pipeline.md`](docs/pipeline.md). Snapshot semasa (4 Okt 2026) mengandungi UN WPP 2024,
+World Bank WDI, statistik nasional/negeri/daerah OpenDOSM, dan mercu tanda Wikidata bagi **Malaysia dan
+Peru sahaja** — Wikidata Query Service sedang menghadkan kadar kepada 1 permintaan/minit (gangguan
+servis), jadi negara lain dimuat secara langsung dari pelayar. Untuk melengkapkannya kemudian:
+`python3 scripts/pipeline/run.py --only wikidata publish` (langkah ini meneruskan negara seterusnya
+jika satu negara gagal, dan berhenti selepas 5 kegagalan berturut-turut).
 
 ### Supabase (PostgreSQL + PostGIS) — pilihan
 
@@ -122,6 +124,10 @@ docs/             seni bina, kamus data, sumber, pipeline, Supabase, deployment,
 1. **Angka UN WPP bagi Malaysia berbeza daripada DOSM** (cth. UN: 35.3 juta pada 1 Jan 2024; DOSM
    menerbitkan anggaran pertengahan tahun yang lebih rendah). Ini perbezaan kaedah, bukan ralat. Mod
    Malaysia mengutamakan DOSM apabila snapshot DOSM dimuatkan; UN kekal untuk perbandingan antarabangsa.
+   **Daerah:** poligon geoBoundaries mendahului beberapa pemecahan daerah (Sarawak: Gedong, Lingga, Pantu,
+   Sebuyau, Siburan; Sabah: Membakut) dan tiada poligon Putrajaya. Daerah ini tidak dipaparkan di peta
+   (direkod sebagai *geographic mismatch*), dan daerah induknya mungkin dilukis lebih besar daripada
+   kawasan yang diwakili angka DOSM — kepadatan terbitan bagi daerah tersebut perlu dibaca dengan berhati-hati.
 2. **Statistik negeri/daerah di luar Malaysia** tidak tersedia secara harmoni dalam sumber terbuka →
    *Data tidak tersedia*.
 3. **Perceraian** dan **perkahwinan global** tiada siri rasmi terbuka yang boleh dibaca mesin.
