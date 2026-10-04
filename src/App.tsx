@@ -53,13 +53,13 @@ export function App() {
         <div className="center">
           <div className="map-area">
             <MapView />
-            <div className="map-overlay top-left">
+            <div className="map-overlay left-stack">
               <div className="year-chip">
                 <span className="year-chip-y">{year}</span>
                 <QualityBadge q={year > ESTIMATE_LAST_YEAR ? 'PROJECTION' : 'ESTIMATE'} small />
               </div>
+              <Legend />
             </div>
-            <div className="map-overlay bottom-left"><Legend /></div>
             <button className="panel-toggle left hide-narrow" onClick={() => togglePanel('left')} aria-label={t(lang, 'layers')} aria-expanded={leftOpen}>{leftOpen ? '‹' : '›'}</button>
             <button className="panel-toggle right hide-narrow" onClick={() => togglePanel('right')} aria-label="Location panel" aria-expanded={rightOpen}>{rightOpen ? '›' : '‹'}</button>
           </div>
