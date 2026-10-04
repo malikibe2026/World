@@ -250,6 +250,10 @@ code { font-family: var(--font-mono); font-size: 0.86em; }
 .point-desc { margin: 0; font-weight: 600; color: var(--text-secondary); }
 .point-summary { margin: 0; font-size: 13px; color: var(--text-secondary); }
 .point-links { display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px; }
+.point-parent { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface-1); }
+.point-parent h3 { margin: 0; font-size: 14px; }
+.point-parent .fineprint { margin: 0; }
+.point-parent .btn { justify-self: start; }
 
 /* ---------------------------------------------------------------- timeline */
 .era-strip { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }

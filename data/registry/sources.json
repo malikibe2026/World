@@ -77,7 +77,7 @@
     "citation": "GeoNames geographical database, geonames.org.",
     "access": "snapshot",
     "default_quality": "ESTIMATE",
-    "notes": "Used only for search and for listing towns inside Malaysian districts (e.g. Kajang in Hulu Langat). Global places ≥15,000 inhabitants via all-the-cities 3.1.0; Malaysian places via cities.json 1.1.65. GeoNames population figures are not shown as statistics."
+    "notes": "Used for search, for listing towns inside Malaysian districts (e.g. Kajang in Hulu Langat) and for Malaysian village/settlement points (country dump MY.zip from download.geonames.org). Global places ≥15,000 inhabitants via all-the-cities 3.1.0; Malaysian places via cities.json 1.1.65. GeoNames population figures are not shown as statistics."
   },
   {
     "id": "world_countries",

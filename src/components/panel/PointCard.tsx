@@ -5,11 +5,14 @@ import { formatCoord, full } from '../../utils/format';
 import { t } from '../../utils/i18n';
 import { QualityBadge } from '../QualityBadge';
 import { Breadcrumb } from '../Breadcrumb';
+import { useLocationBundle } from '../../hooks/useLocation';
+import { KeyStats } from './KeyStats';
 
 const KIND_LABEL: Record<PointSelection['kind'], { en: string; ms: string; emoji: string }> = {
   landmark: { en: 'Landmark', ms: 'Mercu tanda', emoji: '📍' },
   city: { en: 'City', ms: 'Bandar', emoji: '🏙️' },
   town: { en: 'Town', ms: 'Pekan', emoji: '🏘️' },
+  village: { en: 'Village / settlement', ms: 'Kampung / penempatan', emoji: '🏡' },
   peak: { en: 'Mountain / peak', ms: 'Gunung / puncak', emoji: '🏔️' },
   airport: { en: 'Airport', ms: 'Lapangan terbang', emoji: '✈️' },
   port: { en: 'Port', ms: 'Pelabuhan', emoji: '⚓' },
@@ -17,6 +20,28 @@ const KIND_LABEL: Record<PointSelection['kind'], { en: string; ms: string; emoji
   physical: { en: 'Physical feature', ms: 'Ciri fizikal', emoji: '🗺️' },
   event: { en: 'Historical event', ms: 'Peristiwa sejarah', emoji: '📜' },
 };
+
+/**
+ * Towns and villages have no statistics of their own: show the enclosing district's (or state's)
+ * DOSM headline figures, and say plainly that they are not village figures.
+ */
+function ParentStats({ kind }: { kind: PointSelection['kind'] }) {
+  const { selection, lang, setPoint } = useAtlas();
+  const bundle = useLocationBundle(selection && (selection.level === 'admin1' || selection.level === 'admin2') ? selection : null);
+  const b = bundle.data;
+  if (!selection || !b) return null;
+  const ms = lang === 'ms';
+  const what = kind === 'village' ? (ms ? 'kampung' : 'village') : ms ? 'pekan' : 'town';
+  const area = selection.level === 'admin2' ? (ms ? 'daerah' : 'district') : ms ? 'negeri' : 'state';
+  return (
+    <section className="point-parent" aria-label={selection.name}>
+      <h3>{ms ? `Statistik ${area}: ${selection.name}` : `${selection.name} (${area}) statistics`}</h3>
+      <p className="fineprint">{ms ? `Statistik peringkat ${what} tidak tersedia daripada sumber rasmi terbuka. Angka di bawah ialah bagi ${area} ${selection.name}.` : `No open official statistics exist at ${what} level. Figures below are for the ${area} of ${selection.name}.`}</p>
+      <KeyStats b={b} wb={null} pref="dosm" codes={['population', 'population_male', 'population_female', 'births', 'deaths']} />
+      <button className="btn" onClick={() => setPoint(null)}>{ms ? `Profil penuh ${selection.name} →` : `Full profile of ${selection.name} →`}</button>
+    </section>
+  );
+}
 
 /** Card for a point on the map: landmark (Wikidata), city, peak, airport, port or history event. */
 export function PointCard({ p }: { p: PointSelection }) {
@@ -52,15 +77,17 @@ export function PointCard({ p }: { p: PointSelection }) {
         {p.kind === 'peak' && props.elev ? <div className="kv-row"><dt>{lang === 'ms' ? 'Ketinggian' : 'Elevation'}</dt><dd>{full(Number(props.elev), lang)} m <span className="muted">(Natural Earth)</span></dd></div> : null}
         {p.kind === 'city' && props.pop ? <div className="kv-row"><dt>{t(lang, 'population')}</dt><dd>~{full(Number(props.pop), lang)} <QualityBadge q="ESTIMATE" small /> <span className="muted">Natural Earth (compiled, urban agglomeration)</span></dd></div> : null}
         {p.kind === 'city' && props.admin1 ? <div className="kv-row"><dt>{lang === 'ms' ? 'Negeri / wilayah' : 'State / province'}</dt><dd>{String(props.admin1)}</dd></div> : null}
+        {p.kind === 'village' && props.fcode ? <div className="kv-row"><dt>{lang === 'ms' ? 'Jenis' : 'Type'}</dt><dd>{props.fcode === 'PPLX' ? (lang === 'ms' ? 'Bahagian kawasan berpenghuni (cth. taman, seksyen)' : 'Section of a populated place') : lang === 'ms' ? 'Penempatan berpenghuni' : 'Populated place'} <span className="muted">(GeoNames {String(props.fcode)})</span></dd></div> : null}
         {p.kind === 'airport' && props.iata ? <div className="kv-row"><dt>IATA</dt><dd>{String(props.iata)} · {String(props.kind ?? '')}</dd></div> : null}
         {p.kind === 'event' && props.place ? <div className="kv-row"><dt>{t(lang, 'location')}</dt><dd>{String(props.place)} <span className="muted">({lang === 'ms' ? 'lokasi anggaran' : 'approximate location'})</span></dd></div> : null}
       </dl>
+      {(p.kind === 'village' || p.kind === 'town') && p.countryId === 'MYS' && <ParentStats kind={p.kind} />}
       <div className="point-links">
         {lm && <a href={`https://www.wikidata.org/wiki/${lm.id}`} target="_blank" rel="noreferrer">Wikidata {lm.id}</a>}
         {lm?.wikipedia && <a href={lm.wikipedia} target="_blank" rel="noreferrer">Wikipedia</a>}
         <a href={`https://www.openstreetmap.org/?mlat=${p.lat}&mlon=${p.lon}#map=13/${p.lat}/${p.lon}`} target="_blank" rel="noreferrer">OpenStreetMap</a>
       </div>
-      <p className="fineprint">{lm ? t(lang, 'wikidataNote') : p.kind === 'town' ? (lang === 'ms' ? 'Titik daripada GeoNames (CC BY 4.0).' : 'Point from GeoNames (CC BY 4.0).') : p.kind === 'event' ? (lang === 'ms' ? 'Lokasi anggaran daripada garis masa kurasi.' : 'Approximate location from the curated timeline.') : lang === 'ms' ? 'Titik daripada Natural Earth (domain awam).' : 'Point from Natural Earth (public domain).'}</p>
+      <p className="fineprint">{lm ? t(lang, 'wikidataNote') : p.kind === 'town' || p.kind === 'village' ? (lang === 'ms' ? 'Titik daripada GeoNames (CC BY 4.0).' : 'Point from GeoNames (CC BY 4.0).') : p.kind === 'event' ? (lang === 'ms' ? 'Lokasi anggaran daripada garis masa kurasi.' : 'Approximate location from the curated timeline.') : lang === 'ms' ? 'Titik daripada Natural Earth (domain awam).' : 'Point from Natural Earth (public domain).'}</p>
     </article>
   );
 }
