@@ -12,7 +12,7 @@ import { geo, profiles } from '../services/geo';
 import { assetUrl } from '../services/http';
 import { classIndex, mapColors } from './palette';
 import {
-  COUNTRY_SOURCES, COUNTRY_ZOOMS, EMPTY_FC, THEME_PAINT, baseStyle, fillColorExpr, fillOpacityExpr, labelLayers, lineLayers, overlayLayers, pointLayers,
+  COUNTRY_SOURCES, COUNTRY_ZOOMS, EMPTY_FC, THEME_PAINT, adminFillOpacityExpr, baseStyle, fillColorExpr, fillOpacityExpr, labelLayers, lineLayers, overlayLayers, pointLayers,
 } from './layers';
 import { villagesInView } from '../services/villages';
 import { ELEVATION_DEM, satelliteBasemap, streetBasemap, terrainBasemap } from './basemaps';
@@ -96,7 +96,7 @@ export function MapView() {
       center: [100, 12],
       zoom: initial ? 3 : Math.min(2.1, Math.max(1.2, Math.log2(Math.min(el.current.clientWidth, el.current.clientHeight) / 260) + 1)),
       minZoom: 0.6,
-      maxZoom: 16,
+      maxZoom: 18,
       attributionControl: false,
       dragRotate: false,
       pitchWithRotate: false,
@@ -116,7 +116,8 @@ export function MapView() {
       map.addSource('bm-street', { type: 'raster', tiles: st.tiles, tileSize: 256, maxzoom: st.maxzoom, attribution: st.attribution });
       map.addSource('bm-satellite', { type: 'raster', tiles: sat.tiles, tileSize: 256, maxzoom: sat.maxzoom, attribution: sat.attribution });
       map.addSource('bm-terrain', { type: 'raster', tiles: ter.tiles, tileSize: 256, maxzoom: ter.maxzoom, attribution: ter.attribution });
-      for (const b of ['street', 'satellite', 'terrain']) map.addLayer({ id: `bm-${b}`, type: 'raster', source: `bm-${b}`, layout: { visibility: 'none' } });
+      map.addSource('bm-street-ref', { type: 'raster', tiles: streetBasemap('dark').labels!, tileSize: 256, maxzoom: 16, attribution: '' });
+      for (const b of ['street', 'street-ref', 'satellite', 'terrain']) map.addLayer({ id: `bm-${b}`, type: 'raster', source: `bm-${b}`, layout: { visibility: 'none' } });
       map.addSource('dem', { type: 'raster-dem', tiles: ELEVATION_DEM.tiles, encoding: ELEVATION_DEM.encoding, tileSize: 256, maxzoom: ELEVATION_DEM.maxzoom, attribution: ELEVATION_DEM.attribution });
 
       const [w110, w50] = await Promise.all([geo.world('110m'), geo.world('50m')]);
@@ -129,8 +130,8 @@ export function MapView() {
       }
       map.addSource('admin1', { type: 'geojson', data: EMPTY_FC, promoteId: 'id' });
       map.addSource('admin2', { type: 'geojson', data: EMPTY_FC, promoteId: 'id' });
-      map.addLayer({ id: 'a1-fill', type: 'fill', source: 'admin1', minzoom: 2.5, paint: { 'fill-color': fillColorExpr(th, null), 'fill-opacity': ['case', ['boolean', ['feature-state', 'choro'], false], 1, ['boolean', ['feature-state', 'hover'], false], 0.35, 0] } });
-      map.addLayer({ id: 'a2-fill', type: 'fill', source: 'admin2', minzoom: 5, paint: { 'fill-color': fillColorExpr(th, null), 'fill-opacity': ['case', ['boolean', ['feature-state', 'choro'], false], 1, ['boolean', ['feature-state', 'hover'], false], 0.35, 0] } });
+      map.addLayer({ id: 'a1-fill', type: 'fill', source: 'admin1', minzoom: 2.5, paint: { 'fill-color': fillColorExpr(th, null), 'fill-opacity': adminFillOpacityExpr() } });
+      map.addLayer({ id: 'a2-fill', type: 'fill', source: 'admin2', minzoom: 5, paint: { 'fill-color': fillColorExpr(th, null), 'fill-opacity': adminFillOpacityExpr() } });
 
       map.addLayer({ id: 'elev-relief', type: 'color-relief', source: 'dem', layout: { visibility: 'none' }, paint: { 'color-relief-opacity': 0.75, 'color-relief-color': ['interpolate', ['linear'], ['elevation'], -100, 'rgba(0,0,0,0)', 0, '#2f6b3a', 200, '#5e9a4d', 600, '#b8c271', 1200, '#d9b26a', 2200, '#b0784a', 3500, '#8a5a44', 5000, '#f2f2f2'] } } as never);
       map.addLayer({ id: 'elev-hillshade', type: 'hillshade', source: 'dem', layout: { visibility: 'none' }, paint: { 'hillshade-exaggeration': 0.45, 'hillshade-shadow-color': th === 'dark' ? '#000000' : '#473b24', 'hillshade-highlight-color': '#ffffff' } });
@@ -377,14 +378,22 @@ export function MapView() {
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready) return;
-    for (const b of ['street', 'satellite', 'terrain']) map.setLayoutProperty(`bm-${b}`, 'visibility', basemap === b ? 'visible' : 'none');
+    for (const b of ['satellite', 'terrain']) map.setLayoutProperty(`bm-${b}`, 'visibility', basemap === b ? 'visible' : 'none');
+    // the statistical map fades the street map in at village zoom, so street names show without switching basemap
+    const deep = basemap === 'statistical';
+    const streetOn = basemap === 'street' || deep;
+    for (const id of ['bm-street', 'bm-street-ref']) {
+      map.setLayoutProperty(id, 'visibility', streetOn && (id === 'bm-street' || theme === 'dark') ? 'visible' : 'none');
+      map.setLayerZoomRange(id, deep ? 9.5 : 0, 24);
+      map.setPaintProperty(id, 'raster-opacity', deep ? ['interpolate', ['linear'], ['zoom'], 9.5, 0, 11, 1] : 1);
+    }
     const raster = basemap !== 'statistical';
     const L = layerRef.current;
     const base = raster ? (L.indicator ? 0.62 : 0) : 1;
     for (const s of COUNTRY_SOURCES) map.setPaintProperty(`${s}-fill`, 'fill-opacity', fillOpacityExpr(base));
     map.setPaintProperty('background', 'background-opacity', raster ? 0 : 1);
     for (const id of ['lakes50', 'lakes10']) map.setLayoutProperty(id, 'visibility', raster ? 'none' : useAtlas.getState().overlays.lakes ? 'visible' : 'none');
-  }, [basemap, ready, layer.indicator]);
+  }, [basemap, ready, layer.indicator, theme]);
 
   // overlays -----------------------------------------------------------------------------------
   useEffect(() => {

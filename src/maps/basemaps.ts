@@ -9,6 +9,8 @@ export interface RasterBasemap {
   attribution: string;
   maxzoom: number;
   terms: string;
+  /** optional label overlay (place and road names) drawn above the base tiles */
+  labels?: string[];
 }
 
 export function streetBasemap(theme: Theme): RasterBasemap {
@@ -23,6 +25,8 @@ export function streetBasemap(theme: Theme): RasterBasemap {
       : 'Basemap © Esri, HERE, Garmin, USGS, Intermap, NGA, © OpenStreetMap contributors, and the GIS User Community',
     maxzoom: theme === 'dark' ? 16 : 19,
     terms: 'https://www.esri.com/en-us/legal/terms/full-master-agreement',
+    // the dark canvas carries no names; its reference layer adds place and road labels
+    labels: theme === 'dark' ? ['https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}'] : undefined,
   };
 }
 

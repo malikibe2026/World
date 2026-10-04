@@ -44,7 +44,13 @@ const opacityCase = (base: number) =>
 
 /** Country fill opacity; fades when zoomed in so state/district detail reads clearly. */
 export const fillOpacityExpr = (base: number): ExpressionSpecification =>
-  ['interpolate', ['linear'], ['zoom'], 5, opacityCase(base), 8, opacityCase(base * 0.55)] as unknown as ExpressionSpecification;
+  ['interpolate', ['linear'], ['zoom'], 5, opacityCase(base), 8, opacityCase(base * 0.55), 10, opacityCase(base * 0.55), 12.5, opacityCase(base * 0.15)] as unknown as ExpressionSpecification;
+
+const adminCase = (k: number) => ['case', ['boolean', ['feature-state', 'choro'], false], k, ['boolean', ['feature-state', 'hover'], false], 0.35 * k, 0];
+
+/** State/district choropleth opacity: full at district zoom, faded at village zoom so streets show through. */
+export const adminFillOpacityExpr = (): ExpressionSpecification =>
+  ['interpolate', ['linear'], ['zoom'], 9.5, adminCase(1), 12.5, adminCase(0.3)] as unknown as ExpressionSpecification;
 
 export function overlayLayers(theme: Theme): AddLayerObject[] {
   const c = mapColors(theme);
