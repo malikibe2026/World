@@ -57,7 +57,7 @@ export interface DosmUnit {
 }
 export interface DosmDoc { source_id: string; level: string; units: Record<string, DosmUnit> }
 
-export function loadDosm(level: 'national' | 'admin1' | 'admin2'): Promise<DosmDoc | null> {
+export function loadDosm(level: 'national' | 'admin1' | 'admin2' | 'parlimen'): Promise<DosmDoc | null> {
   return loadOptional<DosmDoc>(`stats/my/${level}.json`);
 }
 

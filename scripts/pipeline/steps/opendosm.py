@@ -34,6 +34,7 @@ DATASETS = [
     "fertility_state", "fertility", "lfs_district", "lfs_year",
     "hh_income_state", "hh_income_district", "hh_poverty_state", "hh_poverty_district",
     "gdp_state_real_supply", "gdp_lookup",
+    "population_parlimen", "hh_income_parlimen", "hh_poverty_parlimen",
 ]
 AGE5 = ["0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49",
         "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80-84", "85+"]
@@ -154,7 +155,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
             unmatched_d.add((state, district))
         return did
 
-    def population(ds: str, store: Store, key):
+    def population(ds: str, store: Store, key, ethnicity: bool = True):
         data = rows(ds)
         if data is None:
             return
@@ -173,7 +174,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
                 store.put(unit, ind, y, v, q, ds)
             elif r["age"] in AGE5 and r["ethnicity"] == "overall" and r["sex"] in ("male", "female") and v is not None:
                 pyr[(unit, y)][r["sex"]][r["age"]] = v
-            elif r["age"] == "overall" and r["sex"] == "both" and r["ethnicity"] != "overall" and v is not None:
+            elif ethnicity and r["age"] == "overall" and r["sex"] == "both" and r["ethnicity"] != "overall" and v is not None:
                 eth[(unit, y)][r["ethnicity"]] = v
         by_unit = defaultdict(dict)
         for (unit, y), d in pyr.items():
@@ -210,6 +211,32 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
     population("population_malaysia", nat, lambda r: "MYS")
     population("population_state", st, lambda r: state_id(r["state"]))
     population("population_district", di, lambda r: district_id(r["state"], r["district"]))
+
+    # parliamentary constituencies (a separate division at district depth)
+    pa = Store()
+    p_by_name = {u["name"]: u["id"] for u in admin.get("parlimen", {}).get("MYS", [])}
+    unmatched_p: set[str] = set()
+
+    def parlimen_id(name: str) -> str | None:
+        pid = p_by_name.get(name.strip())
+        if pid is None:
+            unmatched_p.add(name)
+        return pid
+
+    if p_by_name:
+        # the source puts citizen/non-citizen in the 'ethnicity' column for 2020 and in 'age' from 2021;
+        # only the overall/overall rows are used, so totals are unaffected, and no ethnicity split is shown
+        population("population_parlimen", pa, lambda r: parlimen_id(r["parlimen"]), ethnicity=False)
+        for r in rows("hh_income_parlimen") or []:
+            u = parlimen_id(r["parlimen"])
+            if u:
+                pa.put(u, "hh_income_mean", year(r["date"]), r.get("income_mean"), "OFFICIAL", "hh_income_parlimen")
+                pa.put(u, "hh_income_median", year(r["date"]), r.get("income_median"), "OFFICIAL", "hh_income_parlimen")
+        for r in rows("hh_poverty_parlimen") or []:
+            u = parlimen_id(r["parlimen"])
+            if u:
+                pa.put(u, "poverty_absolute", year(r["date"]), r.get("poverty_absolute"), "OFFICIAL", "hh_poverty_parlimen")
+        log.info(STEP, "source note: population_parlimen stores citizenship in 'ethnicity' (2020) but in 'age' (2021+); totals unaffected")
 
     def vital(ds: str, ind_abs: str, ind_rate: str):
         data = rows(ds)
@@ -287,13 +314,16 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
                 for y, d in ys.items()
             }
 
+    for name in sorted(unmatched_p):
+        log.warning(STEP, "geographic mismatch: DOSM constituency not matched to a boundary polygon", parlimen=name)
     for state, district in sorted(unmatched_d):
         log.warning(STEP, "geographic mismatch: DOSM district not matched to a boundary polygon", state=state, district=district)
 
     names_a1 = {u["id"]: u["name"] for u in admin["admin1"].get("MYS", [])}
     names_a2 = {u["id"]: u["name"] for u in admin["admin2"]["MYS"]}
     wrote = 0
-    for fname, store, names in (("national", nat, {"MYS": "Malaysia"}), ("admin1", st, names_a1), ("admin2", di, names_a2)):
+    names_pa = {u["id"]: u["name"] for u in admin.get("parlimen", {}).get("MYS", [])}
+    for fname, store, names in (("national", nat, {"MYS": "Malaysia"}), ("admin1", st, names_a1), ("admin2", di, names_a2), ("parlimen", pa, names_pa)):
         if store.units:
             write_json(PUBLIC_DATA / "stats" / "my" / f"{fname}.json",
                        {"source_id": "dosm_opendosm", "level": fname, "units": store.dump(names)}, ndigits=3)

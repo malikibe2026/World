@@ -1,3 +1,4 @@
+import { dosmLevelFor } from '../utils/geoRefs';
 import { useMemo, useState } from 'react';
 import { useAtlas } from '../store/atlas';
 import { useAsync } from '../hooks/useAsync';
@@ -21,7 +22,7 @@ async function loadOne(g: GeoRef, catalog: NonNullable<ReturnType<typeof useAtla
     g.level === 'country' || g.level === 'admin1' || g.level === 'admin2' ? profiles.country(cid) : Promise.resolve(null),
     g.level === 'admin1' || g.level === 'admin2' ? findAdmin(cid, g.id) : Promise.resolve(null),
     g.level === 'admin1' || g.level === 'admin2' ? Promise.resolve(null) : loadWpp(g.id),
-    cid === 'MYS' ? loadDosm(g.level === 'country' ? 'national' : g.level === 'admin1' ? 'admin1' : 'admin2') : Promise.resolve(null),
+    cid === 'MYS' ? loadDosm(dosmLevelFor(g)) : Promise.resolve(null),
   ]);
   const unit = dosm?.units[g.level === 'country' ? 'MYS' : g.id] ?? null;
   const c = catalog.countries[cid];

@@ -1,14 +1,15 @@
 import { useAtlas } from '../store/atlas';
 import { useAsync } from '../hooks/useAsync';
 import { profiles } from '../services/geo';
-import { countryRef, regionBBox, regionRef } from '../utils/geoRefs';
+import { countryRef, isParlimen, regionBBox, regionRef } from '../utils/geoRefs';
 import type { GeoRef } from '../types';
 
 /** WORLD › Asia › Malaysia › Selangor › Hulu Langat › Kajang */
 export function Breadcrumb() {
   const { selection, point, catalog, lang, select, setPoint } = useAtlas();
   const countryId = selection?.countryId ?? null;
-  const admin = useAsync(() => (countryId ? profiles.admin(countryId) : Promise.resolve(null)), [countryId]);
+  const division = isParlimen(selection?.id) ? 'parlimen' : 'district';
+  const admin = useAsync(() => (countryId ? profiles.admin(countryId, division) : Promise.resolve(null)), [countryId, division]);
   if (!catalog || !selection) return null;
   const chain: GeoRef[] = [];
   for (const id of [...selection.parents, selection.id]) {

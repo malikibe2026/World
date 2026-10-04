@@ -25,7 +25,7 @@ function Classes({ c, ind, lang, noData }: { c: Classification; ind: Indicator; 
 
 /** Dynamic choropleth legend: indicator, year, quality, unit, classes and source. */
 export function Legend() {
-  const { lang, theme, catalog, selection } = useAtlas();
+  const { lang, theme, catalog, selection , myDivision } = useAtlas();
   const L = useLayer();
   const [open, setOpen] = useState(() => typeof window === 'undefined' || window.innerWidth > 700);
   if (!L.indicator || !catalog) return null;
@@ -46,7 +46,7 @@ export function Legend() {
       {open && L.classification && <Classes c={L.classification} ind={ind} lang={lang} noData={noData} />}
       {open && myAdmin?.classification && (
         <>
-          <div className="legend-sub">🇲🇾 {myAdmin.level === 'admin1' ? (lang === 'ms' ? 'Negeri' : 'States') : (lang === 'ms' ? 'Daerah' : 'Districts')} · DOSM · {myAdmin.year}</div>
+          <div className="legend-sub">🇲🇾 {myAdmin.level === 'admin1' ? (lang === 'ms' ? 'Negeri' : 'States') : (myDivision === 'parlimen' ? (lang === 'ms' ? 'Parlimen' : 'Constituencies') : lang === 'ms' ? 'Daerah' : 'Districts')} · DOSM · {myAdmin.year}</div>
           <Classes c={myAdmin.classification} ind={ind} lang={lang} noData={noData} />
         </>
       )}

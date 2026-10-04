@@ -1,3 +1,4 @@
+import { isParlimen } from '../utils/geoRefs';
 import { useState } from 'react';
 import type { Geometry } from 'geojson';
 import { useAtlas } from '../store/atlas';
@@ -66,7 +67,7 @@ export function DownloadModal() {
         let geom: Geometry | null = null;
         if (selection?.level === 'country') geom = (await geo.world('50m')).features.find((f) => f.properties?.id === selection.id)?.geometry ?? null;
         else if (selection?.level === 'admin1' && selection.countryId) geom = (await geo.admin1(selection.countryId)).features.find((f) => f.properties?.id === selection.id)?.geometry ?? null;
-        else if (selection?.level === 'admin2' && selection.countryId) geom = (await geo.admin2(selection.countryId)).features.find((f) => f.properties?.id === selection.id)?.geometry ?? null;
+        else if (selection?.level === 'admin2' && selection.countryId) geom = (await geo.admin2(selection.countryId, isParlimen(selection.id) ? 'parlimen' : 'district')).features.find((f) => f.properties?.id === selection.id)?.geometry ?? null;
         if (!selection && L.indicator) {
           const w = await geo.world('50m');
           const byId = new Map(rows.map((r) => [r.location_id, r]));

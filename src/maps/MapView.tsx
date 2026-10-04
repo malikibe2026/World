@@ -107,7 +107,7 @@ export function MapView() {
     mapHandle.map = map;
     map.addControl(new NavigationControl({ showCompass: false }), 'top-right');
     map.addControl(new ScaleControl({ unit: 'metric' }), 'bottom-right');
-    map.addControl(new AttributionControl({ compact: true, customAttribution: '<a href="https://www.naturalearthdata.com/">Natural Earth</a> · <a href="https://www.geoboundaries.org/">geoBoundaries</a>' }), 'bottom-right');
+    map.addControl(new AttributionControl({ compact: true, customAttribution: '<a href="https://www.naturalearthdata.com/">Natural Earth</a> · <a href="https://www.geoboundaries.org/">geoBoundaries</a> · <a href="https://open.dosm.gov.my/">DOSM</a> (sempadan parlimen) · <a href="https://www.geonames.org/">GeoNames</a>' }), 'bottom-right');
     map.touchZoomRotate.disableRotation();
 
     map.on('load', async () => {
@@ -188,7 +188,7 @@ export function MapView() {
       if (pts.length) {
         const p = pts[0].properties as Record<string, unknown>;
         const kind = pts[0].layer.id;
-        const sub = kind === 'villages' ? `${p.district_name}, ${p.state_name}` : kind === 'peaks' && p.elev ? `${p.elev} m` : kind === 'cities' || kind === 'capitals' ? (p.pop ? `~${Number(p.pop).toLocaleString()} (NE est.)` : undefined) : (p.iata as string) || undefined;
+        const sub = kind === 'villages' ? `${useAtlas.getState().myDivision === 'parlimen' && p.parlimen_name ? p.parlimen_name : p.district_name}, ${p.state_name}` : kind === 'peaks' && p.elev ? `${p.elev} m` : kind === 'cities' || kind === 'capitals' ? (p.pop ? `~${Number(p.pop).toLocaleString()} (NE est.)` : undefined) : (p.iata as string) || undefined;
         setTip({ x: e.point.x, y: e.point.y, title: String(p.name), sub });
         return;
       }
@@ -218,10 +218,11 @@ export function MapView() {
           // no village-level statistics exist: select the enclosing district (or state) and show the point
           const cat = useAtlas.getState().catalog!;
           const c = cat.countries.MYS;
-          const did = String(p.district);
+          const byParlimen = useAtlas.getState().myDivision === 'parlimen' && p.parlimen;
+          const did = String(byParlimen ? p.parlimen : p.district);
           const sid = String(p.state);
           const isState = did === sid;
-          select({ id: did, level: isState ? 'admin1' : 'admin2', name: String(isState ? p.state_name : p.district_name), countryId: 'MYS', parents: ['WORLD', ...(c?.continent_id ? [c.continent_id] : []), 'MYS', ...(isState ? [] : [sid])] });
+          select({ id: did, level: isState ? 'admin1' : 'admin2', name: String(isState ? p.state_name : byParlimen ? p.parlimen_name : p.district_name), countryId: 'MYS', parents: ['WORLD', ...(c?.continent_id ? [c.continent_id] : []), 'MYS', ...(isState ? [] : [sid])] });
           setPoint({ kind: 'village', name: String(p.name), lon, lat, countryId: 'MYS', props: p });
           return;
         }
@@ -296,6 +297,17 @@ export function MapView() {
     }
   }
 
+  /** Malaysia below state level: districts or parliamentary constituencies, per the division switch. */
+  async function loadMyDivision(map: MlMap): Promise<Feature[]> {
+    const L = loaded.current;
+    const division = useAtlas.getState().myDivision;
+    const [fc2, prof] = await Promise.all([geo.admin2('MYS', division), profiles.admin('MYS', division)]);
+    L.admin2.set('MYS', fc2.features);
+    appliedStates.current.admin2.clear();
+    (map.getSource('admin2') as GeoJSONSource).setData({ type: 'FeatureCollection', features: fc2.features });
+    return (prof?.admin2 ?? []).map((u) => ({ type: 'Feature', properties: { name: u.name, level: 'admin2', id: u.id }, geometry: { type: 'Point', coordinates: u.label } }) as Feature);
+  }
+
   async function loadAdmin(map: MlMap, countryId: string) {
     const L = loaded.current;
     if (L.admin1.has(countryId)) return;
@@ -305,12 +317,7 @@ export function MapView() {
       L.admin1.set(countryId, fc.features);
       (map.getSource('admin1') as GeoJSONSource).setData({ type: 'FeatureCollection', features: [...L.admin1.values()].flat() });
       const labels: Feature[] = (prof?.admin1 ?? []).map((u) => ({ type: 'Feature', properties: { name: u.name, level: 'admin1', id: u.id }, geometry: { type: 'Point', coordinates: u.label } }));
-      if (countryId === 'MYS') {
-        const fc2 = await geo.admin2('MYS');
-        L.admin2.set('MYS', fc2.features);
-        (map.getSource('admin2') as GeoJSONSource).setData({ type: 'FeatureCollection', features: fc2.features });
-        for (const u of prof?.admin2 ?? []) labels.push({ type: 'Feature', properties: { name: u.name, level: 'admin2', id: u.id }, geometry: { type: 'Point', coordinates: u.label } });
-      }
+      if (countryId === 'MYS') labels.push(...(await loadMyDivision(map)));
       L.labels.set(countryId, labels);
       (map.getSource('admin-labels') as GeoJSONSource).setData({ type: 'FeatureCollection', features: [...L.labels.values()].flat() });
       applyChoropleth();
@@ -373,6 +380,24 @@ export function MapView() {
     src?.setTiles?.(st.tiles);
     map.setSky({ 'sky-color': theme === 'dark' ? '#061020' : '#bcd6f0', 'horizon-color': theme === 'dark' ? '#123056' : '#e7f0f9', 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 1, 7, 0] });
   }, [theme, ready]);
+
+  // Malaysia division switch: swap districts ⇄ constituencies in place ---------------------------
+  const myDivision = useAtlas((st) => st.myDivision);
+  const divisionRef = useRef(myDivision);
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready || divisionRef.current === myDivision) return;
+    divisionRef.current = myDivision;
+    if (!loaded.current.admin2.has('MYS')) return; // not loaded yet: loadAdmin picks the right division
+    loadMyDivision(map).then((labels) => {
+      const L = loaded.current;
+      const a1 = (L.labels.get('MYS') ?? []).filter((f) => f.properties?.level === 'admin1');
+      L.labels.set('MYS', [...a1, ...labels]);
+      (map.getSource('admin-labels') as GeoJSONSource).setData({ type: 'FeatureCollection', features: [...L.labels.values()].flat() });
+      applyChoropleth();
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [myDivision, ready]);
 
   // basemap ------------------------------------------------------------------------------------
   useEffect(() => {

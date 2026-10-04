@@ -20,16 +20,16 @@ npm install --prefix scripts/pipeline        # mapshaper, world-countries, count
 
 | Langkah | Rangkaian | Fungsi |
 |---|---|---|
-| `fetch` | GitHub raw | Muat turun Natural Earth, UN WPP 2024 (.rda), geoBoundaries MYS, fon Noto (idempoten) |
+| `fetch` | GitHub raw | Muat turun Natural Earth, UN WPP 2024 (.rda), geoBoundaries MYS, sempadan parlimen DOSM, fon Noto (idempoten) |
 | `reference` | — | Lambakan atribut rujukan (world-countries, IANA tz, GeoNames) |
 | `registry` | — | Padanan kod NE ⇄ UN M49 ⇄ World Bank ⇄ ISO; rantau UN; log semua ketidakpadanan |
 | `wpp` | — | Siri UN WPP + piramid + indikator terbitan; lapisan choropleth |
-| `geo` | — | Atribut standard, penyederhanaan & TopoJSON (mapshaper), negeri per negara, daerah Malaysia, keluasan geodesik |
+| `geo` | — | Atribut standard, penyederhanaan & TopoJSON (mapshaper), negeri per negara, daerah & kawasan parlimen Malaysia, keluasan geodesik. **Nota:** langkah ini mengosongkan `public/data/geo`, jadi jalankan semula `villages` selepasnya |
 | `profiles` | — | Profil geografi melalui sambungan spatial (Shapely STRtree) |
 | `search` | — | Indeks carian + laluan hierarki (point-in-polygon) |
 | `villages` | download.geonames.org | Kampung & penempatan Malaysia (titik GeoNames `MY.zip`), dipadankan ke negeri → daerah; fail per negeri (`geo/places/my/`) + `search/villages-my.json`. Uji luar talian: `GEONAMES_MY_ZIP=/laluan/MY.zip` |
 | `worldbank` | api.worldbank.org | Snapshot WDI (semua indikator registri) — jika gagal, pelayar guna API langsung |
-| `opendosm` | github (metadata), storage.dosm.gov.my | Metadata katalog + data negeri/daerah; padanan nama daerah dengan crosswalk |
+| `opendosm` | github (metadata), storage.dosm.gov.my | Metadata katalog + data negeri/daerah/parlimen; padanan nama daerah dengan crosswalk; parlimen dipadankan ikut nama `P.xxx` |
 | `wikidata` | query.wikidata.org | Mercu tanda per negara (SPARQL) |
 | `publish` | — | Registri, sejarah kurasi, fon, `manifest.json` |
 | `quality` | — | Data Quality Engine (lihat `data-quality.md`) |

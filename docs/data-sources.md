@@ -11,6 +11,7 @@ menyimpan metadata masing-masing.
 | `dosm_opendosm` | OpenDOSM / data.gov.my | Jabatan Perangkaan Malaysia | CC BY 4.0 | pipeline | Penduduk nasional/negeri/daerah, kelahiran, kematian, kesuburan, perkahwinan, LFS, pendapatan isi rumah, kemiskinan, KDNK negeri |
 | `natural_earth` | Natural Earth 1:10m/50m/110m | NACIS | Domain awam | snapshot | Sempadan negara/negeri, bandar, sungai, tasik, puncak, laut, lapangan terbang, pelabuhan, jalan, kawasan bandar |
 | `geoboundaries` | geoBoundaries gbOpen MYS ADM1/ADM2 | William & Mary geoLab | CC BY 3.0 (huluan citypopulation.de) | snapshot | Poligon negeri & daerah Malaysia |
+| `dosm_geodata` | Sempadan kawasan parlimen (`electoral_0_parlimen.geojson`, repo `dosm-malaysia/data-open`) | DOSM | Lesen Data Terbuka DOSM | snapshot | 222 kawasan parlimen; lesen melarang membayangkan status rasmi atau sokongan DOSM — laman menyatakan ia projek bebas |
 | `geonames` | GeoNames (melalui `cities.json`, `all-the-cities`) | GeoNames | CC BY 4.0 | snapshot | Carian pekan (cth. Kajang); kampung & penempatan Malaysia sebagai titik peta (dump `MY.zip`, download.geonames.org) — populasi GeoNames **tidak** dipaparkan sebagai statistik; tiada statistik peringkat kampung, panel memaparkan statistik daerah DOSM |
 | `world_countries` | mledoze/countries | penyumbang | ODbL 1.0 | snapshot | Atribut rujukan (ibu negara, bahasa, mata wang, kod panggilan) |
 | `iana_tz` | IANA tz (countries-and-timezones) | IANA | domain awam / MIT | snapshot | Zon masa |

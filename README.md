@@ -37,6 +37,7 @@ dan tarikh kemas kini**. Data yang tiada **tidak direka** — UI memaparkan *“
 | Statistical map layers | Penduduk, kepadatan, lelaki, perempuan, kelahiran, kematian, penuaan (65+), KDNK, KDNK per kapita, pengangguran, pembandaran, pelancongan, iklim (kerpasan), ketinggian — legenda choropleth dinamik (kuantil, palet tervalidasi CVD) | UN WPP, WB |
 | Perbandingan | Sehingga 6 lokasi; tahun sepadan dipilih secara automatik, tahun berbeza ditanda jelas | semua |
 | Time Machine | Slider 1950 → 2024 (anggaran) + mod unjuran rasmi hingga 2100, butang main | UN WPP 2024 |
+| Parlimen (Malaysia) | Suis **Daerah ⇄ Parlimen**: 222 kawasan parlimen (P.001–P.222) di peta, carian (nama atau kod, cth. “P094”), breadcrumb dan panel; statistik DOSM — penduduk (2020–2024), pendapatan isi rumah & kemiskinan (2019, 2022, 2024); kampung dipautkan ke parlimen | DOSM (geodata + OpenDOSM) |
 | Kampung & penempatan | Mod Malaysia: titik kampung/penempatan muncul pada zum ≥ 10, boleh dicari dan diklik; **tiada statistik peringkat kampung** — panel memaparkan statistik daerah (DOSM) dengan nota jelas | GeoNames (CC BY 4.0) |
 | Smart Search | Lokasi, mercu tanda (Wikidata), dan statistik — “population Malaysia”, “kadar kelahiran Jepun”, “Mount Fuji” | indeks sendiri + GeoNames + Wikidata |
 | Download Center | CSV, Excel, JSON, GeoJSON, PNG, PDF — hanya kawasan dipilih; setiap rekod: lokasi, indikator, nilai, unit, tahun rujukan, kualiti, sumber, URL sumber, kemas kini terakhir, nota metodologi | — |

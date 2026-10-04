@@ -96,7 +96,7 @@ function scoreEntry(e: SearchEntry, q: string): number {
     }
   }
   if (!s) return 0;
-  const typeBoost: Partial<Record<SearchEntryType, number>> = { country: 30, continent: 28, admin1: 18, admin2: 14, city: 10, town: 4, village: 2, peak: 6, physical: 3, sea: 3, airport: 0, port: -6 };
+  const typeBoost: Partial<Record<SearchEntryType, number>> = { country: 30, continent: 28, admin1: 18, admin2: 14, parlimen: 14, city: 10, town: 4, village: 2, peak: 6, physical: 3, sea: 3, airport: 0, port: -6 };
   return s + (typeBoost[e.type] ?? 0) + e.importance * 0.3;
 }
 

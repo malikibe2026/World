@@ -210,6 +210,17 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
                 n_admin += 1
             doc["admin2"] = a2
         write_json(PUBLIC_DATA / "profiles" / "admin" / f"{cid}.json", doc)
+        if cid == "MYS" and admin.get("parlimen", {}).get("MYS"):
+            # parliamentary constituencies: same profile shape as districts, separate file
+            p_geoms = {f["properties"]["id"]: f["geometry"] for f in read_json(WORK / "geo" / "parlimen.geojson")["features"]}
+            pa = []
+            for u in admin["parlimen"]["MYS"]:
+                g = shape(p_geoms[u["id"]])
+                p = profile(g, cid, u["area_km2"])
+                tw = sorted({t["name"] for t in _within(prep(g), g.bounds, towns)})
+                pa.append({**u, "level": "admin2", "towns": tw, **{k: p.get(k) for k in ("peaks", "rivers", "lakes", "islands", "seas", "cities", "airports", "ports", "highest_listed_peak", "area_geometry_km2")}})
+                n_admin += 1
+            write_json(PUBLIC_DATA / "profiles" / "admin" / "MYS-parlimen.json", {"country": cid, "division": "parlimen", "admin1": out, "admin2": pa})
 
     log.step_end(STEP, country_profiles=n, admin_profiles=n_admin)
     return {"countries": n}

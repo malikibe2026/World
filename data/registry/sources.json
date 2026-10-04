@@ -38,7 +38,20 @@
     "citation": "Department of Statistics Malaysia, OpenDOSM.",
     "access": "pipeline",
     "default_quality": "OFFICIAL",
-    "notes": "Priority source for Malaysia national, state (negeri) and district (daerah) statistics. Census-year values are OFFICIAL; intercensal mid-year values are ESTIMATE per DOSM methodology notes."
+    "notes": "Priority source for Malaysia national, state (negeri), district (daerah) and parliamentary constituency (parlimen) statistics. Census-year values are OFFICIAL; intercensal mid-year values are ESTIMATE per DOSM methodology notes."
+  },
+  {
+    "id": "dosm_geodata",
+    "name": "DOSM open geodata: parliamentary constituency boundaries",
+    "publisher": "Department of Statistics Malaysia (DOSM)",
+    "url": "https://github.com/dosm-malaysia/data-open",
+    "distribution_url": "https://raw.githubusercontent.com/dosm-malaysia/data-open/main/datasets/geodata/electoral_0_parlimen.geojson",
+    "license": "DOSM Open Data Licence",
+    "license_url": "https://github.com/dosm-malaysia/data-open/blob/main/LICENSE.md",
+    "citation": "Department of Statistics Malaysia, data-open geodata (electoral_0_parlimen).",
+    "access": "snapshot",
+    "default_quality": "OFFICIAL",
+    "notes": "222 parliamentary constituencies (P.001–P.222) used as an alternative to districts below state level. The licence forbids implying official status or DOSM endorsement; the site states that it is independent."
   },
   {
     "id": "natural_earth",
