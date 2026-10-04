@@ -6,7 +6,7 @@ import { indicatorName, t } from '../utils/i18n';
 import { countryRef, regionBBox, regionRef } from '../utils/geoRefs';
 import type { SearchEntry } from '../types';
 
-const TYPE_ICON: Record<string, string> = { continent: '🌐', country: '🏳️', admin1: '🗺️', admin2: '📍', city: '🏙️', town: '🏘️', peak: '🏔️', physical: '🏝️', sea: '🌊', airport: '✈️', port: '⚓', landmark: '⭐' };
+const TYPE_ICON: Record<string, string> = { continent: '🌐', country: '🏳️', admin1: '🗺️', admin2: '📍', city: '🏙️', town: '🏘️', village: '🏡', peak: '🏔️', physical: '🏝️', sea: '🌊', airport: '✈️', port: '⚓', landmark: '⭐' };
 
 interface WdHit { id: string; label: string; description?: string }
 
@@ -67,9 +67,9 @@ export function SearchBox() {
       if (level === 'country') select(countryRef(catalog, e.country));
       else select({ id: parentId, level, name: findById(parentId)?.name ?? parentId, countryId: e.country, parents: e.parents.slice(0, -1) });
     }
-    const kind = e.type === 'town' ? 'town' : e.type === 'city' ? 'city' : e.type === 'peak' ? 'peak' : e.type === 'airport' ? 'airport' : e.type === 'port' ? 'port' : e.type === 'sea' ? 'sea' : 'physical';
+    const kind = e.type === 'village' ? 'village' : e.type === 'town' ? 'town' : e.type === 'city' ? 'city' : e.type === 'peak' ? 'peak' : e.type === 'airport' ? 'airport' : e.type === 'port' ? 'port' : e.type === 'sea' ? 'sea' : 'physical';
     setPoint({ kind, name: e.name, lon: e.lon!, lat: e.lat!, countryId: e.country });
-    flyTo({ center: [e.lon!, e.lat!], zoom: e.type === 'sea' ? 4 : 9 });
+    flyTo({ center: [e.lon!, e.lat!], zoom: e.type === 'sea' ? 4 : e.type === 'village' ? 13 : 9 });
   };
 
   const pickWd = async (h: WdHit) => {

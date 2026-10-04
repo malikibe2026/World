@@ -24,8 +24,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from lib.common import PUBLIC_DATA, RAW, ROOT, WORK, ImportLog, read_json, write_json  # noqa: E402
 
-STEPS = ["fetch", "reference", "registry", "wpp", "geo", "profiles", "search", "worldbank", "opendosm", "wikidata", "publish", "quality", "supabase_export"]
-NETWORK = {"worldbank", "opendosm", "wikidata"}
+STEPS = ["fetch", "reference", "registry", "wpp", "geo", "profiles", "search", "villages", "worldbank", "opendosm", "wikidata", "publish", "quality", "supabase_export"]
+NETWORK = {"villages", "worldbank", "opendosm", "wikidata"}
 
 
 def main() -> int:
@@ -74,6 +74,9 @@ def main() -> int:
             elif step == "search":
                 from steps import search
                 search.run(log, registry(), admin())
+            elif step == "villages":
+                from steps import villages
+                villages.run(log, registry(), admin())
             elif step == "worldbank":
                 from steps import worldbank
                 worldbank.run(log, registry())

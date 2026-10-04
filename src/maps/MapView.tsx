@@ -14,6 +14,7 @@ import { classIndex, mapColors } from './palette';
 import {
   COUNTRY_SOURCES, COUNTRY_ZOOMS, EMPTY_FC, THEME_PAINT, baseStyle, fillColorExpr, fillOpacityExpr, labelLayers, lineLayers, overlayLayers, pointLayers,
 } from './layers';
+import { villagesInView } from '../services/villages';
 import { ELEVATION_DEM, satelliteBasemap, streetBasemap, terrainBasemap } from './basemaps';
 import { formatValue } from '../utils/format';
 import { indicatorName, t } from '../utils/i18n';
@@ -43,6 +44,7 @@ const OVERLAY_LAYERS: Record<OverlayKey, string[]> = {
   admin2: ['a2-line', 'admin2-labels'],
   capitals: ['capitals', 'capital-labels'],
   cities: ['cities', 'city-labels'],
+  villages: ['villages', 'village-labels'],
   rivers: ['rivers50', 'rivers10'],
   lakes: ['lakes50', 'lakes10'],
   peaks: ['peaks', 'peaks-label'],
@@ -138,7 +140,7 @@ export function MapView() {
       for (const l of lineLayers(th)) map.addLayer(l);
       // until the 1:10m countries are loaded, keep 1:50m visible at high zoom
       for (const id of ['c50-fill', 'c50-line', 'c50-hover', 'c50-sel']) map.setLayerZoomRange(id, 2.6, 24);
-      for (const id of ['cities', 'peaks', 'airports', 'ports', 'marine', 'physical']) map.addSource(id, { type: 'geojson', data: EMPTY_FC });
+      for (const id of ['cities', 'villages', 'peaks', 'airports', 'ports', 'marine', 'physical']) map.addSource(id, { type: 'geojson', data: EMPTY_FC });
       map.addSource('admin-labels', { type: 'geojson', data: EMPTY_FC });
       map.addSource('country-labels', {
         type: 'geojson',
@@ -166,7 +168,7 @@ export function MapView() {
     // hover ------------------------------------------------------------------------------
     let hovered: { source: string; id: string } | null = null;
     const fillLayers = ['a2-fill', 'a1-fill', 'c10-fill', 'c50-fill', 'c110-fill'];
-    const pointIds = ['peaks', 'airports', 'ports', 'cities', 'capitals'];
+    const pointIds = ['villages', 'peaks', 'airports', 'ports', 'cities', 'capitals'];
     map.on('mousemove', (e: MapMouseEvent) => {
       const pts = map.queryRenderedFeatures([[e.point.x - 4, e.point.y - 4], [e.point.x + 4, e.point.y + 4]], { layers: pointIds.filter((l) => map.getLayer(l) && map.getLayoutProperty(l, 'visibility') !== 'none') });
       const feats = map.queryRenderedFeatures(e.point, { layers: fillLayers.filter((l) => map.getLayer(l)) });
@@ -185,7 +187,7 @@ export function MapView() {
       if (pts.length) {
         const p = pts[0].properties as Record<string, unknown>;
         const kind = pts[0].layer.id;
-        const sub = kind === 'peaks' && p.elev ? `${p.elev} m` : kind === 'cities' || kind === 'capitals' ? (p.pop ? `~${Number(p.pop).toLocaleString()} (NE est.)` : undefined) : (p.iata as string) || undefined;
+        const sub = kind === 'villages' ? `${p.district_name}, ${p.state_name}` : kind === 'peaks' && p.elev ? `${p.elev} m` : kind === 'cities' || kind === 'capitals' ? (p.pop ? `~${Number(p.pop).toLocaleString()} (NE est.)` : undefined) : (p.iata as string) || undefined;
         setTip({ x: e.point.x, y: e.point.y, title: String(p.name), sub });
         return;
       }
@@ -211,6 +213,17 @@ export function MapView() {
         const f = pts[0];
         const p = f.properties as Record<string, unknown>;
         const [lon, lat] = (f.geometry as GeoJSON.Point).coordinates;
+        if (f.layer.id === 'villages') {
+          // no village-level statistics exist: select the enclosing district (or state) and show the point
+          const cat = useAtlas.getState().catalog!;
+          const c = cat.countries.MYS;
+          const did = String(p.district);
+          const sid = String(p.state);
+          const isState = did === sid;
+          select({ id: did, level: isState ? 'admin1' : 'admin2', name: String(isState ? p.state_name : p.district_name), countryId: 'MYS', parents: ['WORLD', ...(c?.continent_id ? [c.continent_id] : []), 'MYS', ...(isState ? [] : [sid])] });
+          setPoint({ kind: 'village', name: String(p.name), lon, lat, countryId: 'MYS', props: p });
+          return;
+        }
         const kind = f.layer.id === 'capitals' || f.layer.id === 'cities' ? 'city' : f.layer.id === 'peaks' ? 'peak' : f.layer.id === 'airports' ? 'airport' : 'port';
         setPoint({ kind, name: String(p.name), lon, lat, countryId: (p.country as string) ?? null, props: p });
         return;
@@ -263,6 +276,10 @@ export function MapView() {
         for (const id of ['c50-fill', 'c50-line', 'c50-hover', 'c50-sel']) map.setLayerZoomRange(id, 2.6, 5);
         applyChoropleth();
       });
+    }
+    if (z >= 9.5 && useAtlas.getState().overlays.villages) {
+      const b = map.getBounds();
+      villagesInView([b.getWest(), b.getSouth(), b.getEast(), b.getNorth()]).then((d) => { if (d) set('villages', d); });
     }
     if (z >= 4.2 && !L.rivers10) { L.rivers10 = true; geo.rivers('10m').then((d) => set('rivers10', d)); }
     if (z >= 4.2 && !L.lakes10) { L.lakes10 = true; geo.lakes('10m').then((d) => set('lakes10', d)); }

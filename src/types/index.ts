@@ -267,7 +267,7 @@ export interface HistoryDoc {
 }
 
 export type SearchEntryType =
-  | 'continent' | 'country' | 'admin1' | 'admin2' | 'city' | 'town'
+  | 'continent' | 'country' | 'admin1' | 'admin2' | 'city' | 'town' | 'village'
   | 'peak' | 'physical' | 'sea' | 'airport' | 'port' | 'landmark';
 
 export interface SearchEntry {

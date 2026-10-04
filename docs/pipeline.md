@@ -27,6 +27,7 @@ npm install --prefix scripts/pipeline        # mapshaper, world-countries, count
 | `geo` | — | Atribut standard, penyederhanaan & TopoJSON (mapshaper), negeri per negara, daerah Malaysia, keluasan geodesik |
 | `profiles` | — | Profil geografi melalui sambungan spatial (Shapely STRtree) |
 | `search` | — | Indeks carian + laluan hierarki (point-in-polygon) |
+| `villages` | download.geonames.org | Kampung & penempatan Malaysia (titik GeoNames `MY.zip`), dipadankan ke negeri → daerah; fail per negeri (`geo/places/my/`) + `search/villages-my.json`. Uji luar talian: `GEONAMES_MY_ZIP=/laluan/MY.zip` |
 | `worldbank` | api.worldbank.org | Snapshot WDI (semua indikator registri) — jika gagal, pelayar guna API langsung |
 | `opendosm` | github (metadata), storage.dosm.gov.my | Metadata katalog + data negeri/daerah; padanan nama daerah dengan crosswalk |
 | `wikidata` | query.wikidata.org | Mercu tanda per negara (SPARQL) |

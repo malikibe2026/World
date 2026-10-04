@@ -19,8 +19,10 @@ export async function loadSearchIndex(): Promise<void> {
     core = d.entries.map(toEntry);
   }
   if (!places) {
-    loadOptional<IndexDoc>('search/places.json').then((d) => {
-      places = d ? d.entries.map(toEntry) : [];
+    places = [];
+    // GeoNames towns, then Malaysian villages: larger files, loaded after the core index
+    Promise.all([loadOptional<IndexDoc>('search/places.json'), loadOptional<IndexDoc>('search/villages-my.json')]).then(([d, v]) => {
+      places = [...(d?.entries ?? []), ...(v?.entries ?? [])].map(toEntry);
       fuse = null;
     });
   }
@@ -94,7 +96,7 @@ function scoreEntry(e: SearchEntry, q: string): number {
     }
   }
   if (!s) return 0;
-  const typeBoost: Partial<Record<SearchEntryType, number>> = { country: 30, continent: 28, admin1: 18, admin2: 14, city: 10, town: 4, peak: 6, physical: 3, sea: 3, airport: 0, port: -6 };
+  const typeBoost: Partial<Record<SearchEntryType, number>> = { country: 30, continent: 28, admin1: 18, admin2: 14, city: 10, town: 4, village: 2, peak: 6, physical: 3, sea: 3, airport: 0, port: -6 };
   return s + (typeBoost[e.type] ?? 0) + e.importance * 0.3;
 }
 

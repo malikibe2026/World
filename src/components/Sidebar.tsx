@@ -18,6 +18,7 @@ const OVERLAYS: Array<{ k: OverlayKey; en: string; ms: string }> = [
   { k: 'admin2', en: 'District boundaries', ms: 'Sempadan daerah' },
   { k: 'capitals', en: 'Capitals', ms: 'Ibu negara' },
   { k: 'cities', en: 'Major cities', ms: 'Bandar utama' },
+  { k: 'villages', en: 'Villages & settlements (Malaysia, zoom in)', ms: 'Kampung & penempatan (Malaysia, zum dekat)' },
   { k: 'rivers', en: 'Rivers', ms: 'Sungai' },
   { k: 'lakes', en: 'Lakes', ms: 'Tasik' },
   { k: 'peaks', en: 'Mountains', ms: 'Gunung' },

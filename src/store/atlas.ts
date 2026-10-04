@@ -5,12 +5,12 @@ import type { Catalog } from '../services/catalog';
 export type Basemap = 'statistical' | 'street' | 'satellite' | 'terrain';
 export type OverlayKey =
   | 'admin1' | 'admin2' | 'capitals' | 'cities' | 'rivers' | 'lakes' | 'peaks' | 'physical' | 'seas'
-  | 'roads' | 'urban' | 'airports' | 'ports' | 'landmarks' | 'elevation';
+  | 'roads' | 'urban' | 'airports' | 'ports' | 'landmarks' | 'elevation' | 'villages';
 export type Modal = null | 'sources' | 'quality' | 'compare' | 'download' | 'about';
 export type DashTab = 'overview' | 'population' | 'vital' | 'economy' | 'tourism' | 'geography' | 'history' | 'ranking' | 'compare';
 
 export interface PointSelection {
-  kind: 'landmark' | 'city' | 'town' | 'peak' | 'airport' | 'port' | 'sea' | 'physical' | 'event';
+  kind: 'landmark' | 'city' | 'town' | 'village' | 'peak' | 'airport' | 'port' | 'sea' | 'physical' | 'event';
   name: string;
   lon: number;
   lat: number;
@@ -51,7 +51,7 @@ const savedTheme = (() => {
 
 export const DEFAULT_OVERLAYS: Record<OverlayKey, boolean> = {
   admin1: true, admin2: true, capitals: true, cities: true, rivers: true, lakes: true, peaks: false, physical: false, seas: true,
-  roads: false, urban: false, airports: false, ports: false, landmarks: true, elevation: false,
+  roads: false, urban: false, airports: false, ports: false, landmarks: true, elevation: false, villages: true,
 };
 
 export const ESTIMATE_LAST_YEAR = 2024;

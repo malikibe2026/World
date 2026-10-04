@@ -37,6 +37,7 @@ dan tarikh kemas kini**. Data yang tiada **tidak direka** — UI memaparkan *“
 | Statistical map layers | Penduduk, kepadatan, lelaki, perempuan, kelahiran, kematian, penuaan (65+), KDNK, KDNK per kapita, pengangguran, pembandaran, pelancongan, iklim (kerpasan), ketinggian — legenda choropleth dinamik (kuantil, palet tervalidasi CVD) | UN WPP, WB |
 | Perbandingan | Sehingga 6 lokasi; tahun sepadan dipilih secara automatik, tahun berbeza ditanda jelas | semua |
 | Time Machine | Slider 1950 → 2024 (anggaran) + mod unjuran rasmi hingga 2100, butang main | UN WPP 2024 |
+| Kampung & penempatan | Mod Malaysia: titik kampung/penempatan muncul pada zum ≥ 10, boleh dicari dan diklik; **tiada statistik peringkat kampung** — panel memaparkan statistik daerah (DOSM) dengan nota jelas | GeoNames (CC BY 4.0) |
 | Smart Search | Lokasi, mercu tanda (Wikidata), dan statistik — “population Malaysia”, “kadar kelahiran Jepun”, “Mount Fuji” | indeks sendiri + GeoNames + Wikidata |
 | Download Center | CSV, Excel, JSON, GeoJSON, PNG, PDF — hanya kawasan dipilih; setiap rekod: lokasi, indikator, nilai, unit, tahun rujukan, kualiti, sumber, URL sumber, kemas kini terakhir, nota metodologi | — |
 | Data Quality Engine | missing values, duplicate records, outliers, year mismatch, geographic mismatch, unit mismatch (pipeline + runtime) | — |
