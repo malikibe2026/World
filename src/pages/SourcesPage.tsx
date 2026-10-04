@@ -16,6 +16,9 @@ export function SourcesPage() {
   const m = catalog.manifest;
   return (
     <Modal title={t(lang, 'sourcesTitle')} onClose={() => setModal(null)} wide>
+      <p className="fineprint mb">{lang === 'ms'
+        ? 'WorldStat Atlas ialah projek bebas dan bukan laman rasmi mana-mana agensi. Penggunaan data DOSM, UN, World Bank dan lain-lain tidak bermaksud agensi tersebut menyokong atau mengesahkan laman ini.'
+        : 'WorldStat Atlas is an independent project, not an official site of any agency. Use of DOSM, UN, World Bank or other data does not imply that those agencies endorse this site.'}</p>
       <div className="seg mb" role="tablist">
         {(['sources', 'indicators', 'datasets', 'dosm'] as const).map((k) => (
           <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'on' : ''} onClick={() => setTab(k)}>

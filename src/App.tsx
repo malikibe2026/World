@@ -28,7 +28,7 @@ export function App() {
     loadCatalog().then(setCatalog, (e: Error) => setError(e.message));
   }, [setCatalog]);
 
-  // deep link: ?geo=MYS | UN_935 | MY-10 | MY-10-hulu-langat
+  // deep link: ?geo=MYS | UN_935 | MY-10 | MY-10-hulu-langat | MY-10-p094
   useEffect(() => {
     if (!catalog) return;
     const id = new URL(location.href).searchParams.get('geo');
@@ -37,7 +37,7 @@ export function App() {
     else if (catalog.countries[id]) select(countryRef(catalog, id), { bbox: catalog.countries[id].bbox });
     else loadSearchIndex().then(() => {
       const e = findById(id);
-      if (e && (e.type === 'admin1' || e.type === 'admin2')) select({ id: e.id, level: e.type, name: e.name, countryId: e.country, parents: e.parents }, { center: [e.lon!, e.lat!], zoom: e.type === 'admin1' ? 6 : 8.5 });
+      if (e && (e.type === 'admin1' || e.type === 'admin2' || e.type === 'parlimen')) select({ id: e.id, level: e.type === 'admin1' ? 'admin1' : 'admin2', name: e.name, countryId: e.country, parents: e.parents }, { center: [e.lon!, e.lat!], zoom: e.type === 'admin1' ? 6 : 8.5 });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catalog]);

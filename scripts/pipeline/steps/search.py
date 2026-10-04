@@ -62,6 +62,10 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
             parents = ["WORLD"] + ([c["continent_id"]] if c and c["continent_id"] else []) + [cid]
             entries.append(["admin1", u["id"], u["name"], alts, cid, parents, u["label"][0], u["label"][1], 60])
     mys = countries["MYS"]
+    for u in admin.get("parlimen", {}).get("MYS", []):
+        # "P.094 Hulu Selangor": searchable by code ("P094", "P.094") and by name alone
+        code, name = u["code"], u["name"].split(" ", 1)[1] if " " in u["name"] else u["name"]
+        entries.append(["parlimen", u["id"], u["name"], [name, code.replace(".", ""), f"Parlimen {name}"], "MYS", ["WORLD", mys["continent_id"], "MYS", u["state"]], u["label"][0], u["label"][1], 48])
     for u in admin["admin2"]["MYS"]:
         alts = [u["name_source"]] if u["name_source"] != u["name"] else []
         entries.append(["admin2", u["id"], u["name"], alts, "MYS", ["WORLD", mys["continent_id"], "MYS", u["state"]], u["label"][0], u["label"][1], 50])

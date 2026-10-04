@@ -5,6 +5,7 @@ import type { FeatureCollection, Geometry } from 'geojson';
 import type { Topology } from 'topojson-specification';
 import type { AdminUnit, CountryProfile } from '../types';
 import { loadData, loadOptional } from './http';
+import { isParlimen, type MyDivision } from '../utils/geoRefs';
 
 const fcCache = new Map<string, Promise<FeatureCollection>>();
 
@@ -30,7 +31,7 @@ function plain(path: string): Promise<FeatureCollection> {
 export const geo = {
   world: (res: '110m' | '50m' | '10m') => topo(`geo/world-${res}.topo.json`),
   admin1: (countryId: string) => topo(`geo/admin1/${countryId}.topo.json`),
-  admin2: (countryId: string) => topo(`geo/admin2/${countryId}.topo.json`),
+  admin2: (countryId: string, division: MyDivision = 'district') => topo(`geo/admin2/${countryId}${division === 'parlimen' ? '-parlimen' : ''}.topo.json`),
   cities: () => plain('geo/places/cities.json'),
   peaks: () => plain('geo/physical/peaks.json'),
   physicalLabels: () => plain('geo/physical/regions.json'),
@@ -51,12 +52,12 @@ export interface AdminProfiles {
 
 export const profiles = {
   country: (id: string) => loadOptional<CountryProfile>(`profiles/${id}.json`),
-  admin: (countryId: string) => loadOptional<AdminProfiles>(`profiles/admin/${countryId}.json`),
+  admin: (countryId: string, division: MyDivision = 'district') => loadOptional<AdminProfiles>(`profiles/admin/${countryId}${division === 'parlimen' ? '-parlimen' : ''}.json`),
 };
 
 /** Find an admin unit (admin1 or admin2) by id within its country's profile file. */
 export async function findAdmin(countryId: string, id: string): Promise<AdminUnit | null> {
-  const doc = await profiles.admin(countryId);
+  const doc = await profiles.admin(countryId, isParlimen(id) ? 'parlimen' : 'district');
   if (!doc) return null;
   return doc.admin1.find((u) => u.id === id) ?? doc.admin2?.find((u) => u.id === id) ?? null;
 }

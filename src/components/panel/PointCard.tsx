@@ -1,3 +1,4 @@
+import { isParlimen } from '../../utils/geoRefs';
 import { useAtlas, type PointSelection } from '../../store/atlas';
 import { useAsync } from '../../hooks/useAsync';
 import { commonsPage, commonsThumb, wikipediaSummary } from '../../services/wikidata';
@@ -32,7 +33,7 @@ function ParentStats({ kind }: { kind: PointSelection['kind'] }) {
   if (!selection || !b) return null;
   const ms = lang === 'ms';
   const what = kind === 'village' ? (ms ? 'kampung' : 'village') : ms ? 'pekan' : 'town';
-  const area = selection.level === 'admin2' ? (ms ? 'daerah' : 'district') : ms ? 'negeri' : 'state';
+  const area = selection.level === 'admin2' ? (isParlimen(selection.id) ? (ms ? 'parlimen' : 'constituency') : ms ? 'daerah' : 'district') : ms ? 'negeri' : 'state';
   return (
     <section className="point-parent" aria-label={selection.name}>
       <h3>{ms ? `Statistik ${area}: ${selection.name}` : `${selection.name} (${area}) statistics`}</h3>

@@ -21,14 +21,14 @@ export interface LayerState {
 }
 
 export function useLayer(): LayerState {
-  const { catalog, layer, year, theme, regionFilter, projection } = useAtlas();
+  const { catalog, layer, year, theme, regionFilter, projection, myDivision } = useAtlas();
   const ind = catalog && layer ? catalog.indicators[layer] ?? null : null;
   const st = useAsync(() => (ind && catalog ? loadLayer(ind, catalog) : Promise.resolve(null)), [ind?.code, catalog]);
   const dosm = useAsync(async () => {
     if (!ind) return null;
-    const [a1, a2] = await Promise.all([loadDosm('admin1'), loadDosm('admin2')]);
+    const [a1, a2] = await Promise.all([loadDosm('admin1'), loadDosm(myDivision === 'parlimen' ? 'parlimen' : 'admin2')]);
     return { a1, a2 };
-  }, [ind?.code]);
+  }, [ind?.code, myDivision]);
 
   return useMemo<LayerState>(() => {
     const doc = st.data ?? null;

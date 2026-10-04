@@ -1,3 +1,5 @@
+import { MyDivisionSwitch } from '../MyDivisionSwitch';
+import { adminTypeLabel } from '../../utils/geoRefs';
 import { useMemo, useState, type ReactNode } from 'react';
 import { useAtlas } from '../../store/atlas';
 import { useHistory, useLandmarks, useLocationBundle, useWorldBank } from '../../hooks/useLocation';
@@ -55,7 +57,7 @@ export function LocationPanel() {
   const statsLevel = selection.level === 'admin1' || selection.level === 'admin2';
   const pyr = b?.dosm && pref === 'dosm' ? dosmPyramid(b.dosm, year) : b?.wpp ? wppPyramid(b.wpp, Math.min(year, projection ? 2100 : 2024)) : null;
 
-  const levelLabel = { world: t(lang, 'world'), continent: t(lang, 'continent'), subregion: t(lang, 'subregion'), country: t(lang, 'country'), admin1: b?.admin?.type ?? (lang === 'ms' ? 'Negeri / wilayah' : 'State / province'), admin2: b?.admin?.type ?? (lang === 'ms' ? 'Daerah' : 'District'), place: '' }[selection.level];
+  const levelLabel = { world: t(lang, 'world'), continent: t(lang, 'continent'), subregion: t(lang, 'subregion'), country: t(lang, 'country'), admin1: adminTypeLabel(b?.admin?.type, lang) ?? (lang === 'ms' ? 'Negeri / wilayah' : 'State / province'), admin2: adminTypeLabel(b?.admin?.type, lang) ?? (lang === 'ms' ? 'Daerah' : 'District'), place: '' }[selection.level];
 
   return (
     <div className="loc">
@@ -82,6 +84,7 @@ export function LocationPanel() {
       {isMys && (
         <div className="my-mode">
           <div className="my-mode-title">🇲🇾 {t(lang, 'malaysiaMode')} <span className="muted">· {t(lang, 'malaysiaModeHint')}</span></div>
+          <MyDivisionSwitch />
           {b?.dosm ? (
             <div className="seg seg-xs" role="radiogroup" aria-label={t(lang, 'source')}>
               <button className={pref === 'dosm' ? 'on' : ''} onClick={() => setPref('dosm')} role="radio" aria-checked={pref === 'dosm'}>DOSM</button>

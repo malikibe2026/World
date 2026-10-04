@@ -864,6 +864,157 @@
           "description_en": "[String] Definition of the variable in Malay"
         }
       ]
+    },
+    "population_parlimen": {
+      "title_en": "Population Table: Parliamentary Constituencies",
+      "title_ms": "Jadual Penduduk: Kawasan Parlimen",
+      "description_en": "Population at parliamentary constituency level from 2020 to 2022, with breakdowns by sex and nationality. The preview table shows data for the latest year only, but you may download the data in full.",
+      "description_ms": "Jumlah penduduk di peringkat kawasan parlimen dari 2020 ke 2022, dengan pecahan mengikut jantina dan kewarganegaraan. Jadual pratonton hanya menunjukkan data bagi tahun terkini, tetapi data penuh boleh dimuat turun.",
+      "methodology_en": "The 222 parliamentary constituencies enumerated in this dataset are based on the most recent electoral boundaries per the redelineation exercises in 2015 (Sabah), 2017 (Sarawak) and 2018 (Peninsular Malaysia). Values for 2020 are based on adjusted data from the Population Census conducted in that year. Values for all other years are intercensal mid-year population estimates. The intercensal estimates were generated using the cohort-component method, which estimates the latest year's population by taking the previous year's value, then adding births, subtracting deaths, and adding net migration. For a deeper understanding of the methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/population-technotes).",
+      "methodology_ms": "222 kawasan parlimen yang diperincikan dalam set data ini adalah berdasarkan sempadan kawasan parlimen yang terkini selaras dengan kajian semula persempadanan yang dilaksanakan pada tahun 2015 (Sabah), 2017 (Sarawak) dan 2018 (Semenanjung Malaysia). Angka bagi 2020 adalah berdasarkan data daripada Banci Penduduk yang dilaksanakan pada tahun tersebut. Angka bagi semua tahun lain adalah anggaran pertengahan tahun antara banci. Anggaran antara banci dihasilkan dengan kaedah komponen kohort, yang menganggarkan angka bagi tahun terkini dengan mengambil angka bagi tahun sebelumnya, kemudian tambah kelahiran, tolak kematian, dan tambah migrasi bersih. Untuk mendapat pemahaman metodologi yang lebih mendalam, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/population-technotes).",
+      "caveat_en": "Values for breakdowns may be slightly different to totals when summed, due to rounding to one decimal place.",
+      "caveat_ms": "Angka-angka terperinci mungkin sedikit berbeza dengan angka keseluruhan apabila terjumlah, disebabkan oleh penggenapan kepada satu titik perpuluhan.",
+      "data_as_of": "2024",
+      "last_updated": "2025-10-31 13:00",
+      "next_update": "2026-10-31 13:00",
+      "link_csv": "https://storage.dosm.gov.my/population/population_parlimen.csv",
+      "link_parquet": "https://storage.dosm.gov.my/population/population_parlimen.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "PARLIMEN"
+      ],
+      "demography": [
+        "SEX",
+        "ETHNICITY"
+      ],
+      "dataset_begin": 2020,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/population_parlimen.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as this is annual data"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 222 parliamentary constituencies"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')"
+        },
+        {
+          "name": "age",
+          "description_en": "[Categorical] Only data for all age groups ('overall') is available for now; the column is included to allow for expansion in future."
+        },
+        {
+          "name": "ethnicity",
+          "description_en": "[Categorical] All ethnic groups ('overall'), citizen ('citizen'), or non-citizen residents ('other_noncitizen')."
+        },
+        {
+          "name": "population",
+          "description_en": "[Float] Thousands of people ('000 people)"
+        }
+      ]
+    },
+    "hh_income_parlimen": {
+      "title_en": "Household Income by Parliament",
+      "title_ms": "Pendapatan Isi Rumah mengikut Parlimen",
+      "description_en": "Mean and median gross monthly household income by parliamentary constituency from 2019 to 2024.",
+      "description_ms": "Purata dan penengah pendapatan kasar bulanan isi rumah mengikut kawasan parlimen dari 2019 hingga 2024.",
+      "methodology_en": "Data on individual salaries and wages [in the formal economy](https://open.dosm.gov.my/dashboard/formal-sector-wages) is easy to obtain from administrative records. However, data on household income is more difficult to tabulate, as it requires the correct definition of a statistical household, as well as the inclusion of non-salary sources of income such as property income, dividends, and interest. For this reason, it requires the use of a representative survey or census.\n\n In Malaysia, data on household income (as well as expenditure and access to basic amenities) is collected through the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. The data shown here was tabulated from household-level HIES records spanning 2022 to 2024 (the latest edition). For a full description of the methodology, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Data mengenai gaji dan upah individu [dalam ekonomi formal](https://open.dosm.gov.my/ms-MY/dashboard/formal-sector-wages) mudah diperoleh daripada rekod pentadbiran. Sebaliknya, data mengenai pendapatan isi rumah lebih sukar untuk dihasilkan, kerana ia memerlukan definisi statistik yang tepat bagi isi rumah, serta sumber pendapatan bukan gaji seperti pendapatan hartanah, dividen, dan faedah. Oleh itu, ia memerlukan penggunaan survei atau banci.\n\nDi Malaysia, data mengenai pendapatan isi rumah (serta perbelanjaan dan akses kepada kemudahan asas) dikumpul melalui Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Data yang dipaparkan di sini telah dihasilkan daripada rekod HIES peringkat isi rumah dari tahun 2019 hingga 2024 (edisi terkini). Untuk mendapat perincian metodologi yang penuh, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "This data presents nominal values, i.e. they have not been adjusted for inflation. Furthermore, Parliment-level data is only published from 2019 (relative to [state-level data](https://open.dosm.gov.my/data-catalogue/hh_income_state) which is available from 1970) as prior HIES samples were not sufficient to support Parliament-level granularity.",
+      "caveat_ms": "Data ini menunjukkan nilai nominal, iaitu mereka tidak diselaraskan untuk inflasi. Selain itu, data di peringkat Parlimen hanya diterbitkan mulai 2019 (berbanding dengan [data negeri](https://open.dosm.gov.my/data-catalogue/hh_income_state) yang tersedia dari 1970) kerana sampel HIES sebelumnya tidak mencukupi untuk membolehkan pecahan mengikut kawasan Parlimen.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_income_parlimen.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_income_parlimen.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "PARLIMEN"
+      ],
+      "demography": [],
+      "dataset_begin": 2019,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_income_parlimen.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, including the 3 Federal Territories"
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 222 parliamentary constituencies"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "income_mean",
+          "description_en": "[Integer, RM] Average gross monthly household income"
+        },
+        {
+          "name": "income_median",
+          "description_en": "[Integer, RM] Median gross monthly household income; this is generally less than the mean income due to the right-skewed distribution of income"
+        }
+      ]
+    },
+    "hh_poverty_parlimen": {
+      "title_en": "Poverty by Parliament",
+      "title_ms": "Kemiskinan mengikut Parlimen",
+      "description_en": "Poverty rates by parliamentary constituency from 2019 to 2024.",
+      "description_ms": "Kadar kemiskinan mengikut kawasan parlimen dari 2019 hingga 2024.",
+      "methodology_en": "In general, poverty is defined as having household income below a specific benchmark. Accordingly, statistics on poverty in Malaysia are produced and published together with statistics on household income derived from the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. This dataset presents 2 definitions of poverty:\n 1. **Absolute Poverty**: A household is considered to be in absolute poverty if their gross monthly household income is below the Poverty Line Income (PLI). This indicates that the household does not earn sufficient income to meet basic needs for a dignified life.\n 2. **Relative Poverty**: A household is considered to be in relative poverty if their gross monthly household income is below half the national median income. This measure is used to assess relative deprivation within the district, especially as absolute and hardcore poverty rates approach 0, as is the case for Malaysia.\n\n For full details on the methodology, especially the computation of the PLI and its evolution and nuances, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Secara am, definisi kemiskinan adalah pendapatan isi rumah di bawah sesuatu aras pendapatan. Oleh itu, statistik mengenai kemiskinan di Malaysia dihasilkan dan diterbitkan bersama dengan statistik pendapatan isi rumah yang dihasilkan daripada Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Set data ini memaparkan 3 definisi kemiskinan:\n 1. **Kemiskinan Mutlak**: Sebuah isi rumah dianggap berada dalam kemiskinan mutlak jika pendapatan kasar bulanan isi rumah mereka berada di bawah Pendapatan Garis Kemiskinan (PGK). Ini menunjukkan bahawa isi rumah tersebut tidak mempunyai pendapatan yang cukup untuk memenuhi keperluan asas.\n 2 **Kemiskinan Relatif**: Sebuah isi rumah dianggap berada dalam kemiskinan relatif jika pendapatan kasar bulanan isi rumah mereka berada di bawah separuh pendapatan penengah daerah. Indikator ini digunakan untuk menganalisis ketersisihan relatif dalam negara, terutamanya apabila kadar kemiskinan mutlak dan tegar semakin mendekati kosong seperti mana yang berlaku di Malaysia.\n\n Untuk mendapat perincian metodologi yang penuh, terutamanya mengenai pengiraan PGK serta evolusi dan nuansanya, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "Data on hardcore poverty is not available at parliamentary constituency level. Furthermore, Parliament-level data is only published from 2019 (relative to [state-level data](https://open.dosm.gov.my/data-catalogue/hh_poverty_state) which is available from 1970) as prior HIES samples were not sufficient to support Parliament-level granularity.",
+      "caveat_ms": "Data mengenai kadar kemiskinan tegar tidak dapat disediakan di peringkat Parlimen. Selain itu, data Parlimen hanya diterbitkan mulai 2019 (berbanding dengan [data negeri](https://open.dosm.gov.my/data-catalogue/hh_poverty_state) yang tersedia dari 1970) kerana sampel HIES sebelumnya tidak mencukupi untuk membolehkan pecahan mengikut kawasan Parlimen.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_poverty_parlimen.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_poverty_parlimen.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "PARLIMEN"
+      ],
+      "demography": [],
+      "dataset_begin": 2019,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_poverty_parlimen.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, including the 3 Federal Territories"
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 222 parliamentary constituencies"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "poverty_absolute",
+          "description_en": "[Float] Proportion of households with monthly income below the Poverty Line Income (PLI)"
+        }
+      ]
     }
   }
 }

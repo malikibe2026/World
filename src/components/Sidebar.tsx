@@ -1,3 +1,4 @@
+import { MyDivisionSwitch } from './MyDivisionSwitch';
 import { useAtlas, type Basemap, type OverlayKey } from '../store/atlas';
 import { indicatorName, t, type I18nKey } from '../utils/i18n';
 import { SearchBox } from './SearchBox';
@@ -15,7 +16,7 @@ const LAYER_GROUPS: Array<{ key: I18nKey; codes: string[] }> = [
 
 const OVERLAYS: Array<{ k: OverlayKey; en: string; ms: string }> = [
   { k: 'admin1', en: 'State / province boundaries', ms: 'Sempadan negeri / wilayah' },
-  { k: 'admin2', en: 'District boundaries', ms: 'Sempadan daerah' },
+  { k: 'admin2', en: 'District / constituency boundaries', ms: 'Sempadan daerah / parlimen' },
   { k: 'capitals', en: 'Capitals', ms: 'Ibu negara' },
   { k: 'cities', en: 'Major cities', ms: 'Bandar utama' },
   { k: 'villages', en: 'Villages & settlements (Malaysia, zoom in)', ms: 'Kampung & penempatan (Malaysia, zum dekat)' },
@@ -39,6 +40,12 @@ export function Sidebar() {
   return (
     <aside className="sidebar" aria-label={t(lang, 'layers')}>
       <div className="sb-search"><SearchBox /></div>
+
+      <section className="sb-sec">
+        <h3>🇲🇾 {lang === 'ms' ? 'Malaysia: paparan bawah negeri' : 'Malaysia: below state level'}</h3>
+        <MyDivisionSwitch />
+        <p className="fineprint">{lang === 'ms' ? 'Daerah atau 222 kawasan parlimen (P.001–P.222). Statistik DOSM.' : 'Districts or the 222 parliamentary constituencies (P.001–P.222). DOSM statistics.'}</p>
+      </section>
 
       <section className="sb-sec">
         <h3>{t(lang, 'indicatorLayer')}</h3>

@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import type { GeoRef, Lang, Landmark, Theme } from '../types';
 import type { Catalog } from '../services/catalog';
+import { isParlimen, type MyDivision } from '../utils/geoRefs';
+import { profiles } from '../services/geo';
 
 export type Basemap = 'statistical' | 'street' | 'satellite' | 'terrain';
 export type OverlayKey =
@@ -73,6 +75,8 @@ interface AtlasState {
   globe: boolean;
   overlays: Record<OverlayKey, boolean>;
   regionFilter: string | null;
+  /** Malaysia below state level: districts or parliamentary constituencies */
+  myDivision: MyDivision;
   compare: GeoRef[];
   modal: Modal;
   dashTab: DashTab;
@@ -97,6 +101,7 @@ interface AtlasState {
   setGlobe: (on: boolean) => void;
   toggleOverlay: (k: OverlayKey) => void;
   setRegionFilter: (id: string | null) => void;
+  setMyDivision: (d: MyDivision) => void;
   addCompare: (g: GeoRef) => void;
   removeCompare: (id: string) => void;
   clearCompare: () => void;
@@ -124,6 +129,7 @@ export const useAtlas = create<AtlasState>((set, get) => ({
   globe: store.get<boolean>('globe', true),
   overlays: { ...DEFAULT_OVERLAYS, ...store.get<Partial<Record<OverlayKey, boolean>>>('overlays', {}) },
   regionFilter: null,
+  myDivision: store.get<MyDivision>('myDivision', 'district'),
   compare: [],
   modal: null,
   dashTab: 'overview',
@@ -143,6 +149,10 @@ export const useAtlas = create<AtlasState>((set, get) => ({
   setCatalog: (catalog) => set({ catalog }),
   select: (selection, fly) => {
     set({ selection, point: null, rightOpen: true, landmarkFilter: null });
+    if (selection?.level === 'admin2' && selection.countryId === 'MYS') {
+      const d: MyDivision = isParlimen(selection.id) ? 'parlimen' : 'district';
+      if (d !== get().myDivision) { store.set('myDivision', d); set({ myDivision: d }); }
+    }
     if (selection?.level !== get().selection?.level) set({ dashTab: get().dashTab });
     if (fly) get().flyTo(fly);
     const url = new URL(location.href);
@@ -159,6 +169,17 @@ export const useAtlas = create<AtlasState>((set, get) => ({
   setGlobe: (globe) => { store.set('globe', globe); set({ globe }); },
   toggleOverlay: (k) => set((s) => { const overlays = { ...s.overlays, [k]: !s.overlays[k] }; store.set('overlays', overlays); return { overlays }; }),
   setRegionFilter: (regionFilter) => set({ regionFilter }),
+  setMyDivision: (myDivision) => {
+    store.set('myDivision', myDivision);
+    const sel = get().selection;
+    set({ myDivision });
+    // a district stays meaningful only in district view (and a constituency only in parlimen view): step up to its state
+    if (sel?.level === 'admin2' && sel.countryId === 'MYS' && isParlimen(sel.id) !== (myDivision === 'parlimen')) {
+      const stateId = sel.parents[sel.parents.length - 1];
+      const parents = sel.parents.slice(0, -1);
+      profiles.admin('MYS').then((d) => get().select({ id: stateId, level: 'admin1', name: d?.admin1.find((u) => u.id === stateId)?.name ?? stateId, countryId: 'MYS', parents }));
+    }
+  },
   addCompare: (g) => set((s) => (s.compare.some((c) => c.id === g.id) || s.compare.length >= 6 ? s : { compare: [...s.compare, g] })),
   removeCompare: (id) => set((s) => ({ compare: s.compare.filter((c) => c.id !== id) })),
   clearCompare: () => set({ compare: [] }),

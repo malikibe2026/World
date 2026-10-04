@@ -169,6 +169,31 @@ def run(log: ImportLog, registry: dict) -> dict:
         log.warning(STEP, "geographic mismatch: no district polygon for W.P. Putrajaya in geoBoundaries ADM2 (area lies inside a neighbouring district polygon)")
     log.info(STEP, "admin-2 Malaysia written", districts=len(districts))
 
+    # ---- Malaysia parliamentary constituencies (DOSM geodata) ---------------------
+    # An alternative to districts at the same depth: constituencies nest in states but cross
+    # district lines, so they are a separate division, never mixed with districts.
+    parlimen, parlimen_index = [], []
+    src = RAW / "dosm" / "electoral_0_parlimen.geojson"
+    if src.exists():
+        from steps.opendosm import STATE_ISO
+        for f in read_json(src)["features"]:
+            p = f["properties"]
+            state = STATE_ISO.get(p["state"].strip().lower())
+            if state is None:
+                log.warning(STEP, "geographic mismatch: constituency state not recognised", state=p["state"], parlimen=p["parlimen"])
+                continue
+            code = p["code_parlimen"]  # "P.094"
+            pid = f"{state}-{code.replace('.', '').lower()}"  # MY-10-p094
+            g = shape(f["geometry"])
+            pt = g.representative_point()
+            props = {"id": pid, "name": p["parlimen"], "name_source": p["parlimen"], "code": code, "state": state, "country": "MYS", "type": "Parliamentary constituency"}
+            parlimen.append({"type": "Feature", "properties": props, "geometry": f["geometry"]})
+            parlimen_index.append({**props, "area_km2": round(geodesic_km2(g), 1), "label": [round(pt.x, 4), round(pt.y, 4)], "bbox": [round(v, 4) for v in g.bounds]})
+        sizes["admin2/MYS-parlimen"] = to_topo("parlimen", parlimen, OUT / "admin2" / "MYS-parlimen.topo.json", "45%")
+        log.info(STEP, "parliamentary constituencies written", constituencies=len(parlimen))
+    else:
+        log.warning(STEP, "DOSM constituency boundaries missing; run the fetch step", path=str(src))
+
     # ---- populated places --------------------------------------------------------
     pp = read_json(RAW / "ne" / "ne_10m_populated_places_simple.geojson")
     cities = []
@@ -276,7 +301,7 @@ def run(log: ImportLog, registry: dict) -> dict:
     sizes["urban"] = to_topo("urban", urban, OUT / "infra" / "urban.topo.json", "10%")
     log.info(STEP, "infrastructure layers", airports=len(airports), ports=len(ports), roads=len(roads), urban=len(urban))
 
-    write_json(WORK / "admin_index.json", {"admin1": admin1_index, "admin2": {"MYS": admin2_index}, "country_area_km2": areas})
+    write_json(WORK / "admin_index.json", {"admin1": admin1_index, "admin2": {"MYS": admin2_index}, "parlimen": {"MYS": parlimen_index}, "country_area_km2": areas})
     for k, v in sizes.items():
         if v > 3_000_000:
             log.warning(STEP, "large geometry file for the browser", file=k, bytes=v)

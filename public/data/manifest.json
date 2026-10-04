@@ -1,7 +1,7 @@
 {
   "app": "WorldStat Atlas",
-  "snapshot_built_at": "2026-10-04T02:45:16Z",
-  "run_id": "20261004T024515Z",
+  "snapshot_built_at": "2026-10-04T04:57:54Z",
+  "run_id": "20261004T045753Z",
   "datasets": [
     {
       "source_id": "un_wpp_2024",
@@ -217,6 +217,18 @@
         },
         "gdp_lookup": {
           "last_updated": "2024-05-17 12:00",
+          "next_update": "—"
+        },
+        "population_parlimen": {
+          "last_updated": "2025-10-31 13:00",
+          "next_update": "2026-10-31 13:00"
+        },
+        "hh_income_parlimen": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_poverty_parlimen": {
+          "last_updated": "2025-12-31 12:00",
           "next_update": "—"
         }
       },

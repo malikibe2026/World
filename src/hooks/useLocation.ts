@@ -1,3 +1,4 @@
+import { dosmLevelFor } from '../utils/geoRefs';
 // Everything the location panel and dashboard need for the current selection.
 import { useMemo } from 'react';
 import type { AdminUnit, CountryProfile, GeoRef, HistoryDoc, Landmark, Series, WppDoc } from '../types';
@@ -26,7 +27,7 @@ export function useLocationBundle(geo: GeoRef | null) {
       countryId ? profiles.country(countryId) : Promise.resolve(null),
       geo.level === 'admin1' || geo.level === 'admin2' ? findAdmin(countryId!, geo.id) : Promise.resolve(null),
       geo.level === 'country' || geo.level === 'world' || geo.level === 'continent' || geo.level === 'subregion' ? loadWpp(geo.id) : Promise.resolve(null),
-      countryId === 'MYS' ? loadDosm(geo.level === 'country' ? 'national' : geo.level === 'admin1' ? 'admin1' : 'admin2') : Promise.resolve(null),
+      countryId === 'MYS' ? loadDosm(dosmLevelFor(geo)) : Promise.resolve(null),
     ]);
     const dosmUnit = dosm ? dosm.units[geo.level === 'country' ? 'MYS' : geo.id] ?? null : null;
     return {
