@@ -52,6 +52,14 @@ def norm(s: str) -> str:
     return re.sub(r"[^a-z0-9]", "", s)
 
 
+def num(v) -> float | None:
+    """CSV cell → float; blank / placeholder cells are missing values, never zero."""
+    if v is None:
+        return None
+    v = str(v).strip()
+    return None if v in ("", "-", "NA", "N/A", "..") else float(v)
+
+
 def year(d: str) -> int:
     return int(d[:4])
 
@@ -65,9 +73,10 @@ class Store:
         self.units: dict[str, dict] = defaultdict(lambda: {"series": defaultdict(dict), "datasets": {}})
 
     def put(self, unit: str, ind: str, y: int, v, q: str, ds: str):
-        if v in (None, ""):
+        v = num(v)
+        if v is None:
             return
-        self.units[unit]["series"][ind][y] = (float(v), q)
+        self.units[unit]["series"][ind][y] = (v, q)
         self.units[unit]["datasets"][ind] = ds
 
     def dump(self, names: dict[str, str]):
@@ -128,6 +137,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
         a2_by_key[(u["state"], norm(u["name"]))] = u["id"]
         a2_by_key[(u["state"], norm(u["name_source"]))] = u["id"]
     unmatched_d: set[tuple[str, str]] = set()
+    aliases = read_json(REGISTRY / "mys_district_crosswalk.json").get("dosm_aliases", {})
 
     def state_id(name: str) -> str | None:
         return STATE_ISO.get(name.strip().lower())
@@ -136,6 +146,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
         sid = state_id(state)
         if sid is None:
             return None
+        district = aliases.get(state.strip(), {}).get(district.strip(), district)
         did = a2_by_key.get((sid, norm(district)))
         if did is None and norm(district) == norm(state):
             did = next((v for (s, _), v in a2_by_key.items() if s == sid), None) if sid in ("MY-09", "MY-14", "MY-15") else None
@@ -154,7 +165,8 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
             if unit is None:
                 continue
             y = year(r["date"])
-            v = float(r["population"]) * 1000.0 if r["population"] not in ("", None) else None
+            v = num(r["population"])
+            v = v * 1000.0 if v is not None else None
             q = pop_quality(y)
             if r["age"] == "overall" and r["ethnicity"] == "overall":
                 ind = {"both": "population", "male": "population_male", "female": "population_female"}[r["sex"]]
@@ -237,13 +249,13 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
             y = year(r["date"])
             di.put(did, "unemployment", y, r["u_rate"], "OFFICIAL", "lfs_district")
             di.put(did, "lfpr", y, r["p_rate"], "OFFICIAL", "lfs_district")
-            di.put(did, "labour_force", y, float(r["lf"]) * 1000 if r["lf"] else None, "OFFICIAL", "lfs_district")
+            di.put(did, "labour_force", y, num(r["lf"]) * 1000 if num(r["lf"]) is not None else None, "OFFICIAL", "lfs_district")
     for r in rows("lfs_year") or []:
         y = year(r["date"])
         nat.put("MYS", "unemployment", y, r.get("u_rate"), "OFFICIAL", "lfs_year")
         nat.put("MYS", "lfpr", y, r.get("p_rate"), "OFFICIAL", "lfs_year")
-        if r.get("lf"):
-            nat.put("MYS", "labour_force", y, float(r["lf"]) * 1000, "OFFICIAL", "lfs_year")
+        if num(r.get("lf")) is not None:
+            nat.put("MYS", "labour_force", y, num(r["lf"]) * 1000, "OFFICIAL", "lfs_year")
     for ds, store, key in (("hh_income_state", st, lambda r: state_id(r["state"])),
                            ("hh_income_district", di, lambda r: district_id(r["state"], r["district"]))):
         for r in rows(ds) or []:
@@ -262,9 +274,10 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
     sectors = defaultdict(lambda: defaultdict(dict))
     for r in rows("gdp_state_real_supply") or []:
         sid = state_id(r["state"])
-        if sid is None or r.get("series") != "abs":
+        v = num(r.get("value"))
+        if sid is None or r.get("series") != "abs" or v is None:
             continue
-        sectors[sid][year(r["date"])][r["sector"]] = float(r["value"]) * 1e6
+        sectors[sid][year(r["date"])][r["sector"]] = v * 1e6
     if sectors and not lookup:
         log.error(STEP, "gdp_lookup unavailable: sector codes cannot be labelled, state GDP skipped")
     elif sectors:

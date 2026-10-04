@@ -1,72 +1,35 @@
 {
-  "run_id": "20261003T165226Z",
-  "generated_at": "2026-10-03T16:58:50Z",
+  "run_id": "20261004T003232Z",
+  "generated_at": "2026-10-04T00:32:45Z",
   "counts": {
-    "info": 64,
-    "warning": 18,
+    "info": 7,
+    "warning": 0,
     "error": 0
   },
   "steps": {
-    "registry": {
-      "started": "2026-10-03T16:52:26Z",
-      "status": "ok",
-      "finished": "2026-10-03T16:52:27Z",
-      "entities": 258,
-      "wpp_matched": 230,
-      "wpp_unmapped": 7
-    },
-    "wpp": {
-      "started": "2026-10-03T16:52:27Z",
-      "status": "ok",
-      "finished": "2026-10-03T16:53:31Z",
-      "files": 257,
-      "layers": 12,
-      "rows": 38807
-    },
-    "geo": {
-      "started": "2026-10-03T16:53:31Z",
-      "status": "ok",
-      "finished": "2026-10-03T16:54:30Z",
-      "files": 261,
-      "total_bytes": 13251938
-    },
-    "profiles": {
-      "started": "2026-10-03T16:54:31Z",
-      "status": "ok",
-      "finished": "2026-10-03T16:58:35Z",
-      "country_profiles": 258,
-      "admin_profiles": 4748
-    },
-    "search": {
-      "started": "2026-10-03T16:58:36Z",
-      "status": "ok",
-      "finished": "2026-10-03T16:58:39Z",
-      "entries": 16496,
-      "bytes": 1741336
-    },
     "publish": {
-      "started": "2026-10-03T16:58:39Z",
+      "started": "2026-10-04T00:32:32Z",
       "status": "ok",
-      "finished": "2026-10-03T16:58:40Z",
+      "finished": "2026-10-04T00:32:32Z",
       "sources": 12,
       "indicators": 74
     },
     "quality": {
-      "started": "2026-10-03T16:58:40Z",
+      "started": "2026-10-04T00:32:33Z",
       "status": "ok",
-      "finished": "2026-10-03T16:58:41Z",
-      "issues": 501,
+      "finished": "2026-10-04T00:32:35Z",
+      "issues": 484,
       "duplicate_records": 9,
       "missing_values": 28,
       "outliers": 441,
       "unit_mismatch": 1,
       "year_mismatch": 3,
-      "geographic_mismatch": 19
+      "geographic_mismatch": 2
     },
     "supabase_export": {
-      "started": "2026-10-03T16:58:41Z",
+      "started": "2026-10-04T00:32:35Z",
       "status": "ok",
-      "finished": "2026-10-03T16:58:50Z",
+      "finished": "2026-10-04T00:32:45Z",
       "data_sources": 12,
       "indicators": 74,
       "geographies": 5034,
@@ -82,201 +45,6 @@
       "historical_events": 30
     }
   },
-  "warnings": [
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "NE numeric code not in UN WPP locations",
-      "context": {
-        "ne": "ATA",
-        "m49": 10
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "NE numeric code not in UN WPP locations",
-      "context": {
-        "ne": "PCN",
-        "m49": 612
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "NE numeric code not in UN WPP locations",
-      "context": {
-        "ne": "ATF",
-        "m49": 260
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "NE numeric code not in UN WPP locations",
-      "context": {
-        "ne": "UMI",
-        "m49": 581
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "NE numeric code not in UN WPP locations",
-      "context": {
-        "ne": "HMD",
-        "m49": 334
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "NE numeric code not in UN WPP locations",
-      "context": {
-        "ne": "ALD",
-        "m49": 248
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "NE numeric code not in UN WPP locations",
-      "context": {
-        "ne": "IOT",
-        "m49": 86
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "NE numeric code not in UN WPP locations",
-      "context": {
-        "ne": "NFK",
-        "m49": 574
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "NE numeric code not in UN WPP locations",
-      "context": {
-        "ne": "SGS",
-        "m49": 239
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
-      "context": {
-        "m49": 175,
-        "name": "Mayotte"
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
-      "context": {
-        "m49": 254,
-        "name": "French Guiana"
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
-      "context": {
-        "m49": 312,
-        "name": "Guadeloupe"
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
-      "context": {
-        "m49": 474,
-        "name": "Martinique"
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
-      "context": {
-        "m49": 535,
-        "name": "Bonaire, Sint Eustatius and Saba"
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
-      "context": {
-        "m49": 638,
-        "name": "Reunion"
-      }
-    },
-    {
-      "ts": "2026-10-03T16:52:27Z",
-      "run_id": "20261003T165226Z",
-      "step": "registry",
-      "level": "warning",
-      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
-      "context": {
-        "m49": 772,
-        "name": "Tokelau"
-      }
-    },
-    {
-      "ts": "2026-10-03T16:54:16Z",
-      "run_id": "20261003T165226Z",
-      "step": "geo",
-      "level": "warning",
-      "message": "geographic mismatch: no district polygon for W.P. Putrajaya in geoBoundaries ADM2 (area lies inside a neighbouring district polygon)"
-    },
-    {
-      "ts": "2026-10-03T16:54:30Z",
-      "run_id": "20261003T165226Z",
-      "step": "geo",
-      "level": "warning",
-      "message": "large geometry file for the browser",
-      "context": {
-        "file": "urban",
-        "bytes": 3354342
-      }
-    }
-  ],
+  "warnings": [],
   "errors": []
 }
