@@ -53,7 +53,7 @@ def parse(text: str) -> list[dict]:
         c = line.split("\t")
         if len(c) < 19 or c[6] != "P" or c[8] != "MY":
             continue
-        rows.append({"gid": int(c[0]), "name": c[1].strip(), "fcode": c[7], "lat": float(c[4]), "lon": float(c[5])})
+        rows.append({"gid": int(c[0]), "name": c[1].strip(), "fcode": c[7], "lat": float(c[4]), "lon": float(c[5]), "modified": c[18].strip()})
     return rows
 
 
@@ -106,6 +106,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
     seen_gid, seen_key = set(), set()
     dropped = defaultdict(int)
     snapped = 0
+    data_as_of = ""  # newest GeoNames modification date among kept places: changes only when the data does
     for r in raw:
         if r["fcode"] not in KEEP:
             dropped["not_a_settlement"] += 1
@@ -130,6 +131,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
         pid = locate(pa_geoms, pa_ids, pa_tree, pt, lambda q: pa_state[q] == sid)[0] if pa_tree is not None else None
         snapped += s1 or s2
         by_state[sid].append([r["gid"], r["name"], r["fcode"], round(r["lon"], 5), round(r["lat"], 5), did or sid, pid])
+        data_as_of = max(data_as_of, r["modified"])
 
     if dropped["duplicate"]:
         log.warning(STEP, "duplicate records dropped", count=dropped["duplicate"])
@@ -151,7 +153,8 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
             if gid in known:
                 continue
             search_rows.append(["village", f"gn:{gid}", name, alt_spelling(name), "MYS", [*root, sid] + ([did] if did != sid else []), round(lon, 4), round(lat, 4), 12 if fcode == "PPLX" else 15])
-    write_json(out / "index.json", {"source_id": "geonames", "source_url": prov["url"], "retrieved_at": prov.get("retrieved_at"),
+    # no download timestamp here: it would change every run and make each scheduled refresh look like an update
+    write_json(out / "index.json", {"source_id": "geonames", "source_url": prov["url"], "data_as_of": data_as_of or None,
                                     "license": "CC BY 4.0", "fields": ["gid", "name", "fcode", "lon", "lat", "district", "parlimen"], "states": index, "names": names})
     size = write_json(PUBLIC_DATA / "search" / "villages-my.json",
                       {"fields": ["type", "id", "name", "alt", "country", "parents", "lon", "lat", "importance"], "source_id": "geonames", "entries": search_rows})
