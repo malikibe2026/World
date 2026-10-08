@@ -1,0 +1,24 @@
+{
+  "id": "./",
+  "name": "WorldStat Atlas",
+  "short_name": "WorldStat",
+  "description": "Atlas statistik dunia: peta interaktif, penduduk, ekonomi, sejarah dan pelancongan — dengan sumber rasmi untuk setiap angka. Mod Malaysia: negeri, daerah, parlimen dan kampung.",
+  "lang": "ms",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0d1b2e",
+  "theme_color": "#0d1b2e",
+  "categories": ["education", "reference"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Malaysia", "short_name": "Malaysia", "url": "./?geo=MYS", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Dunia", "short_name": "Dunia", "url": "./?geo=WORLD", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

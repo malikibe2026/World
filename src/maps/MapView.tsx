@@ -6,7 +6,7 @@ import {
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import type { Feature, FeatureCollection } from 'geojson';
-import { useAtlas, type OverlayKey } from '../store/atlas';
+import { isPhone, useAtlas, type OverlayKey } from '../store/atlas';
 import { useLayer } from '../hooks/useLayer';
 import { geo, profiles } from '../services/geo';
 import { assetUrl } from '../services/http';
@@ -466,9 +466,13 @@ export function MapView() {
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready || !fly) return;
-    const pad = { top: 60, bottom: 60, left: 40, right: 40 };
+    // on a phone the bottom sheet covers the lower part of the map: keep the target above it
+    const st = useAtlas.getState();
+    const sheetPx = isPhone() && st.rightOpen ? Math.round(map.getContainer().clientHeight * 0.44) : 0;
+    const pad = { top: 60, bottom: 60 + sheetPx, left: 40, right: 40 };
+    map.setPadding({ top: 0, bottom: 0, left: 0, right: 0 }); // flyTo padding persists on the camera; never let it stack
     if (fly.bbox && bboxOk(fly.bbox)) map.fitBounds([[fly.bbox[0], fly.bbox[1]], [fly.bbox[2], fly.bbox[3]]], { padding: pad, maxZoom: fly.zoom ?? 7.5, duration: 1400, essential: true });
-    else if (fly.center) map.flyTo({ center: fly.center, zoom: fly.zoom ?? Math.max(map.getZoom(), 4), duration: 1400, essential: true });
+    else if (fly.center) map.flyTo({ center: fly.center, zoom: fly.zoom ?? Math.max(map.getZoom(), 4), duration: 1400, essential: true, padding: { top: 0, left: 0, right: 0, bottom: sheetPx } });
   }, [fly, ready]);
 
   // landmark markers -----------------------------------------------------------------------------

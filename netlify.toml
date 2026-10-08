@@ -5,7 +5,7 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# Static data snapshot: cache for a day; hashed assets forever
+# Static data snapshot: URLs carry the build id (?v=…), so a day of caching never serves an old deploy; hashed assets forever
 [[headers]]
   for = "/data/*"
   [headers.values]
@@ -15,3 +15,16 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# App (PWA): the service worker and manifest must be re-checked on every visit so updates are seen
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+    Service-Worker-Allowed = "/"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Cache-Control = "no-cache"
+    Content-Type = "application/manifest+json"

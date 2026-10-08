@@ -44,6 +44,7 @@ dan tarikh kemas kini**. Data yang tiada **tidak direka** — UI memaparkan *“
 | Data Quality Engine | missing values, duplicate records, outliers, year mismatch, geographic mismatch, unit mismatch (pipeline + runtime) | — |
 | Mod Malaysia | Negeri (16) dan daerah (159 poligon) dengan statistik OpenDOSM/DOSM diutamakan; perbandingan DOSM ↔ UN WPP | DOSM, geoBoundaries |
 | Tema | Mod Cerah & Gelap, BM/EN | — |
+| Telefon & aplikasi | Paparan telefon: peta penuh skrin, panel lokasi sebagai helaian bawah (separuh ⇄ penuh), menu sisi dengan lapisan gelap. **Boleh dipasang** sebagai aplikasi di Android, iPhone dan desktop (PWA), berfungsi luar talian untuk kawasan yang pernah dibuka, dan **dikemas kini sendiri** setiap kali laman diterbitkan semula | — |
 
 ## Mula cepat
 
