@@ -1,7 +1,7 @@
 {
   "app": "WorldStat Atlas",
-  "snapshot_built_at": "2026-10-04T04:57:54Z",
-  "run_id": "20261004T045753Z",
+  "snapshot_built_at": "2026-10-08T03:41:34Z",
+  "run_id": "20261008T034125Z",
   "datasets": [
     {
       "source_id": "un_wpp_2024",
@@ -160,8 +160,8 @@
           "next_update": "2027-07-31 12:00"
         },
         "population_district": {
-          "last_updated": "2025-10-02 12:00",
-          "next_update": "2026-10-31 12:00"
+          "last_updated": "2026-10-07 13:00",
+          "next_update": "2027-10-31 12:00"
         },
         "births_district_sex": {
           "last_updated": "2025-10-16 12:00",

@@ -129,6 +129,14 @@ def run(log: ImportLog, registry: dict) -> dict:
         ctx = ev.get("context", {})
         if "geographic mismatch" in msg or "has no Natural Earth polygon" in msg or "not in UN WPP locations" in msg:
             add("geographic_mismatch", "warning", msg, geo=ctx.get("ne") or ctx.get("state") or ("MYS" if "Putrajaya" in msg or ctx.get("district") else None), value=ctx.get("name") or ctx.get("district") or ctx.get("m49"))
+    # boundary redefinitions flagged by the opendosm step (read from its output, so a quality-only run sees them)
+    a2 = PUBLIC_DATA / "stats" / "my" / "admin2.json"
+    if a2.exists():
+        for uid, u in read_json(a2)["units"].items():
+            for b in u.get("breaks", []):
+                add("geographic_mismatch", "warning",
+                    f"structural break: from {b['year']} DOSM publishes {u['name']} on a new boundary ({b['change_pct']}% vs the previous year; area moved to new districts; new districts in the state: {', '.join(b['new_districts'])}). The map polygon is the old boundary; no density or y/y change is shown across the break.",
+                    geo=uid, indicator="population", year=b["year"], value=b["change_pct"])
     add("geographic_mismatch", "warning", "Natural Earth 'France' includes the overseas departments (French Guiana, Guadeloupe, Martinique, Mayotte, Réunion) which UN WPP reports separately; per-area ratios mix coverage.", geo="FRA")
     add("geographic_mismatch", "warning", "Natural Earth 'Netherlands' polygon includes the Caribbean Netherlands (Bonaire, Sint Eustatius, Saba) which UN WPP reports separately.", geo="NLD")
 

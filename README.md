@@ -130,6 +130,12 @@ docs/             seni bina, kamus data, sumber, pipeline, Supabase, deployment,
    Sebuyau, Siburan; Sabah: Membakut) dan tiada poligon Putrajaya. Daerah ini tidak dipaparkan di peta
    (direkod sebagai *geographic mismatch*), dan daerah induknya mungkin dilukis lebih besar daripada
    kawasan yang diwakili angka DOSM — kepadatan terbitan bagi daerah tersebut perlu dibaca dengan berhati-hati.
+   **Mulai data 2025** (keluaran DOSM 7 Okt 2026), DOSM menerbitkan Beaufort, Papar, Serian, Simunjan dan
+   Sri Aman mengikut sempadan baharu. Pipeline mengesan perubahan ini secara automatik (*structural break*);
+   aplikasi memutuskan graf pada 2025, tidak memaparkan perubahan tahunan merentasinya, dan tidak mengira
+   kepadatan bagi 2025 ke atas (poligon masih sempadan lama).
+   **Tahun lalai:** slider masa di hujung kanan bermaksud *terkini* — anggaran rasmi terbaharu (cth. DOSM
+   2026) dipaparkan; unjuran UN hanya dipaparkan dalam mod unjuran.
 2. **Statistik negeri/daerah di luar Malaysia** tidak tersedia secara harmoni dalam sumber terbuka →
    *Data tidak tersedia*.
 3. **Perceraian** dan **perkahwinan global** tiada siri rasmi terbuka yang boleh dibaca mesin.

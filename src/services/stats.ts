@@ -1,5 +1,6 @@
 // Statistics service: one place that turns every source (UN WPP snapshot, World Bank live or
 // snapshot, OpenDOSM snapshot) into Series / Observation objects that carry their provenance.
+import { ESTIMATE_LAST_YEAR } from '../store/atlas';
 import type { GeoLevel, Indicator, LayerDoc, Observation, Pyramid, Quality, Series, WppDoc } from '../types';
 import type { Catalog } from './catalog';
 import { loadOptional } from './http';
@@ -36,13 +37,23 @@ export function wppPyramid(doc: WppDoc, year: number): Pyramid | null {
 }
 
 /** Density derived from WPP population and the geometric area of the boundary. */
-export function densitySeries(pop: Series | null, areaKm2: number | null | undefined): Series | null {
+/** Population ÷ map area. `untilYear` stops it where the figures no longer match the map polygon. */
+export function densitySeries(pop: Series | null, areaKm2: number | null | undefined, untilYear?: number): Series | null {
   if (!pop || !areaKm2) return null;
+  const points = pop.points.filter((p) => untilYear === undefined || p.year < untilYear);
+  if (!points.length) return null;
   return {
     indicator: 'density', sourceId: 'worldstat_derived', lastUpdated: pop.lastUpdated, referenceConvention: pop.referenceConvention,
-    points: pop.points.map((p) => ({ year: p.year, value: p.value / areaKm2, quality: p.quality === 'PROJECTION' ? 'PROJECTION' : 'DERIVED' })),
+    points: points.map((p) => ({ year: p.year, value: p.value / areaKm2, quality: p.quality === 'PROJECTION' ? 'PROJECTION' : 'DERIVED' })),
   };
 }
+
+/** First year a DOSM unit's figures follow a new boundary (null = none). */
+export const breakYear = (u: DosmUnit | null | undefined): number | null => (u?.breaks?.length ? Math.min(...u.breaks.map((b) => b.year)) : null);
+
+/** Last year with a non-projection value (for chart ranges that should end at the latest estimate). */
+export const lastEstimateYear = (s: Series | null | undefined): number | null =>
+  s?.points.length ? s.points.filter((p) => p.quality !== 'PROJECTION').reduce<number | null>((a, p) => (a === null || p.year > a ? p.year : a), null) : null;
 
 // ---------------------------------------------------------------------------------------------
 // OpenDOSM snapshot (Malaysia national / states / districts)
@@ -54,6 +65,8 @@ export interface DosmUnit {
   pyramid?: { groups: string[]; years: number[]; male: number[][]; female: number[][]; dataset: string };
   ethnicity?: Record<string, Record<string, number>>;
   gdp_sectors?: Record<string, Array<{ code: string; name_en: string; value: number }>>;
+  /** boundary redefinitions detected by the pipeline (figures from `year` are on the new boundary) */
+  breaks?: Array<{ year: number; change_pct: number; new_districts: string[] }>;
 }
 export interface DosmDoc { source_id: string; level: string; units: Record<string, DosmUnit> }
 
@@ -71,7 +84,7 @@ export function dosmPyramid(unit: DosmUnit | undefined, year: number): Pyramid |
   const p = unit?.pyramid;
   if (!p) return null;
   let i = p.years.indexOf(year);
-  if (i < 0) i = p.years.length - 1; // latest available (UI shows the year)
+  if (i < 0 || year >= ESTIMATE_LAST_YEAR) i = p.years.length - 1; // latest available at the slider's "now" end (UI shows the year)
   return { groups: p.groups, male: p.male[i], female: p.female[i], year: p.years[i], quality: [1970, 1980, 1991, 2000, 2010, 2020].includes(p.years[i]) ? 'OFFICIAL' : 'ESTIMATE', sourceId: 'dosm_opendosm' };
 }
 
@@ -166,6 +179,19 @@ export function toObservation(cat: Catalog, geo: { id: string; name: string; lev
     lastUpdated: s.lastUpdated,
     notes: [ind?.description, ind?.reference ? `Reference: ${ind.reference}` : undefined, ind?.formula ? `Formula: ${ind.formula}` : undefined, ind?.notes, ind?.original_source ? `Original source: ${ind.original_source}` : undefined].filter(Boolean).join(' · ') || undefined,
   };
+}
+
+/**
+ * The point a view shows. With projections off and the time slider at its "now" end, that is the
+ * latest published non-projection value, so a current estimate newer than the UN series (e.g.
+ * DOSM's 2026 district estimates) is shown instead of being cut at the slider year. Otherwise pointAt.
+ */
+export function pointForView(s: Series | null | undefined, year: number, projection = false) {
+  if (!projection && year >= ESTIMATE_LAST_YEAR && s?.points.length) {
+    const last = s.points.filter((p) => p.quality !== 'PROJECTION').reduce<Series['points'][number] | null>((a, p) => (!a || p.year > a.year ? p : a), null);
+    if (last && last.year > year) return last;
+  }
+  return pointAt(s, year, { allowProjection: projection });
 }
 
 /** Value at a year, or the latest value not after it (the returned point carries the year used). */

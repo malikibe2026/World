@@ -89,6 +89,7 @@ class Store:
                 "datasets": d["datasets"],
                 **({"pyramid": d["pyramid"]} if "pyramid" in d else {}),
                 **({"ethnicity": d["ethnicity"]} if "ethnicity" in d else {}),
+                **({"breaks": d["breaks"]} if "breaks" in d else {}),
             }
         return out
 
@@ -238,6 +239,42 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
                 pa.put(u, "poverty_absolute", year(r["date"]), r.get("poverty_absolute"), "OFFICIAL", "hh_poverty_parlimen")
         log.info(STEP, "source note: population_parlimen stores citizenship in 'ethnicity' (2020) but in 'age' (2021+); totals unaffected")
 
+    def district_breaks(data: list[dict] | None, store: Store):
+        """Boundary changes: a district that first appears after the series start (e.g. Sarawak's
+        Gedong and Sebuyau in 2025) takes area from existing districts, so those drop sharply in the
+        same year. Such drops are a change of definition, not of population: each is flagged as a
+        structural break (detected from the data, never hard-coded) so the app does not draw a fall,
+        a y/y change or a density on the old map polygon across it."""
+        if not data:
+            return
+        totals: dict[tuple[str, str], dict[int, float]] = defaultdict(dict)
+        for r in data:
+            if r["sex"] == "both" and r["age"] == "overall" and r["ethnicity"] == "overall" and num(r["population"]) is not None:
+                totals[(r["state"], r["district"])][year(r["date"])] = num(r["population"]) * 1000.0
+        start = min(y for v in totals.values() for y in v)
+        new_by_state: dict[tuple[str, int], list[str]] = defaultdict(list)
+        for (state, district), v in totals.items():
+            first = min(v)
+            if first > start:
+                new_by_state[(state, first)].append(district)
+        for (state, y), news in sorted(new_by_state.items()):
+            sid = state_id(state)
+            new_pop = sum(totals[(state, d)][y] for d in news)
+            lost = 0.0
+            for (st, district), v in totals.items():
+                if st != state or district in news or y not in v or (y - 1) not in v or v[y - 1] <= 0:
+                    continue
+                change = v[y] / v[y - 1] - 1
+                if change < -0.10:  # far beyond any one-year demographic change
+                    did = district_id(state, district)
+                    if did and did in store.units:
+                        store.units[did].setdefault("breaks", []).append({"year": y, "change_pct": round(change * 100, 1), "new_districts": sorted(news)})
+                        lost += v[y - 1] - v[y]
+                        log.warning(STEP, "structural break: district redefined (area moved to new districts)", district=district, state=state, year=y,
+                                    change_pct=round(change * 100, 1), new_districts=sorted(news))
+            log.info(STEP, "new districts in source", state=state, state_id=sid, first_year=y, districts=sorted(news),
+                     new_population=round(new_pop), population_lost_by_flagged_districts=round(lost))
+
     def vital(ds: str, ind_abs: str, ind_rate: str):
         data = rows(ds)
         if data is None:
@@ -256,6 +293,8 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
                 if sid:
                     st.put(sid, ind_abs, y, r["abs"], "OFFICIAL", ds)
                     st.put(sid, ind_rate, y, r["rate"], "OFFICIAL", ds)
+
+    district_breaks(rows("population_district"), di)
 
     vital("births_district_sex", "births", "cbr")
     vital("deaths_state", "deaths", "cdr")

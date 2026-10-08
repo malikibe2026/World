@@ -14,7 +14,8 @@ const axisCommon = (tk: ChartTokens) => ({
   splitLine: { lineStyle: { color: tk.grid, width: 1 } },
 });
 
-export interface LineSpec { name: string; series: Series; color?: number; area?: boolean }
+/** breakYear: first year on a new definition (e.g. district boundaries); the line is not joined across it. */
+export interface LineSpec { name: string; series: Series; color?: number; area?: boolean; breakYear?: number }
 
 /** Time series; estimates solid, projections dashed in the same colour (one axis). */
 export function TrendChart({ lines, ind, height = 220, lang, yearMarker, minYear, maxYear }: { lines: LineSpec[]; ind?: Indicator; height?: number; lang: Lang; yearMarker?: number; minYear?: number; maxYear?: number }) {
@@ -27,8 +28,17 @@ export function TrendChart({ lines, ind, height = 220, lang, yearMarker, minYear
       const proj = pts.filter((p) => p.quality === 'PROJECTION');
       if (est.length && proj.length) proj.unshift(est[est.length - 1]);
       const common = { type: 'line', showSymbol: false, symbolSize: 8, smooth: false, lineStyle: { width: 2, color, cap: 'round', join: 'round' }, itemStyle: { color }, emphasis: { focus: 'series' } };
-      series.push({ ...common, name: l.name, data: est.map((p) => [p.year, p.value]), areaStyle: l.area ? { color, opacity: 0.1 } : undefined,
-        markLine: i === 0 && yearMarker ? { symbol: 'none', silent: true, label: { show: false }, lineStyle: { color: tk.axis, width: 1, type: 'solid' }, data: [{ xAxis: yearMarker }] } : undefined });
+      const data: Array<[number, number | null]> = [];
+      for (const p of est) {
+        if (l.breakYear && p.year === l.breakYear && data.length) data.push([p.year - 0.5, null]); // gap: a redefinition, not a change
+        data.push([p.year, p.value]);
+      }
+      const marks = [
+        ...(yearMarker ? [{ xAxis: yearMarker }] : []),
+        ...(l.breakYear ? [{ xAxis: l.breakYear - 0.5, lineStyle: { color: tk.muted, width: 1, type: [3, 3] }, label: { show: true, formatter: lang === 'ms' ? 'Sempadan baharu' : 'New boundaries', color: tk.muted, fontSize: 10, position: 'insideEndTop' } }] : []),
+      ];
+      series.push({ ...common, name: l.name, data, connectNulls: false, areaStyle: l.area ? { color, opacity: 0.1 } : undefined,
+        markLine: i === 0 && marks.length ? { symbol: 'none', silent: true, label: { show: false }, lineStyle: { color: tk.axis, width: 1, type: 'solid' }, data: marks } : undefined });
       if (proj.length > 1) series.push({ ...common, name: l.name, data: proj.map((p) => [p.year, p.value]), lineStyle: { ...common.lineStyle, type: [5, 4] }, areaStyle: l.area ? { color, opacity: 0.05 } : undefined, tooltip: { valueFormatter: (v: number) => `${formatValue(v, ind, lang, { compact: true })} (proj.)` } });
     });
     return {

@@ -2,7 +2,7 @@
 // Malaysia → OpenDOSM (when loaded, unless the user switched to UN) · UN WPP · World Bank WDI.
 import type { Indicator, Quality, Series } from '../types';
 import type { LocationBundle, WbState } from './useLocation';
-import { densitySeries, dosmSeries, pointAt, wppSeries } from '../services/stats';
+import { breakYear, densitySeries, dosmSeries, pointForView, wppSeries } from '../services/stats';
 
 export type SourcePref = 'dosm' | 'un';
 
@@ -14,7 +14,8 @@ export function resolveSeries(code: string, b: LocationBundle | null | undefined
     if (s) return s;
     if (code === 'density') {
       const p = dosmSeries(b.dosm, 'population');
-      const d = densitySeries(p, b.areaKm2);
+      // the map polygon is the old boundary: no density once DOSM moves to a new one
+      const d = densitySeries(p, b.areaKm2, breakYear(b.dosm) ?? undefined);
       if (d) return d;
     }
   }
@@ -33,5 +34,5 @@ export function resolveSeries(code: string, b: LocationBundle | null | undefined
 }
 
 export function latest(s: Series | null | undefined, year: number, allowProjection = false) {
-  return pointAt(s, year, { allowProjection });
+  return pointForView(s, year, allowProjection);
 }

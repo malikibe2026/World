@@ -5,6 +5,7 @@ import { latest, resolveSeries, type SourcePref } from '../../hooks/resolve';
 import type { LocationBundle, WbState } from '../../hooks/useLocation';
 import { t } from '../../utils/i18n';
 import { isParlimen } from '../../utils/geoRefs';
+import { breakYear } from '../../services/stats';
 
 export const KEY_INDICATORS = ['population', 'population_male', 'population_female', 'density', 'births', 'deaths', 'gdp', 'gdp_per_capita'];
 
@@ -32,7 +33,9 @@ export function KeyStats({ b, wb, pref, codes = KEY_INDICATORS }: { b: LocationB
         const s = resolveSeries(code, b, wb, inds, pref);
         const p = latest(s, year, projection);
         const prev = s && p ? s.points.find((x) => x.year === p.year - 1) : undefined;
-        const delta = p && prev && prev.value && code !== 'density' ? { value: ((p.value - prev.value) / Math.abs(prev.value)) * 100, label: lang === 'ms' ? 'thn lepas' : 'y/y', goodWhenUp: null } : null;
+        const brk = s?.sourceId === 'dosm_opendosm' ? breakYear(b.dosm) : null;
+        const crossesBreak = brk !== null && p && prev && prev.year < brk && p.year >= brk; // a redefinition, not a change
+        const delta = p && prev && prev.value && code !== 'density' && !crossesBreak ? { value: ((p.value - prev.value) / Math.abs(prev.value)) * 100, label: lang === 'ms' ? 'thn lepas' : 'y/y', goodWhenUp: null } : null;
         return <StatCard key={code} ind={ind} value={p?.value} year={p?.year} quality={p?.quality} sourceLabel={shortSource(s?.sourceId, catalog)} delta={code === 'population' ? delta : null} big={code === 'population'} />;
       })}
       {b.areaKm2 ? (
