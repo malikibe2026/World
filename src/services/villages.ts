@@ -7,7 +7,7 @@ type Item = [number, string, string, number, number, string, string | null]; // 
 interface StateDoc { state: string; items: Item[] }
 export interface VillageIndex {
   source_url: string;
-  retrieved_at: string | null;
+  data_as_of: string | null; // newest GeoNames modification date
   states: Record<string, { name: string; count: number; bbox: [number, number, number, number] }>;
   names: Record<string, string>;
 }
