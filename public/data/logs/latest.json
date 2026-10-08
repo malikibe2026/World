@@ -1,25 +1,500 @@
 {
-  "run_id": "20261008T034356Z",
-  "generated_at": "2026-10-08T03:43:57Z",
+  "run_id": "20261008T071942Z",
+  "generated_at": "2026-10-08T07:25:17Z",
   "counts": {
-    "info": 3,
-    "warning": 0,
+    "info": 189,
+    "warning": 31,
     "error": 0
   },
   "steps": {
-    "quality": {
-      "started": "2026-10-08T03:43:56Z",
+    "fetch": {
+      "started": "2026-10-08T07:19:42Z",
       "status": "ok",
-      "finished": "2026-10-08T03:43:57Z",
-      "issues": 489,
+      "finished": "2026-10-08T07:19:49Z",
+      "files": 51,
+      "errors": 0
+    },
+    "reference": {
+      "started": "2026-10-08T07:19:49Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:19:49Z"
+    },
+    "registry": {
+      "started": "2026-10-08T07:19:50Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:19:50Z",
+      "entities": 258,
+      "wpp_matched": 230,
+      "wpp_unmapped": 7
+    },
+    "wpp": {
+      "started": "2026-10-08T07:19:50Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:20:37Z",
+      "files": 257,
+      "layers": 12,
+      "rows": 38807
+    },
+    "geo": {
+      "started": "2026-10-08T07:20:37Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:21:21Z",
+      "files": 262,
+      "total_bytes": 13588966
+    },
+    "profiles": {
+      "started": "2026-10-08T07:21:21Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:22:52Z",
+      "country_profiles": 258,
+      "admin_profiles": 4970
+    },
+    "search": {
+      "started": "2026-10-08T07:22:52Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:22:55Z",
+      "entries": 16718,
+      "bytes": 1772639
+    },
+    "villages": {
+      "started": "2026-10-08T07:22:55Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:22:58Z",
+      "settlements": 21566,
+      "snapped": 364,
+      "search_rows": 21396,
+      "search_bytes": 2905493,
+      "dropped_not_a_settlement": 96,
+      "dropped_outside_states": 10,
+      "dropped_duplicate": 0
+    },
+    "worldbank": {
+      "started": "2026-10-08T07:22:58Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:24:39Z",
+      "indicators": 38,
+      "economies": 212
+    },
+    "opendosm": {
+      "started": "2026-10-08T07:24:39Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:25:08Z",
+      "catalogue": 20,
+      "files": 4,
+      "unmatched_districts": 7
+    },
+    "publish": {
+      "started": "2026-10-08T07:25:08Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:25:08Z",
+      "sources": 13,
+      "indicators": 74
+    },
+    "quality": {
+      "started": "2026-10-08T07:25:08Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:25:09Z",
+      "issues": 514,
       "duplicate_records": 9,
       "missing_values": 28,
       "outliers": 441,
       "unit_mismatch": 1,
       "year_mismatch": 3,
-      "geographic_mismatch": 7
+      "geographic_mismatch": 32
+    },
+    "supabase_export": {
+      "started": "2026-10-08T07:25:09Z",
+      "status": "ok",
+      "finished": "2026-10-08T07:25:17Z",
+      "data_sources": 13,
+      "indicators": 74,
+      "geographies": 5034,
+      "dataset_versions": 25,
+      "countries": 258,
+      "admin_level_1": 4589,
+      "admin_level_2": 159,
+      "geometries": 5006,
+      "places": 7301,
+      "population": 426877,
+      "vital_statistics": 582105,
+      "population_age_sex": 1629894,
+      "historical_events": 30
     }
   },
-  "warnings": [],
+  "warnings": [
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "ATA",
+        "m49": 10
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "PCN",
+        "m49": 612
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "ATF",
+        "m49": 260
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "UMI",
+        "m49": 581
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "HMD",
+        "m49": 334
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "ALD",
+        "m49": 248
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "IOT",
+        "m49": 86
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "NFK",
+        "m49": 574
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "SGS",
+        "m49": 239
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 175,
+        "name": "Mayotte"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 254,
+        "name": "French Guiana"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 312,
+        "name": "Guadeloupe"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 474,
+        "name": "Martinique"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 535,
+        "name": "Bonaire, Sint Eustatius and Saba"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 638,
+        "name": "Reunion"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:19:50Z",
+      "run_id": "20261008T071942Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 772,
+        "name": "Tokelau"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:21:10Z",
+      "run_id": "20261008T071942Z",
+      "step": "geo",
+      "level": "warning",
+      "message": "geographic mismatch: no district polygon for W.P. Putrajaya in geoBoundaries ADM2 (area lies inside a neighbouring district polygon)"
+    },
+    {
+      "ts": "2026-10-08T07:21:21Z",
+      "run_id": "20261008T071942Z",
+      "step": "geo",
+      "level": "warning",
+      "message": "large geometry file for the browser",
+      "context": {
+        "file": "urban",
+        "bytes": 3354342
+      }
+    },
+    {
+      "ts": "2026-10-08T07:22:57Z",
+      "run_id": "20261008T071942Z",
+      "step": "villages",
+      "level": "warning",
+      "message": "geographic mismatch: settlement outside every state polygon (dropped)",
+      "context": {
+        "count": 10
+      }
+    },
+    {
+      "ts": "2026-10-08T07:24:56Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "structural break: district redefined (area moved to new districts)",
+      "context": {
+        "district": "Beaufort",
+        "state": "Sabah",
+        "year": 2025,
+        "change_pct": -26.8,
+        "new_districts": [
+          "Membakut"
+        ]
+      }
+    },
+    {
+      "ts": "2026-10-08T07:24:56Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "structural break: district redefined (area moved to new districts)",
+      "context": {
+        "district": "Papar",
+        "state": "Sabah",
+        "year": 2025,
+        "change_pct": -21.5,
+        "new_districts": [
+          "Membakut"
+        ]
+      }
+    },
+    {
+      "ts": "2026-10-08T07:24:56Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "structural break: district redefined (area moved to new districts)",
+      "context": {
+        "district": "Serian",
+        "state": "Sarawak",
+        "year": 2025,
+        "change_pct": -35.5,
+        "new_districts": [
+          "Gedong",
+          "Lingga",
+          "Pantu",
+          "Sebuyau",
+          "Siburan"
+        ]
+      }
+    },
+    {
+      "ts": "2026-10-08T07:24:56Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "structural break: district redefined (area moved to new districts)",
+      "context": {
+        "district": "Simunjan",
+        "state": "Sarawak",
+        "year": 2025,
+        "change_pct": -67.6,
+        "new_districts": [
+          "Gedong",
+          "Lingga",
+          "Pantu",
+          "Sebuyau",
+          "Siburan"
+        ]
+      }
+    },
+    {
+      "ts": "2026-10-08T07:24:56Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "structural break: district redefined (area moved to new districts)",
+      "context": {
+        "district": "Sri Aman",
+        "state": "Sarawak",
+        "year": 2025,
+        "change_pct": -30,
+        "new_districts": [
+          "Gedong",
+          "Lingga",
+          "Pantu",
+          "Sebuyau",
+          "Siburan"
+        ]
+      }
+    },
+    {
+      "ts": "2026-10-08T07:25:08Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
+      "context": {
+        "state": "Sabah",
+        "district": "Membakut"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:25:08Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
+      "context": {
+        "state": "Sarawak",
+        "district": "Gedong"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:25:08Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
+      "context": {
+        "state": "Sarawak",
+        "district": "Lingga"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:25:08Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
+      "context": {
+        "state": "Sarawak",
+        "district": "Pantu"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:25:08Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
+      "context": {
+        "state": "Sarawak",
+        "district": "Sebuyau"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:25:08Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
+      "context": {
+        "state": "Sarawak",
+        "district": "Siburan"
+      }
+    },
+    {
+      "ts": "2026-10-08T07:25:08Z",
+      "run_id": "20261008T071942Z",
+      "step": "opendosm",
+      "level": "warning",
+      "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
+      "context": {
+        "state": "W.P. Putrajaya",
+        "district": "W.P. Putrajaya"
+      }
+    }
+  ],
   "errors": []
 }
