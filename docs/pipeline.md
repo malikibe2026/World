@@ -45,6 +45,13 @@ python3 scripts/pipeline/run.py --only wikidata --wikidata-only MYS IDN THA SGP
 Langkah rangkaian **gagal dengan selamat**: ralat dilog, langkah ditanda `skipped`/`partial`,
 dan aplikasi terus berfungsi dengan API langsung atau *Data tidak tersedia*.
 
+## Larian automatik
+
+GitHub Actions menjalankan pipeline ini setiap minggu dan membuka PR jika data berubah — lihat
+[`deployment.md`](deployment.md#kemas-kini-data-automatik-mingguan). Output pipeline mesti **deterministik**
+(larian berulang tanpa perubahan sumber menghasilkan fail yang sama); jangan susun output mengikut
+urutan `set` Python.
+
 ## Malaysia (OpenDOSM)
 
 Set data yang diproses (skema disahkan daripada metadata rasmi `datagovmy-meta`):

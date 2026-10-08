@@ -51,3 +51,25 @@ production pada setiap push ke `main`, pratonton (`pr-<nombor>--worldstat-atlas.
 Sekali sahaja: cipta *Personal access token* di Netlify (User settings → Applications) dan simpan sebagai
 secret repositori **`NETLIFY_AUTH_TOKEN`** (GitHub → Settings → Secrets and variables → Actions).
 Tanpa secret itu, kerja deploy dilangkau (CI tidak gagal). Alternatif: pautkan repo terus dalam Netlify UI.
+
+## Kemas kini data automatik (mingguan)
+
+`.github/workflows/data-refresh.yml` berjalan setiap **Isnin 08:47 waktu Malaysia** (dan boleh dijalankan
+bila-bila masa: GitHub → Actions → *Data refresh* → *Run workflow*):
+
+1. Jalankan pipeline penuh dari sumber rasmi (UN WPP, World Bank, OpenDOSM, GeoNames, geodata DOSM).
+   Wikidata dilangkau secara lalai kerana perlahan; tanda *wikidata* semasa larian manual untuk memasukkannya.
+2. `scripts/pipeline/refresh_report.py` membandingkan hasil dengan snapshot semasa. Jika hanya metadata
+   larian berubah (cap masa), tiada apa-apa dibuat.
+3. Jika data berubah: typecheck, ujian dan build dijalankan; pratonton diterbitkan di
+   `data-refresh--worldstat-atlas.netlify.app`; PR **“Kemas kini data automatik …”** dibuka (atau dikemas
+   kini) daripada cawangan `data-refresh/auto` dengan ringkasan: dataset OpenDOSM yang dikemas kini,
+   fail berubah, laporan kualiti dan perubahan sempadan yang dikesan.
+4. **Tiada apa-apa diterbitkan sehingga PR digabungkan oleh manusia.** Gabungan itu mencetuskan deploy production.
+
+Sekali sahaja: GitHub → Settings → Actions → General → *Workflow permissions* → tandakan
+**“Allow GitHub Actions to create and approve pull requests”**. Tanpa tetapan ini, larian gagal pada langkah
+membuka PR (data tetap ada di cawangan `data-refresh/auto`) dan GitHub menghantar e-mel kegagalan.
+
+Nota: GitHub mematikan jadual (*schedule*) bagi repositori awam yang tiada aktiviti selama 60 hari; jika
+berlaku, aktifkan semula di tab Actions.
