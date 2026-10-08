@@ -9,7 +9,7 @@ import { HistoryTimeline } from './panel/HistoryTimeline';
 import { NotAvailable } from './NotAvailable';
 import { SourceNote } from './SourceNote';
 import { ComparePanel } from './ComparePanel';
-import { dosmPyramid, wppPyramid } from '../services/stats';
+import { breakYear, dosmPyramid, lastEstimateYear, wppPyramid } from '../services/stats';
 import { indicatorName, t, type I18nKey } from '../utils/i18n';
 import { formatValue } from '../utils/format';
 import { countryRef } from '../utils/geoRefs';
@@ -67,7 +67,12 @@ function DashContent() {
   const s = (c: string): Series | null => resolveSeries(c, b, wb.data, inds, 'dosm');
   const maxYear = projection ? 2100 : 2024;
   const line = (codes: string[], opts: { title: string; ind?: Indicator; names?: string[]; area?: boolean; maxYear?: number }) => {
-    const lines: LineSpec[] = codes.map((c, i) => ({ name: opts.names?.[i] ?? indicatorName(lang, inds[c]), series: s(c)! })).filter((l) => l.series && l.series.points.length);
+    // without projections, the chart runs to the latest published estimate (DOSM may be newer than 2024)
+    const latestEst = Math.max(maxYear, ...codes.map((c) => lastEstimateYear(s(c)) ?? 0));
+    if (!projection && opts.maxYear === undefined) opts = { ...opts, maxYear: latestEst };
+    const brk = breakYear(b.dosm) ?? undefined;
+    const lines: LineSpec[] = codes.map((c, i) => ({ name: opts.names?.[i] ?? indicatorName(lang, inds[c]), series: s(c)! })).filter((l) => l.series && l.series.points.length)
+      .map((l) => ({ ...l, breakYear: l.series.sourceId === 'dosm_opendosm' ? brk : undefined }));
     const ind = opts.ind ?? inds[codes[0]];
     if (!lines.length) return <ChartCard key={opts.title} title={opts.title}><NotAvailable compact /></ChartCard>;
     const yrs = [...new Set(lines.flatMap((l) => l.series.points.map((p) => p.year)))].filter((y) => y <= (opts.maxYear ?? maxYear)).sort((a, b2) => a - b2);

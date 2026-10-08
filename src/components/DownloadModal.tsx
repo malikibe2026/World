@@ -5,7 +5,7 @@ import { useAtlas } from '../store/atlas';
 import { useLayer } from '../hooks/useLayer';
 import { useLocationBundle, useWorldBank } from '../hooks/useLocation';
 import { resolveSeries } from '../hooks/resolve';
-import { pointAt, toObservation } from '../services/stats';
+import { pointForView, toObservation } from '../services/stats';
 import { buildMeta, downloadBlob, fileStem, toCSV, toGeoJSON, toJSON, toPDF, toPNG, toRows, toXLSX, type ExportRow } from '../services/export';
 import { geo } from '../services/geo';
 import { mapHandle } from '../maps/MapView';
@@ -33,7 +33,7 @@ export function DownloadModal() {
       for (const ind of catalog.indicatorList) {
         const s = resolveSeries(ind.code, bundle.data, wb.data, catalog.indicators, 'dosm');
         if (!s) continue;
-        const pts = series === 'all' ? s.points.filter((p) => projection || p.quality !== 'PROJECTION') : [pointAt(s, year, { allowProjection: projection })].filter(Boolean);
+        const pts = series === 'all' ? s.points.filter((p) => projection || p.quality !== 'PROJECTION') : [pointForView(s, year, projection)].filter(Boolean);
         for (const p of pts) out.push(toObservation(catalog, g, s, p!));
       }
     } else if (L.indicator && L.doc) {

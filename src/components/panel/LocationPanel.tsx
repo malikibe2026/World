@@ -13,7 +13,8 @@ import { StatCard } from '../StatCard';
 import { NotAvailable } from '../NotAvailable';
 import { SourceNote } from '../SourceNote';
 import { TrendChart, PyramidChart, DonutChart } from '../../charts/charts';
-import { dosmPyramid, wppPyramid } from '../../services/stats';
+import { breakYear, dosmPyramid, lastEstimateYear, wppPyramid } from '../../services/stats';
+import { ESTIMATE_LAST_YEAR } from '../../store/atlas';
 import { t } from '../../utils/i18n';
 import { compact } from '../../utils/format';
 import type { GeoRef, Series } from '../../types';
@@ -103,6 +104,11 @@ export function LocationPanel() {
           {statsLevel && !b.dosm ? (
             <NotAvailable reason={isMys ? t(lang, 'dosmNotLoaded') : lang === 'ms' ? 'Tiada statistik rasmi terbuka yang diselaraskan untuk tahap pentadbiran ini dalam snapshot.' : 'No harmonised open official statistics for this administrative level in the snapshot.'} />
           ) : null}
+          {b.dosm?.breaks?.length ? (
+            <p className="fineprint warn pad" role="note">⚠ {lang === 'ms'
+              ? `Perubahan sempadan: mulai ${breakYear(b.dosm)}, DOSM menerbitkan angka ${b.dosm.name} mengikut sempadan baharu, kerana sebahagian kawasannya dipindahkan ke daerah baharu (daerah baharu di negeri ini mulai ${breakYear(b.dosm)}: ${b.dosm.breaks[0].new_districts.join(', ')}). Angka ${breakYear(b.dosm)} ke atas tidak boleh dibandingkan terus dengan tahun sebelumnya (perubahan ${b.dosm.breaks[0].change_pct}% ialah perubahan definisi, bukan penduduk). Sempadan di peta masih sempadan lama, jadi kepadatan tidak dikira bagi tahun tersebut.`
+              : `Boundary change: from ${breakYear(b.dosm)}, DOSM publishes ${b.dosm.name} on its new boundary, as part of its area moved to new districts (new districts in this state from ${breakYear(b.dosm)}: ${b.dosm.breaks[0].new_districts.join(', ')}). Figures from ${breakYear(b.dosm)} are not comparable with earlier years (the ${b.dosm.breaks[0].change_pct}% change is a redefinition, not a population change). The map still shows the old boundary, so density is not computed for those years.`}</p>
+          ) : null}
           {(!statsLevel || b.dosm) && <KeyStats b={b} wb={wb.data} pref={pref} codes={selection.level === 'country' || b.dosm ? undefined : ['population', 'population_male', 'population_female', 'births', 'deaths', 'tfr', 'e0', 'median_age']} />}
           {wb.error && selection.level === 'country' && <p className="fineprint warn pad">⚠ {t(lang, 'liveSourceFailed')} (World Bank API). {lang === 'ms' ? 'Indikator ekonomi dipaparkan sebagai "Data tidak tersedia".' : 'Economic indicators show as “Data not available”.'}</p>}
 
@@ -110,7 +116,7 @@ export function LocationPanel() {
             <Section id="trend" title={t(lang, 'populationTrend')} extra={<button className="link small" onClick={(e) => { e.preventDefault(); setDashTab('population'); }}>{lang === 'ms' ? 'Analisis ›' : 'Analyse ›'}</button>}>
               {s('population') ? (
                 <>
-                  <TrendChart lang={lang} ind={inds.population} height={170} yearMarker={year} lines={[{ name: t(lang, 'population'), series: s('population')!, area: true }]} maxYear={projection ? 2100 : 2024} />
+                  <TrendChart lang={lang} ind={inds.population} height={170} yearMarker={year} lines={[{ name: t(lang, 'population'), series: s('population')!, area: true, breakYear: s('population')!.sourceId === 'dosm_opendosm' ? breakYear(b.dosm) ?? undefined : undefined }]} maxYear={projection ? 2100 : Math.max(ESTIMATE_LAST_YEAR, lastEstimateYear(s('population')) ?? ESTIMATE_LAST_YEAR)} />
                   <SourceNote sourceId={s('population')!.sourceId} note={projection ? t(lang, 'estimateVsProjection') : undefined} />
                 </>
               ) : <NotAvailable compact />}

@@ -1,7 +1,7 @@
 // Active statistical map layer: values for the selected year, classification and legend data.
 import { useMemo } from 'react';
 import type { Indicator, LayerDoc, Quality } from '../types';
-import { useAtlas } from '../store/atlas';
+import { ESTIMATE_LAST_YEAR, useAtlas } from '../store/atlas';
 import { useAsync } from './useAsync';
 import { layerQualityAt, layerYearsWithData, loadDosm, loadLayer, type DosmDoc } from '../services/stats';
 import { classify, type Classification } from '../maps/palette';
@@ -61,7 +61,8 @@ export function useLayer(): LayerState {
       for (const [uid, u] of Object.entries(d.units)) {
         const s = u.series[ind.code];
         if (!s?.length) continue;
-        const pt = [...s].reverse().find(([py]) => py <= year) ?? s[0];
+        // slider at its "now" end (projections off): the latest published estimate, as in the panel
+        const pt = !projection && year >= ESTIMATE_LAST_YEAR ? [...s].reverse().find(([, , q]) => q !== 'PROJECTION') ?? s[s.length - 1] : [...s].reverse().find(([py]) => py <= year) ?? s[0];
         vals[uid] = pt[1];
         yy = Math.max(yy, pt[0]);
       }
