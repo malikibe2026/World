@@ -1,0 +1,110 @@
+# Scheduled data refresh: rebuild the snapshot from the official sources and, when the data
+# changed, open (or update) a pull request with a summary for review. Nothing is published until
+# a person merges that pull request; the merge then deploys to production (deploy-netlify.yml).
+name: Data refresh
+
+on:
+  schedule:
+    - cron: "47 0 * * 1" # Mondays 00:47 UTC (08:47 in Malaysia)
+  workflow_dispatch:
+    inputs:
+      wikidata:
+        description: "Also refresh Wikidata landmarks (slow: one query per country)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
+env:
+  BRANCH: data-refresh/auto
+  NETLIFY_SITE_ID: 90045eca-674e-48d2-accd-63f8cd7ee626
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: scripts/pipeline/requirements.txt
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            scripts/pipeline/package-lock.json
+      - run: pip install -r scripts/pipeline/requirements.txt
+      - run: npm ci --prefix scripts/pipeline
+      - run: npm ci
+
+      # static raw sources (Natural Earth, UN WPP, geoBoundaries, fonts, DOSM geodata) change rarely;
+      # API responses (data/raw/http) are never cached, so every run asks the sources again
+      - uses: actions/cache@v5
+        with:
+          path: |
+            data/raw/ne
+            data/raw/wpp
+            data/raw/gb
+            data/raw/fonts
+            data/raw/dosm
+          key: raw-static-${{ hashFiles('scripts/pipeline/steps/fetch.py') }}
+
+      - name: Run pipeline
+        run: |
+          steps="fetch reference registry wpp geo profiles search villages worldbank opendosm"
+          if [ "${{ inputs.wikidata }}" = "true" ]; then steps="$steps wikidata"; fi
+          python3 scripts/pipeline/run.py --only $steps publish quality supabase_export
+
+      - name: Summarise changes
+        id: report
+        run: |
+          python3 scripts/pipeline/refresh_report.py "$RUNNER_TEMP/summary.md"
+          cat "$RUNNER_TEMP/summary.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Check the app still builds with the new data
+        if: steps.report.outputs.changed == 'true'
+        run: |
+          npm run typecheck
+          npm test
+          npm run build
+
+      - name: Preview deploy
+        if: steps.report.outputs.changed == 'true'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: |
+          if [ -z "$NETLIFY_AUTH_TOKEN" ]; then echo "No NETLIFY_AUTH_TOKEN; skipping preview."; exit 0; fi
+          npx -y netlify-cli@17 deploy --dir=dist --site "$NETLIFY_SITE_ID" --alias data-refresh --message "Data refresh ${{ github.run_id }}"
+          printf '\nPratonton: https://data-refresh--worldstat-atlas.netlify.app\n' >> "$RUNNER_TEMP/summary.md"
+
+      - name: Open or update the pull request
+        if: steps.report.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "worldstat-data-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add public/data data/registry
+          git commit -m "Data refresh $(date -u +%Y-%m-%d)" -m "Automated rebuild of the snapshot from the official sources (run ${{ github.run_id }})."
+          git push --force origin "$BRANCH"
+          title="Kemas kini data automatik $(date -u +%Y-%m-%d)"
+          if gh pr view "$BRANCH" --json state -q .state 2>/dev/null | grep -q OPEN; then
+            gh pr edit "$BRANCH" --title "$title" --body-file "$RUNNER_TEMP/summary.md"
+          else
+            gh pr create --base main --head "$BRANCH" --title "$title" --body-file "$RUNNER_TEMP/summary.md" || {
+              echo "::error::Could not open the pull request. Enable Settings → Actions → General → 'Allow GitHub Actions to create and approve pull requests'. The data is on branch $BRANCH."
+              exit 1
+            }
+          fi

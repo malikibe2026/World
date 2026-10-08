@@ -27,7 +27,8 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
         if r["level"] == "continent":
             entries.append(["continent", r["id"], r["name"], [r.get("name_ms")], None, ["WORLD"], None, None, 100])
     for e in registry["countries"]:
-        alts = [a for a in {e["name_long"], e["name_official"], e["iso2"], e["iso3"], e.get("wpp_name"), *e["name_local"]} if a and a != e["name"]]
+        # sorted: set order changes between runs, which would rewrite the index on every refresh
+        alts = sorted(a for a in {e["name_long"], e["name_official"], e["iso2"], e["iso3"], e.get("wpp_name"), *e["name_local"]} if a and a != e["name"])
         parents = ["WORLD"] + ([e["continent_id"]] if e["continent_id"] else [])
         imp = 90 - (e["label_rank"] or 5)
         entries.append(["country", e["id"], e["name"], alts, e["id"], parents, e["label"][0], e["label"][1], imp])
@@ -58,7 +59,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
     for cid, units in admin["admin1"].items():
         c = countries.get(cid)
         for u in units:
-            alts = [a for a in {u.get("name_local"), u.get("iso")} if a and a != u["name"]]
+            alts = sorted(a for a in {u.get("name_local"), u.get("iso")} if a and a != u["name"])
             parents = ["WORLD"] + ([c["continent_id"]] if c and c["continent_id"] else []) + [cid]
             entries.append(["admin1", u["id"], u["name"], alts, cid, parents, u["label"][0], u["label"][1], 60])
     mys = countries["MYS"]
