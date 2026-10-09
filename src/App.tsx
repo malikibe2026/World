@@ -3,6 +3,8 @@ import { useAtlas } from './store/atlas';
 import { loadCatalog } from './services/catalog';
 import { findById, loadSearchIndex } from './services/search';
 import { MapView } from './maps/MapView';
+import { SheetHandle } from './components/SheetHandle';
+import { AppBanners } from './components/AppBanners';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { LocationPanel } from './components/panel/LocationPanel';
@@ -16,7 +18,7 @@ import { ESTIMATE_LAST_YEAR } from './store/atlas';
 import { t } from './utils/i18n';
 
 export function App() {
-  const { catalog, setCatalog, modal, leftOpen, rightOpen, lang, theme, year, togglePanel, select } = useAtlas();
+  const { catalog, setCatalog, modal, leftOpen, rightOpen, lang, theme, year, togglePanel, select , sheet } = useAtlas();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -50,6 +52,7 @@ export function App() {
       <Header />
       <div className="main">
         {leftOpen && <Sidebar />}
+        {leftOpen && <div className="scrim only-narrow-block" onClick={() => togglePanel('left', false)} aria-hidden="true" />}
         <div className="center">
           <div className="map-area">
             <MapView />
@@ -66,11 +69,13 @@ export function App() {
           <Dashboard />
         </div>
         {rightOpen && (
-          <aside className="panel" aria-label="Location intelligence">
+          <aside className={`panel sheet-${sheet}`} aria-label="Location intelligence">
+            <SheetHandle />
             <LocationPanel />
           </aside>
         )}
       </div>
+      <AppBanners />
       {modal === 'download' && <DownloadModal />}
       {modal === 'sources' && <SourcesPage />}
       {modal === 'quality' && <QualityPage />}

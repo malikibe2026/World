@@ -27,6 +27,7 @@ pipeline di mesin anda atau CI (sebagai *secret*), bukan dalam repositori.
 default-src 'self';
 script-src 'self';
 worker-src 'self' blob:;
+manifest-src 'self';
 img-src 'self' data: blob: https://server.arcgisonline.com https://*.tile.opentopomap.org https://s3.amazonaws.com https://commons.wikimedia.org https://upload.wikimedia.org;
 connect-src 'self' https://api.worldbank.org https://query.wikidata.org https://www.wikidata.org https://en.wikipedia.org https://*.supabase.co https://s3.amazonaws.com;
 style-src 'self' 'unsafe-inline';
@@ -51,6 +52,31 @@ production pada setiap push ke `main`, pratonton (`pr-<nombor>--worldstat-atlas.
 Sekali sahaja: cipta *Personal access token* di Netlify (User settings → Applications) dan simpan sebagai
 secret repositori **`NETLIFY_AUTH_TOKEN`** (GitHub → Settings → Secrets and variables → Actions).
 Tanpa secret itu, kerja deploy dilangkau (CI tidak gagal). Alternatif: pautkan repo terus dalam Netlify UI.
+
+## Aplikasi (PWA): telefon dan desktop
+
+Laman ini juga aplikasi yang boleh dipasang (Progressive Web App) — satu kod untuk semua peranti:
+
+| Peranti | Cara pasang |
+|---|---|
+| Android (Chrome, Edge, Samsung Internet) | Banner **“Pasang WorldStat Atlas”** → *Pasang*; atau menu ⋮ → *Pasang aplikasi* |
+| iPhone / iPad (Safari, Chrome) | Kongsi ⬆︎ → **Tambah ke Skrin Utama** (banner memaparkan langkah ini) |
+| Windows / macOS / ChromeOS (Chrome, Edge) | Ikon pasang di bar alamat, atau banner / butang *Pasang sebagai aplikasi* di bar sisi |
+
+Bagaimana ia berfungsi:
+- `public/manifest.webmanifest` + ikon dalam `public/icons/` (dijana daripada logo).
+- `sw.js` dijana semasa build oleh `vite.config.ts` daripada `src/pwa/sw-template.js`, dengan **ID build**
+  (commit SHA dalam CI). Halaman: rangkaian dahulu (sentiasa versi terkini bila dalam talian); kod
+  aplikasi: disimpan terlebih dahulu; data: disimpan apabila dibuka. URL data membawa `?v=<ID build>`,
+  jadi data deploy lama tidak pernah dipaparkan selepas deploy baharu (termasuk dari cache pelayar).
+- **Kemas kini automatik**: aplikasi menyemak versi baharu apabila dibuka semula dan setiap jam.
+  Jika ditemui semasa aplikasi di latar belakang, ia dipasang senyap; jika semasa digunakan, banner
+  *“Versi baharu … Muat semula”* dipaparkan (tidak dipaksa di tengah kerja).
+- **Luar talian**: kawasan dan statistik yang pernah dibuka boleh dilihat tanpa internet (penunjuk
+  “Luar talian”). Jubin peta asas dan API langsung (World Bank, Wikidata) memerlukan internet.
+- Tiada App Store / Play Store diperlukan. Jika mahu diterbitkan di Play Store kemudian, PWA ini boleh
+  dibungkus sebagai *Trusted Web Activity* (akaun pembangun Google diperlukan); App Store memerlukan
+  pembungkus asli (cth. Capacitor) dan akaun Apple Developer.
 
 ## Kemas kini data automatik (mingguan)
 

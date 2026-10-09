@@ -21,6 +21,10 @@ export interface PointSelection {
   props?: Record<string, unknown>;
 }
 
+/** Phone layout: the location panel is a bottom sheet (see app.css, max-width 700px). */
+export const isPhone = (): boolean => typeof window !== 'undefined' && !!window.matchMedia?.('(max-width: 700px)').matches;
+export type SheetState = 'peek' | 'full';
+
 export interface FlyRequest { nonce: number; bbox?: [number, number, number, number]; center?: [number, number]; zoom?: number }
 
 const store = {
@@ -83,6 +87,8 @@ interface AtlasState {
   leftOpen: boolean;
   rightOpen: boolean;
   dashOpen: boolean;
+  /** phone bottom sheet: half height or full height */
+  sheet: SheetState;
   fly: FlyRequest | null;
   landmarks: Landmark[];
   landmarkFilter: string | null;
@@ -108,6 +114,7 @@ interface AtlasState {
   setModal: (m: Modal) => void;
   setDashTab: (t: DashTab) => void;
   togglePanel: (p: 'left' | 'right' | 'dash', open?: boolean) => void;
+  setSheet: (s: SheetState) => void;
   flyTo: (f: Omit<FlyRequest, 'nonce'>) => void;
   setLandmarks: (l: Landmark[]) => void;
   setLandmarkFilter: (c: string | null) => void;
@@ -135,7 +142,9 @@ export const useAtlas = create<AtlasState>((set, get) => ({
   dashTab: 'overview',
   leftOpen: typeof window === 'undefined' || window.innerWidth > 900,
   rightOpen: typeof window === 'undefined' || window.innerWidth > 900,
-  dashOpen: typeof window === 'undefined' || window.innerHeight > 760,
+  // phones open on the map: charts stay one tap away instead of taking half the screen
+  dashOpen: typeof window === 'undefined' || (window.innerHeight > 760 && !isPhone()),
+  sheet: 'peek',
   fly: null,
   landmarks: [],
   landmarkFilter: null,
@@ -148,7 +157,7 @@ export const useAtlas = create<AtlasState>((set, get) => ({
   },
   setCatalog: (catalog) => set({ catalog }),
   select: (selection, fly) => {
-    set({ selection, point: null, rightOpen: true, landmarkFilter: null });
+    set({ selection, point: null, rightOpen: true, landmarkFilter: null, ...(isPhone() ? { sheet: 'peek' as const, leftOpen: false } : {}) });
     if (selection?.level === 'admin2' && selection.countryId === 'MYS') {
       const d: MyDivision = isParlimen(selection.id) ? 'parlimen' : 'district';
       if (d !== get().myDivision) { store.set('myDivision', d); set({ myDivision: d }); }
@@ -159,7 +168,7 @@ export const useAtlas = create<AtlasState>((set, get) => ({
     if (selection) url.searchParams.set('geo', selection.id); else url.searchParams.delete('geo');
     history.replaceState(null, '', url);
   },
-  setPoint: (point) => set({ point, rightOpen: point ? true : get().rightOpen }),
+  setPoint: (point) => set({ point, rightOpen: point ? true : get().rightOpen, ...(point && isPhone() ? { sheet: 'peek' as const } : {}) }),
   setHover: (hoverId) => set({ hoverId }),
   setYear: (year) => set({ year }),
   setProjection: (projection) => set((s) => ({ projection, year: projection ? s.year : Math.min(s.year, ESTIMATE_LAST_YEAR) })),
@@ -184,11 +193,13 @@ export const useAtlas = create<AtlasState>((set, get) => ({
   removeCompare: (id) => set((s) => ({ compare: s.compare.filter((c) => c.id !== id) })),
   clearCompare: () => set({ compare: [] }),
   setModal: (modal) => set({ modal }),
-  setDashTab: (dashTab) => set({ dashTab, dashOpen: true }),
+  // on a phone the sheet would cover the charts: make room for them
+  setDashTab: (dashTab) => set({ dashTab, dashOpen: true, ...(isPhone() ? { rightOpen: false } : {}) }),
   togglePanel: (p, open) => set((s) => {
     const key = p === 'left' ? 'leftOpen' : p === 'right' ? 'rightOpen' : 'dashOpen';
     return { [key]: open ?? !s[key] } as Partial<AtlasState>;
   }),
+  setSheet: (sheet) => set({ sheet }),
   flyTo: (f) => set({ fly: { ...f, nonce: Date.now() + Math.random() } }),
   setLandmarks: (landmarks) => set({ landmarks }),
   setLandmarkFilter: (landmarkFilter) => set({ landmarkFilter }),

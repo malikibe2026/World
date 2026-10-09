@@ -1,3 +1,4 @@
+import { InstallButton } from './AppBanners';
 import { MyDivisionSwitch } from './MyDivisionSwitch';
 import { useAtlas, type Basemap, type OverlayKey } from '../store/atlas';
 import { indicatorName, t, type I18nKey } from '../utils/i18n';
@@ -114,6 +115,9 @@ export function Sidebar() {
             </label>
           ))}
         </div>
+      </section>
+      <section className="sb-sec">
+        <InstallButton />
       </section>
     </aside>
   );

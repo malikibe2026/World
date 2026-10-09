@@ -11,9 +11,12 @@ export class HttpError extends Error {
   }
 }
 
-/** URL of a file in the static snapshot (public/data). */
+/**
+ * URL of a file in the static snapshot (public/data). The build id makes each deploy's data a
+ * new URL, so neither the browser cache nor the service worker can serve an older snapshot.
+ */
 export function dataUrl(path: string): string {
-  return `${BASE}/data/${path.replace(/^\//, '')}`;
+  return `${BASE}/data/${path.replace(/^\//, '')}?v=${__BUILD_ID__}`;
 }
 
 export function assetUrl(path: string): string {
