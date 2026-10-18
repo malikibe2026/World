@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="lib/ml/maplibre-gl.css">
+<style>html,body,#map{margin:0;width:100vw;height:100vh;overflow:hidden;background:#000}.maplibregl-ctrl-attrib,.maplibregl-ctrl{display:none!important}</style>
+</head>
+<body>
+<div id="map"></div>
+<script src="lib/path.js"></script>
+<script type="module">
+import { Map, setNow } from './lib/ml/maplibre-gl.mjs';
+const Q = new URL(location.href).searchParams; const test = Q.has('test');
+const ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services';
+const fadeZ = (a, b, c, d) => ['interpolate', ['linear'], ['zoom'], a, 0, b, 1, c, 1, d, 0];
+const style = {
+  version: 8,
+  glyphs: 'desc-data/fonts/{fontstack}/{range}.pbf',
+  projection: { type: 'globe' },
+  sky: { 'sky-color': '#4f86d4', 'horizon-color': '#cfe2ff', 'fog-color': '#d9e7ff', 'sky-horizon-blend': 0.55, 'horizon-fog-blend': 0.6, 'fog-ground-blend': 0.25, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 1, 8, 0] },
+  sources: {
+    img: { type: 'raster', tiles: [`${ESRI}/World_Imagery/MapServer/tile/{z}/{y}/{x}`], tileSize: 256, maxzoom: 19 },
+    roads: { type: 'raster', tiles: [`${ESRI}/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}`], tileSize: 256, maxzoom: 19 },
+    places: { type: 'raster', tiles: [`${ESRI}/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}`], tileSize: 256, maxzoom: 19 },
+    dem: { type: 'raster-dem', tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'], tileSize: 256, maxzoom: 15, encoding: 'terrarium' },
+    hl: { type: 'geojson', data: 'desc-data/hulu-langat.geojson' },
+    vil: { type: 'geojson', data: 'desc-data/villages.geojson' },
+  },
+  layers: [
+    { id: 'bg', type: 'background', paint: { 'background-color': '#0b1a33' } },
+    ...(test
+      ? [{ id: 'hs', type: 'hillshade', source: 'dem', paint: { 'hillshade-exaggeration': 0.6 } }]
+      : [
+          { id: 'img', type: 'raster', source: 'img', paint: { 'raster-fade-duration': 0, 'raster-saturation': 0.06, 'raster-contrast': 0.05 } },
+          { id: 'roads', type: 'raster', source: 'roads', minzoom: 10, paint: { 'raster-fade-duration': 0, 'raster-opacity': ['interpolate', ['linear'], ['zoom'], 10.5, 0, 12.5, 1] } },
+          { id: 'places', type: 'raster', source: 'places', paint: { 'raster-fade-duration': 0, 'raster-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0, 6.5, 0.85, 12, 0.85, 13.5, 0] } },
+        ]),
+    { id: 'hl-glow', type: 'line', source: 'hl', paint: { 'line-color': '#f2b84b', 'line-width': 12, 'line-blur': 9, 'line-opacity': fadeZ(6.8, 7.8, 12.3, 13.8) } },
+    { id: 'hl-line', type: 'line', source: 'hl', paint: { 'line-color': '#f7cd73', 'line-width': 2.8, 'line-opacity': fadeZ(6.8, 7.8, 12.3, 13.8) } },
+    { id: 'vil-dot', type: 'circle', source: 'vil', minzoom: 11, paint: {
+      'circle-radius': ['case', ['get', 'focus'], 11, 5], 'circle-color': ['case', ['get', 'focus'], '#f2b84b', '#ffffff'],
+      'circle-stroke-color': ['case', ['get', 'focus'], '#ffffff', '#0b1528'], 'circle-stroke-width': ['case', ['get', 'focus'], 3, 2], 'circle-opacity': ['interpolate', ['linear'], ['zoom'], 11, 0, 12, 1], 'circle-stroke-opacity': ['interpolate', ['linear'], ['zoom'], 11, 0, 12, 1], 'circle-pitch-alignment': 'viewport' } },
+    { id: 'vil-lab', type: 'symbol', source: 'vil', minzoom: 11.5, filter: ['!', ['get', 'focus']], layout: {
+      'text-field': ['get', 'name'], 'text-font': ['Noto Sans Medium'], 'text-size': 17, 'text-offset': [0, 0.9], 'text-anchor': 'top', 'text-pitch-alignment': 'viewport' },
+      paint: { 'text-color': '#ffffff', 'text-halo-color': 'rgba(8,14,26,.92)', 'text-halo-width': 1.8, 'text-opacity': ['interpolate', ['linear'], ['zoom'], 11.5, 0, 12.3, 1] } },
+    { id: 'vil-focus', type: 'symbol', source: 'vil', minzoom: 11.5, filter: ['get', 'focus'], layout: {
+      'text-field': ['get', 'name'], 'text-font': ['Noto Sans Medium'], 'text-size': 32, 'text-offset': [0, 0.8], 'text-anchor': 'top', 'text-allow-overlap': true, 'text-ignore-placement': true, 'text-pitch-alignment': 'viewport' },
+      paint: { 'text-color': '#ffe2a3', 'text-halo-color': 'rgba(8,14,26,.92)', 'text-halo-width': 2.4, 'text-opacity': ['interpolate', ['linear'], ['zoom'], 11.5, 0, 12.3, 1] } },
+  ],
+  ...(Q.has('terrain') ? { terrain: { source: 'dem', exaggeration: 1.35 } } : {}),
+};
+if (!Q.has('nonow')) setNow(0);
+const c0 = window.PATH.camera(16.0);
+const map = new Map({ container: 'map', style, center: [c0.lon, c0.lat], zoom: c0.z, pitch: 0, maxPitch: 75, fadeDuration: 0, interactive: false, attributionControl: false, canvasContextAttributes: { antialias: true, preserveDrawingBuffer: true } });
+map.on('error', (e) => console.log('maperr', e.error?.message || e));
+const idle = () => new Promise((res) => { let done = false; const fin = () => { if (!done) { done = true; res(); } }; map.once('idle', fin); map.triggerRepaint(); setTimeout(fin, 45000); });
+window.frame = async (t) => {
+  const c = window.PATH.camera(t);
+  if (!Q.has('nonow')) setNow(Math.round(t * 1000));
+  map.jumpTo({ center: [c.lon, c.lat], zoom: c.z, pitch: c.pitch, bearing: c.bearing });
+  await idle();
+  return c;
+};
+map.once('load', async () => { await idle(); window.ready = true; });
+</script>
+</body>
+</html>

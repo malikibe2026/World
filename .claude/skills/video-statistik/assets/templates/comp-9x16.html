@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<title>WorldStat Atlas — 9:16</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="fonts/fonts2.css">
+<style>
+:root { --navy:#070d18; --gold:#f2b84b; --gold2:#ffd68a; --blue:#7db3f5; --ink:#f5f8fc; --mute:#a9b8cc;
+  --f-disp:'Plus Jakarta Sans', Inter, sans-serif; --f-body: Inter, sans-serif; --f-mono:'JetBrains Mono', monospace; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #02040a; font-family: var(--f-body); color: var(--ink); -webkit-font-smoothing: antialiased; }
+.scene { position: absolute; inset: 0; display: none; overflow: hidden; }
+.abs { position: absolute; }
+.full { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; }
+/* typography system: one display face (Plus Jakarta Sans), solid accents, tracked caps for kickers */
+.disp { font-family: var(--f-disp); font-weight: 800; letter-spacing: -0.03em; line-height: 1.06; color: var(--ink); }
+.disp2 { font-family: var(--f-disp); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.kick { font-family: var(--f-disp); font-weight: 700; font-size: 17px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 16px; white-space: nowrap; }
+.kick::before { content: ''; width: 44px; height: 2px; background: var(--gold); display: block; }
+.mono { font-family: var(--f-mono); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
+.k .kl { white-space: nowrap; }
+.mask { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.04em 0.03em 0.14em; margin-bottom: -0.1em; }
+.w { display: inline-block; transform-origin: 0 100%; }
+.acc { color: var(--gold); }
+.gold { color: var(--blue); }
+.shadow { text-shadow: 0 2px 24px rgba(0,0,0,.6), 0 1px 2px rgba(0,0,0,.5); }
+
+.lt { position: absolute; padding: 20px 32px 22px 34px; background: rgba(5,10,20,.9); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+.lt-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; border-radius: 12px 0 0 12px; background: var(--gold); transform-origin: 50% 0; }
+.lt-k { font-family: var(--f-disp); font-weight: 700; font-size: 15px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.lt-tm { overflow: hidden; }
+.lt-t { font-family: var(--f-disp); font-weight: 700; font-size: 32px; letter-spacing: -0.01em; color: #fff; white-space: nowrap; }
+
+.browser { position: absolute; border-radius: 16px; overflow: hidden; background: #0d1626; box-shadow: 0 50px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(140,180,240,.16); }
+.chrome { position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; gap: 9px; padding: 0 18px; background: linear-gradient(#162236, #111b2c); border-bottom: 1px solid rgba(255,255,255,.06); }
+.chrome i { width: 13px; height: 13px; border-radius: 50%; background: #ff5f57; display: block; }
+.chrome i:nth-child(2) { background: #febc2e; } .chrome i:nth-child(3) { background: #28c840; }
+.url { margin-left: 22px; flex: 0 1 520px; height: 28px; border-radius: 8px; background: rgba(255,255,255,.06); color: #b9c7da; font-size: 15px; display: flex; align-items: center; gap: 8px; padding: 0 14px; }
+.url b { color: #fff; font-weight: 600; }
+.content { position: absolute; left: 0; overflow: hidden; }
+.zw { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.zw img.shot { position: absolute; left: 0; top: 0; }
+.callout { position: absolute; }
+.callout svg { position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px); overflow: visible; }
+.callout .tag { position: absolute; left: -6px; bottom: calc(100% + 12px); transform-origin: 0 100%; white-space: nowrap; background: var(--gold); color: #1a1205; font-family: var(--f-disp); font-weight: 700; font-size: 20px; padding: 8px 14px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+.callout .tag.below { bottom: auto; top: calc(100% + 12px); transform-origin: 0 0; }
+.cursor { position: absolute; left: 0; top: 0; width: 34px; height: 40px; z-index: 5; filter: drop-shadow(0 4px 8px rgba(0,0,0,.5)); }
+.ripple { position: absolute; width: 20px; height: 20px; border-radius: 50%; border: 3px solid var(--gold); z-index: 4; }
+.phone { position: absolute; border-radius: 52px; background: linear-gradient(145deg, #2b3446, #0b0f17 60%); padding: 13px; box-shadow: 0 50px 100px rgba(0,0,0,.55), inset 0 0 0 2px rgba(255,255,255,.08); }
+.phone .scr { position: relative; width: 100%; height: 100%; border-radius: 40px; overflow: hidden; background: #000; }
+.phone .scr img { width: 100%; height: 100%; display: block; }
+.phone .island { position: absolute; left: 50%; top: 22px; width: 92px; height: 26px; margin-left: -46px; border-radius: 14px; background: #000; }
+.chip { display: inline-flex; align-items: center; gap: 10px; padding: 9px 16px; border-radius: 999px; background: rgba(5,10,20,.72); border: 1px solid rgba(255,255,255,.14); color: #fff; font-family: var(--f-disp); font-weight: 700; font-size: 15px; letter-spacing: 0.16em; text-transform: uppercase; }
+.toast { position: absolute; display: flex; align-items: center; gap: 18px; padding: 18px 22px; border-radius: 14px; background: rgba(13,27,46,.96); border: 1px solid rgba(120,170,240,.3); box-shadow: 0 30px 70px rgba(0,0,0,.5); font-size: 22px; font-weight: 600; white-space: nowrap; }
+.toast .btn { background: #1c5cab; color: #fff; padding: 9px 16px; border-radius: 10px; font-size: 19px; }
+.feat { display: flex; align-items: center; gap: 18px; font-size: 27px; font-weight: 500; color: #dfe8f5; }
+.feat .ic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: rgba(242,184,75,.12); color: var(--gold); font-size: 24px; border: 1px solid rgba(242,184,75,.35); }
+.flag { position: absolute; width: 150px; height: 112.5px; border-radius: 7px; overflow: hidden; box-shadow: 0 8px 22px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.08); }
+.flag img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.hud { font-family: var(--f-mono); font-size: 17px; letter-spacing: 0.14em; color: #e9f0fa; text-transform: uppercase; }
+.hud b { color: var(--gold); font-weight: 500; }
+#grain div { position: absolute; inset: -20px; background-size: 256px 256px; mix-blend-mode: overlay; display: none; }
+#vig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0,0,0,.5) 100%); }
+.bar { position: absolute; left: 0; right: 0; background: #000; z-index: 90; }
+#flash { position: absolute; inset: 0; background: #fff; opacity: 0; z-index: 95; }
+.attrib { position: absolute; right: 26px; bottom: 150px; font-size: 14px; color: rgba(255,255,255,.72); text-shadow: 0 1px 3px rgba(0,0,0,.8); z-index: 91; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/path.js"></script>
+<script type="module">
+import { createEarth } from './lib/earth.js';
+const FPS = 30;
+const $ = (tag, cls, parent, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; if (parent) parent.appendChild(e); return e; };
+const css = (e, o) => { for (const k in o) e.style[k] = typeof o[k] === 'number' && !['opacity', 'zIndex'].includes(k) ? o[k] + 'px' : o[k]; return e; };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, p) => a + (b - a) * p;
+const P = (t, a, b) => clamp((t - a) / (b - a));
+const E = {
+  outExpo: (p) => (p >= 1 ? 1 : 1 - Math.pow(2, -10 * p)), outCubic: (p) => 1 - Math.pow(1 - p, 3), inCubic: (p) => p * p * p,
+  inOutCubic: (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2), inOutSine: (p) => -(Math.cos(Math.PI * p) - 1) / 2,
+  outBack: (p) => { const c1 = 1.5, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); },
+};
+const fmt = (n) => Math.round(n).toLocaleString('en-US');
+const SH = (n) => `shots/${n}.jpg`;
+const stage = document.getElementById('stage');
+const scenes = [];
+function scene(a, b, z, build, draw) { const root = $('div', 'scene', stage); root.style.zIndex = z; const s = { a, b, root, draw }; build(root, s); scenes.push(s); return s; }
+function K(parent, text, cls, pos) {
+  const box = $('div', 'k ' + (cls || ''), parent); if (pos) css(box, pos);
+  const words = [];
+  text.split('|').forEach((line) => {
+    const ln = $('div', 'kl', box);
+    line.trim().split(/\s+/).forEach((w, i, arr) => {
+      const acc = w.includes('*'), alt = w.includes('^');
+      const m = $('span', 'mask', ln); const s = $('span', 'w' + (acc ? ' acc' : '') + (alt ? ' gold' : ''), m, w.replace(/[*^]/g, '').replace(/_/g, ' '));
+      if (i < arr.length - 1) ln.appendChild(document.createTextNode(' '));
+      words.push(s);
+    });
+  });
+  return { box, words };
+}
+function kDraw(k, t, tin, tout, o = {}) {
+  const st = o.st ?? 0.06, d = o.d ?? 0.8, od = o.od ?? 0.38;
+  let any = false;
+  k.words.forEach((w, i) => {
+    const pi = E.outExpo(P(t, tin + i * st, tin + i * st + d));
+    const po = tout == null ? 0 : E.inCubic(P(t, tout + i * st * 0.35, tout + i * st * 0.35 + od));
+    w.style.transform = `translateY(${(1 - pi) * 112 - po * 112}%)`;
+    w.style.opacity = Math.min(pi * 1.5, 1) * (1 - po);
+    if (pi > 0 && po < 1) any = true;
+  });
+  k.box.style.visibility = any ? 'visible' : 'hidden';
+}
+function Kick(parent, text, pos) { const k = $('div', 'kick abs', parent, text); css(k, pos); return k; }
+function kickDraw(k, t, tin, tout) { const p = E.outExpo(P(t, tin, tin + 0.7)), q = tout == null ? 0 : P(t, tout, tout + 0.3); k.style.opacity = p * (1 - q); k.style.transform = `translateX(${(1 - p) * -24}px)`; k.style.clipPath = `inset(0 ${(1 - p) * 100}% 0 0)`; }
+function LT(parent, kicker, title, pos) {
+  const r = $('div', 'lt', parent); css(r, pos);
+  const bar = $('div', 'lt-bar', r), kk = $('div', 'lt-k', r, kicker), tm = $('div', 'lt-tm', r), tt = $('div', 'lt-t', tm, title);
+  return { r, bar, kk, tt };
+}
+function ltDraw(l, t, tin, tout) {
+  const pi = E.outExpo(P(t, tin, tin + 0.75)), po = E.inCubic(P(t, tout, tout + 0.32));
+  l.r.style.visibility = pi > 0 && po < 1 ? 'visible' : 'hidden';
+  l.r.style.opacity = 1 - po;
+  l.r.style.transform = `translateX(${-po * 40}px)`;
+  l.r.style.clipPath = `inset(0 ${(1 - pi) * 100}% 0 0 round 12px)`;
+  l.bar.style.transform = `scaleY(${E.outExpo(P(t, tin + 0.15, tin + 0.8))})`;
+  l.kk.style.opacity = P(t, tin + 0.15, tin + 0.5);
+  l.tt.style.transform = `translateY(${(1 - E.outExpo(P(t, tin + 0.2, tin + 0.95))) * 110}%)`;
+}
+let gid = 0;
+const globe = () => { const id = 'bm' + gid++; return `<svg viewBox="0 0 64 64"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3987e5"/><stop offset="1" stop-color="#104281"/></linearGradient></defs><circle cx="32" cy="32" r="28" fill="url(#${id})"/><g fill="none" stroke="#fff" stroke-opacity=".92" stroke-width="2.6"><ellipse cx="32" cy="32" rx="12" ry="28"/><path d="M4 32h56M9 18h46M9 46h46"/></g></svg>`; };
+const CURSOR = `<svg viewBox="0 0 34 40"><path d="M3 2 L3 32 L10.5 25 L15.5 37 L21 34.6 L16 23 L26.5 23 Z" fill="#fff" stroke="#0a0f18" stroke-width="2.2" stroke-linejoin="round"/></svg>`;
+function Browser(parent, W, left, top, srcs) {
+  const ch = Math.round(44 * W / 1500), H = Math.round(W * 900 / 1600);
+  const root = $('div', 'browser', parent); css(root, { left, top, width: W, height: H + ch });
+  const c = $('div', 'chrome', root); c.style.height = ch + 'px';
+  $('i', '', c); $('i', '', c); $('i', '', c);
+  $('div', 'url', c, `<span style="opacity:.7">🔒</span><b>worldstat-atlas</b>.netlify.app`);
+  const content = $('div', 'content', root); css(content, { top: ch, width: W, height: H });
+  const zw = $('div', 'zw', content); css(zw, { width: W, height: H });
+  const imgs = {};
+  for (const n of srcs) { const im = $('img', 'shot', zw); im.src = SH(n); css(im, { width: W, height: H, opacity: 0 }); imgs[n] = im; }
+  return { root, content, zw, imgs, W, H, k: W / 1600 };
+}
+function Callout(parent, k, x, y, w, h, label, below) {
+  const r = $('div', 'callout', parent); css(r, { left: x * k, top: y * k, width: w * k, height: h * k });
+  r.innerHTML = `<svg preserveAspectRatio="none"><rect style="x:3px;y:3px;rx:12px;width:calc(100% - 6px);height:calc(100% - 6px)" pathLength="1" fill="rgba(242,184,75,.08)" stroke="#f2b84b" stroke-width="3" stroke-dasharray="1 1"/></svg>`;
+  const tag = $('div', 'tag' + (below ? ' below' : ''), r, label);
+  return { r, rect: r.querySelector('rect'), tag };
+}
+function calloutDraw(c, t, tin, tout, s = 1) {
+  const pi = E.outCubic(P(t, tin, tin + 0.55)), po = P(t, tout, tout + 0.3);
+  c.r.style.visibility = pi > 0 && po < 1 ? 'visible' : 'hidden';
+  c.r.style.opacity = 1 - po;
+  c.rect.style.strokeDashoffset = 1 - pi;
+  c.rect.setAttribute('stroke-width', 3 / s);
+  const tp = E.outBack(P(t, tin + 0.25, tin + 0.7));
+  c.tag.style.transform = `scale(${(0.6 + 0.4 * tp) / s})`;
+  c.tag.style.opacity = P(t, tin + 0.25, tin + 0.45);
+}
+const STATUS = (k) => `<div style="position:absolute;left:0;right:0;top:0;height:${46 * k}px;background:#0b1424;display:flex;align-items:center;justify-content:space-between;padding:0 ${30 * k}px 0 ${38 * k}px;font:600 ${17 * k}px Inter;color:#fff;z-index:2"><span>9:41</span><span style="display:flex;gap:${6 * k}px;align-items:center"><svg width="${18 * k}" height="${11 * k}" viewBox="0 0 18 11"><rect x="0" y="7" width="3" height="4" rx="1" fill="#fff"/><rect x="5" y="5" width="3" height="6" rx="1" fill="#fff"/><rect x="10" y="2.5" width="3" height="8.5" rx="1" fill="#fff"/><rect x="15" y="0" width="3" height="11" rx="1" fill="#fff"/></svg><svg width="${25 * k}" height="${12 * k}" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="3" fill="none" stroke="#fff" stroke-opacity=".5"/><rect x="2" y="2" width="16" height="8" rx="1.6" fill="#fff"/><rect x="22.5" y="4" width="2" height="4" rx="1" fill="#fff" fill-opacity=".5"/></svg></span></div>`;
+function Phone(parent, src, w, x, y) {
+  const k = (w - 26) / 390, sb = 46 * k;
+  const h = Math.round((w - 26) * 1992 / 1170 + sb) + 26;
+  const r = $('div', 'phone', parent); css(r, { left: x, top: y, width: w, height: h });
+  const scr = $('div', 'scr', r); scr.insertAdjacentHTML('beforeend', STATUS(k));
+  const im = $('img', '', scr); im.src = SH(src); css(im, { position: 'absolute', left: 0, top: sb, width: w - 26, height: (w - 26) * 1992 / 1170 });
+  const isl = $('div', 'island', r); css(isl, { top: 13 + 11 * k, width: 92 * k, height: 26 * k, marginLeft: -46 * k });
+  return r;
+}
+function keyed(t, keys, f) {
+  if (t <= keys[0].t) return keys[0];
+  for (let i = 0; i < keys.length - 1; i++) {
+    const a = keys[i], b = keys[i + 1];
+    if (t <= b.t) { const p = (f || E.inOutCubic)(P(t, a.t, b.t)); const o = {}; for (const k in a) o[k] = lerp(a[k], b[k], p); return o; }
+  }
+  return keys[keys.length - 1];
+}
+const flagUrl = (iso) => `shots/flags/${iso}.svg`;
+window.FLAGS = (await (await fetch('shots/flags/list.json')).json()).iso;
+window.DESC_DIR = new URL(location.href).searchParams.get('desc') || 'desc';
+
+/* ===== Vertical 9:16 (1080×1920) for TikTok & Reels. Safe area for text: x 70–920, y 250–1480. ===== */
+const VW = 1080, VH = 1920, CX = 540, CY = 960;
+
+/* ================= EARTH layer ================= */
+const earthRoot = $('div', 'scene', stage); earthRoot.style.zIndex = 12;
+const earthCanvas = $('canvas', 'full', earthRoot); earthCanvas.width = VW; earthCanvas.height = VH;
+// same pixel scale as the landscape cut (f = 2015 px) so the hand-off to the map still lines up
+const EARTH = await createEarth(earthCanvas, { W: VW, H: VH, fov: 2 * Math.atan(960 / 2015) * 180 / Math.PI });
+function earthState(t) {
+  if (t < 8.5) {
+    const p = E.inOutCubic(P(t, 4.5, 6.6));
+    return {
+      lon: 102, lat: 4, dist: lerp(6.3 - 0.35 * P(t, 0, 4.5), 1.62, p), spin: lerp(-44, -30, P(t, 0, 8.5)), tilt: lerp(9, 2, p),
+      shiftX: 0, shiftY: lerp(330, 1925, p), sunLon: lerp(4, 160, E.inOutSine(P(t, 4.3, 7.4))), sunLat: lerp(8, 38, p), stars: 1, exposure: 1,
+    };
+  }
+  const c = window.PATH.camera(t);
+  return { lon: c.lon, lat: c.lat, dist: c.dist, spin: c.spin, tilt: c.tilt, sunLon: 58, sunLat: 9, stars: clamp((c.dist - 1.8) / 3), exposure: 1 };
+}
+
+/* ================= S1 · Space open (0 – 6.4) ================= */
+const S1 = {};
+scene(0, 6.4, 25, (r) => {
+  S1.kick = Kick(r, 'Bumi · lebih 8 bilion penduduk', { left: 84, top: 330 });
+  S1.k1 = K(r, 'Setiap tempat|ada *cerita.*', 'disp shadow', { position: 'absolute', left: 80, top: 380, fontSize: '104px' });
+  S1.k2 = K(r, 'Setiap cerita|ada *angka.*', 'disp shadow', { position: 'absolute', left: 80, top: 380, fontSize: '104px' });
+}, (t) => {
+  kickDraw(S1.kick, t, 0.4, 4.2);
+  kDraw(S1.k1, t, 0.5, 2.25);
+  kDraw(S1.k2, t, 2.45, 4.25);
+});
+
+/* ================= S2 · Logo over the horizon (4.9 – 8.4) ================= */
+const S2 = {};
+scene(4.9, 8.4, 26, (r) => {
+  S2.logo = $('div', 'abs', r); css(S2.logo, { left: 0, right: 0, top: 520, height: 640, textAlign: 'center', transformOrigin: '50% 40%' });
+  S2.ring = $('div', 'abs', S2.logo); css(S2.ring, { left: CX - 72, top: 0, width: 144, height: 144, borderRadius: '50%', border: '2px solid rgba(242,184,75,.85)' });
+  S2.mark = $('div', 'abs', S2.logo, globe()); css(S2.mark, { left: CX - 72, top: 0, width: 144, height: 144 });
+  S2.word = $('div', 'abs disp', S2.logo, 'WORLDSTAT<br><span style="color:var(--gold)">ATLAS</span>'); css(S2.word, { left: 0, right: 0, top: 190, fontSize: '118px', lineHeight: '1.04', letterSpacing: '0.1em' });
+  S2.rule = $('div', 'abs', S2.logo); css(S2.rule, { left: CX - 150, top: 462, width: 300, height: 2, background: 'linear-gradient(90deg, transparent, #f2b84b, transparent)' });
+  S2.tag = K(S2.logo, 'Atlas statistik interaktif —|dari angkasa hingga ke kampung.', '', { position: 'absolute', left: 0, right: 0, top: 492, fontSize: '34px', fontWeight: 500, color: '#c7d4e6', lineHeight: '1.35' });
+}, (t) => {
+  const out = E.inCubic(P(t, 7.85, 8.4));
+  S2.logo.style.opacity = (t >= 5.0 ? 1 : 0) * (1 - out);
+  S2.logo.style.transform = `translateY(${-out * 40}px)`;
+  const m = E.outBack(P(t, 5.0, 5.6));
+  S2.mark.style.transform = `scale(${0.3 + 0.7 * m})`; S2.mark.style.opacity = P(t, 5.0, 5.15);
+  const rg = P(t, 5.05, 6.2); S2.ring.style.transform = `scale(${1 + rg * 2.6})`; S2.ring.style.opacity = (1 - rg) * (t > 5.05 ? 0.9 : 0);
+  const wp = E.outExpo(P(t, 5.15, 6.2)); S2.word.style.letterSpacing = `${0.32 - 0.22 * wp}em`; S2.word.style.opacity = wp;
+  S2.rule.style.transform = `scaleX(${E.outExpo(P(t, 5.6, 6.5))})`;
+  kDraw(S2.tag, t, 5.75, null, { st: 0.035 });
+});
+
+/* ================= S3 · World flags wall + counter, dive into Malaysia (8.125 – 12.6) ================= */
+const S3 = {};
+const FL = { w: 150, h: 112.5, gx: 22, gy: 24, rows: 15, cols: 24, myRow: 7, myCol: 12 };
+const SC3 = scene(8.125, 12.6, 30, (r) => {
+  r.style.background = '#050912';
+  r.style.perspective = '1700px';
+  S3.wall = $('div', 'abs', r); css(S3.wall, { left: 0, top: 0, width: FL.cols * (FL.w + FL.gx), height: FL.rows * (FL.h + FL.gy), transformOrigin: '0 0', transformStyle: 'preserve-3d' });
+  S3.rows = [];
+  const list = window.FLAGS; let k = 0;
+  for (let ri = 0; ri < FL.rows; ri++) {
+    const row = $('div', 'abs', S3.wall); css(row, { left: 0, top: ri * (FL.h + FL.gy), width: FL.cols * (FL.w + FL.gx), height: FL.h });
+    for (let ci = 0; ci < FL.cols; ci++) {
+      const iso = ri === FL.myRow && ci === FL.myCol ? 'my' : list[k++ % list.length];
+      const f = $('div', 'flag', row); css(f, { left: ci * (FL.w + FL.gx), top: 0 });
+      const im = $('img', '', f); im.src = flagUrl(iso);
+    }
+    S3.rows.push(row);
+  }
+  S3.shade = $('div', 'abs', r); css(S3.shade, { inset: 0, background: 'radial-gradient(ellipse 78% 34% at 50% 47%, rgba(4,8,16,.95) 0%, rgba(4,8,16,.86) 50%, rgba(4,8,16,.25) 85%, rgba(4,8,16,.55) 100%)' });
+  S3.kick = Kick(r, 'Satu atlas · seluruh dunia', { left: 0, right: 0, top: 640, justifyContent: 'center' });
+  S3.num = $('div', 'abs disp', r, '0'); css(S3.num, { left: 0, right: 0, top: 680, textAlign: 'center', fontSize: '250px', fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.04em' });
+  S3.lab = K(r, 'negara & *wilayah*', 'disp2', { position: 'absolute', left: 0, right: 0, top: 960, textAlign: 'center', fontSize: '66px' });
+  S3.sub = $('div', 'abs', r, '74 penunjuk statistik · 1950 → 2100<br>UN, World Bank & DOSM'); css(S3.sub, { left: 0, right: 0, top: 1070, textAlign: 'center', fontSize: '30px', lineHeight: '1.45', fontWeight: 500, color: '#c7d4e6' });
+}, (t) => {
+  const tt = t - 8.125;
+  S3.rows.forEach((row, ri) => { row.style.transform = `translateX(${ri === FL.myRow ? 0 : (ri % 2 ? 1 : -1) * (30 + (ri % 5) * 6) * tt}px)`; });
+  const W = FL.cols * (FL.w + FL.gx), H = FL.rows * (FL.h + FL.gy);
+  const myX = FL.myCol * (FL.w + FL.gx) + FL.w / 2, myY = FL.myRow * (FL.h + FL.gy) + FL.h / 2;
+  const dive = E.inCubic(P(t, 11.15, 12.5)), flat = E.inOutCubic(P(t, 10.9, 11.9));
+  const fx = lerp(W / 2, myX, E.inOutCubic(P(t, 10.9, 11.7))), fy = lerp(H / 2, myY, E.inOutCubic(P(t, 10.9, 11.7)));
+  const enter = E.outExpo(P(t, 8.125, 9.2));
+  const s = lerp(0.84 + 0.06 * enter, 1, flat) * Math.pow(10, dive);
+  S3.wall.style.transform = `translate(${CX}px, ${CY}px) rotateX(${lerp(20, 0, flat)}deg) rotateY(${lerp(-22, 0, flat)}deg) rotateZ(${lerp(-8, 0, flat)}deg) scale(${s}) translate(${-fx}px, ${-fy}px)`;
+  SC3.root.style.opacity = P(t, 8.125, 8.5);
+  const out = P(t, 10.85, 11.2);
+  S3.shade.style.opacity = 1 - out;
+  kickDraw(S3.kick, t, 8.45, 10.85);
+  S3.num.textContent = fmt(258 * E.outExpo(P(t, 8.55, 10.0)));
+  const np = E.outExpo(P(t, 8.5, 9.3)); S3.num.style.opacity = np * (1 - out); S3.num.style.transform = `translateY(${(1 - np) * 40}px)`;
+  kDraw(S3.lab, t, 8.8, 10.85);
+  S3.sub.style.opacity = P(t, 9.3, 9.8) * (1 - out);
+});
+
+/* ================= S4 · Descent space → kampung roads (12.45 – 25.3) ================= */
+const S4 = {};
+const T0 = window.PATH.DESC_T0, DFPS = window.PATH.DESC_FPS, DN = Math.round((window.PATH.DESC_T1 - T0) * DFPS);
+const CRUMBS = [['Dunia', 1.4], ['Asia', 3.0], ['Malaysia', 4.5], ['Selangor', 7.2], ['Hulu Langat', 9.7], ['Kg. Sungai Tekali', 13.6]];
+const crumbT = CRUMBS.map(([, z]) => { for (let t = 12.45; t < 25; t += 0.01) if (window.PATH.camera(t).z >= z) return t; return 12.5; });
+const SC4 = scene(12.45, 25.3, 20, (r) => {
+  S4.img = $('img', 'full', r); css(S4.img, { width: VW, height: VH, opacity: 0 });
+  S4.haze = $('div', 'abs', r); css(S4.haze, { inset: 0, background: 'radial-gradient(ellipse at 50% 50%, rgba(220,235,255,.85), rgba(160,200,255,.55))', opacity: 0 });
+  S4.vig = $('div', 'abs', r); css(S4.vig, { inset: 0, background: 'linear-gradient(0deg, rgba(2,5,12,.8), transparent 40%), linear-gradient(180deg, rgba(2,5,12,.6), transparent 24%)' });
+  S4.crumb = $('div', 'abs', r); css(S4.crumb, { left: 70, top: 250, width: 860, display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' });
+  S4.crumbs = CRUMBS.map(([n], i) => { const w = $('span', 'chip', S4.crumb, (i ? '<span style="color:var(--gold);margin-right:4px">›</span>' : '') + n); if (i === CRUMBS.length - 1) { w.style.borderColor = 'rgba(242,184,75,.75)'; w.style.color = '#ffd68a'; } return w; });
+  S4.alt = $('div', 'abs hud', r); css(S4.alt, { left: 74, top: 372, lineHeight: '1.7' });
+  S4.t1 = K(r, 'Dari *angkasa* …', 'disp shadow', { position: 'absolute', left: 70, top: 1250, fontSize: '96px' });
+  S4.t2 = K(r, '13 negeri|3 wilayah persekutuan|159 sempadan daerah|222 kawasan parlimen', 'disp shadow', { position: 'absolute', left: 70, top: 1150, fontSize: '62px', lineHeight: '1.12' });
+  S4.t3 = K(r, 'hingga ke *kampung*|dan *jalannya.*', 'disp shadow', { position: 'absolute', left: 70, top: 1200, fontSize: '92px' });
+  S4.ret = $('div', 'abs', r); css(S4.ret, { left: CX - 70, top: CY - 70, width: 140, height: 140 });
+  S4.ret.innerHTML = `<svg viewBox="0 0 140 140" width="140" height="140"><circle cx="70" cy="70" r="40" fill="none" stroke="#f2b84b" stroke-width="2.5"/><circle cx="70" cy="70" r="56" fill="none" stroke="rgba(242,184,75,.45)" stroke-width="1.5" stroke-dasharray="4 6"/><path d="M70 4v22M70 114v22M4 70h22M114 70h22" stroke="#f2b84b" stroke-width="2.5"/></svg>`;
+  S4.lt = LT(r, 'Kampung & penempatan', '21,566 titik · statistik daerah DOSM', { left: 70, top: 1300 });
+  S4.attr = $('div', 'abs', r); css(S4.attr, { left: 74, top: 1452, fontSize: '15px', color: 'rgba(255,255,255,.75)', textShadow: '0 1px 3px rgba(0,0,0,.8)', width: 860 });
+}, async (t) => {
+  const c = window.PATH.camera(t);
+  S4.img.style.opacity = E.inOutSine(P(t, 16.02, 16.42));
+  S4.haze.style.opacity = 0.42 * Math.sin(Math.PI * P(t, 15.9, 16.6));
+  if (t >= T0) {
+    const f = clamp(Math.round((t - T0) * DFPS), 0, DN - 1);
+    const src = `${window.DESC_DIR}/f_${String(f).padStart(4, '0')}.jpg`;
+    if (!S4.img.src.endsWith(src)) { S4.img.src = src; try { await S4.img.decode(); } catch { console.warn('desc frame missing', src); } }
+  }
+  CRUMBS.forEach((_, i) => { const p = E.outExpo(P(t, crumbT[i], crumbT[i] + 0.6)); S4.crumbs[i].style.opacity = p * (1 - P(t, 24.7, 25.1)); S4.crumbs[i].style.transform = `translateX(${(1 - p) * -24}px)`; });
+  const alt = c.altKm;
+  S4.alt.innerHTML = `Altitud anggaran <b>${alt >= 100 ? fmt(alt) : alt.toFixed(1)} km</b><br>${c.lat.toFixed(2)}° U · ${c.lon.toFixed(2)}° T`;
+  S4.alt.style.opacity = P(t, 12.8, 13.2) * (1 - P(t, 24.7, 25.1));
+  kDraw(S4.t1, t, 12.95, 15.7);
+  kDraw(S4.t2, t, 17.0, 19.9, { st: 0.09 });
+  kDraw(S4.t3, t, 20.4, 22.9);
+  const rp = E.outBack(P(t, 23.0, 23.6));
+  S4.ret.style.transform = `scale(${0.4 + 0.6 * rp}) rotate(${(1 - rp) * 90 + (t - 23) * 6}deg)`;
+  S4.ret.style.opacity = P(t, 23.0, 23.2) * (1 - P(t, 24.8, 25.2));
+  ltDraw(S4.lt, t, 23.25, 24.85);
+  S4.attr.textContent = t < 16.2 ? 'Imej Bumi: NASA Blue Marble & Black Marble' : 'Imej: Esri, Maxar, Earthstar Geographics · Jalan: Esri · Kampung: GeoNames';
+  S4.attr.style.opacity = P(t, 12.8, 13.2) * (1 - P(t, 24.8, 25.2));
+});
+
+/* ================= S5 · Real phone UI: search → parlimen → panel → kampung (25.0 – 36.6) ================= */
+const PH = {};
+const PW = 600, PSW = PW - 26, PK = PSW / 390;   // phone width, screen width, CSS→px factor
+const SC5 = scene(25.0, 36.6, 40, (r) => {
+  r.style.background = 'radial-gradient(ellipse 90% 60% at 50% 48%, #12305a 0%, #070d18 72%)';
+  r.style.perspective = '2200px';
+  PH.bg = $('img', 'full', r); PH.bg.src = 'shots/bg-asia.jpg'; css(PH.bg, { width: VH * 16 / 9, height: VH, left: -(VH * 16 / 9 - VW) / 2, opacity: 0.4, transformOrigin: '50% 50%' });
+  const SB = 46 * PK, ph = Math.round(PSW * 1992 / 1170 + SB) + 26;
+  PH.phone = $('div', 'phone', r); css(PH.phone, { left: CX - PW / 2, top: 320, width: PW, height: ph, borderRadius: '64px', padding: '13px' });
+  const scr = $('div', 'scr', PH.phone); scr.style.borderRadius = '52px'; scr.insertAdjacentHTML('beforeend', STATUS(PK));
+  PH.wrap = $('div', 'abs', scr); css(PH.wrap, { left: 0, top: SB, width: PSW, height: PSW * 1992 / 1170, transformOrigin: '0 0' });
+  PH.imgs = {};
+  for (const n of ['ph-search', 'ph-parl', 'ph-full', 'ph-village', 'ph-village-full']) { const im = $('img', 'abs', PH.wrap); im.src = SH(n); css(im, { left: 0, top: 0, width: PSW, height: PSW * 1992 / 1170, opacity: 0 }); PH.imgs[n] = im; }
+  const isl = $('div', 'island', PH.phone); css(isl, { top: 13 + 11 * PK, width: 92 * PK, height: 26 * PK, marginLeft: -46 * PK });
+  PH.c1 = Callout(PH.wrap, PK, 26, 634, 142, 30, 'Suis Daerah ⇄ Parlimen');
+  PH.c2 = Callout(PH.wrap, PK, 14, 378, 362, 128, 'Data terkini DOSM · 2026', true);
+  PH.c3 = Callout(PH.wrap, PK, 18, 286, 356, 92, 'Tiada data kampung? Statistik daerahnya', true);
+  PH.rip = $('div', 'ripple', PH.wrap);
+  PH.lts = [
+    [LT(r, 'Carian pintar', 'Nama tempat, kod parlimen atau kampung', { left: 70, top: 1390 }), 25.6, 27.9],
+    [LT(r, 'Mod parlimen', '222 kawasan parlimen · statistik DOSM', { left: 70, top: 1390 }), 28.1, 30.4],
+    [LT(r, 'Panel lokasi', 'Setiap angka: tahun, status & sumber', { left: 70, top: 1390 }), 30.8, 33.3],
+    [LT(r, 'Hingga ke kampung', 'Klik kampung → statistik daerahnya', { left: 70, top: 1390 }), 33.8, 36.2],
+  ];
+  PH.kick = Kick(r, 'Aplikasi sebenar · di telefon', { left: 84, top: 262 });
+}, (t) => {
+  SC5.root.style.opacity = P(t, 25.0, 25.4) * (1 - P(t, 36.25, 36.6));
+  const pin = E.outExpo(P(t, 25.0, 26.1)), pout = E.inCubic(P(t, 36.1, 36.5));
+  PH.phone.style.transform = `translateY(${(1 - pin) * 420 - pout * 60}px) rotateY(${(1 - pin) * -22 + Math.sin(t * 0.6) * 4}deg) rotateX(${(1 - pin) * 18 + 3}deg) scale(${0.9 + 0.1 * pin})`;
+  PH.phone.style.opacity = Math.min(1, pin * 1.6) * (1 - pout);
+  PH.bg.style.transform = `scale(1.1) translate(${Math.sin(t * 0.3) * 20}px, 0)`;
+  kickDraw(PH.kick, t, 25.3, 36.0);
+  const sched = { 'ph-search': [25.0, 27.75], 'ph-parl': [27.6, 30.55], 'ph-full': [30.4, 33.55], 'ph-village': [33.4, 34.95], 'ph-village-full': [34.8, 37] };
+  for (const n in sched) { const [a, z] = sched[n]; PH.imgs[n].style.opacity = P(t, a, a + 0.2) * (1 - P(t, z - 0.2, z)); PH.imgs[n].style.display = t > a - 0.05 && t < z + 0.05 ? 'block' : 'none'; }
+  PH.imgs['ph-search'].style.opacity = 1 - P(t, 27.55, 27.75);
+  PH.imgs['ph-village-full'].style.transform = `translateY(${(1 - E.outCubic(P(t, 34.8, 35.3))) * 260}px)`;
+  // gentle Ken Burns inside the phone screen
+  const z = keyed(t, [{ t: 25, s: 1, y: 0 }, { t: 30.4, s: 1, y: 0 }, { t: 31.2, s: 1.06, y: -20 }, { t: 33.4, s: 1.08, y: -24 }, { t: 33.6, s: 1, y: 0 }]);
+  PH.wrap.style.transform = `translateY(${z.y}px) scale(${z.s})`;
+  const taps = [[26.9, 120, 160], [33.0, 0, 0]].filter(([c]) => t >= c && t < c + 0.55);
+  if (taps.length && taps[0][1]) { const [c, x, y] = taps[0]; const q = E.outCubic(P(t, c, c + 0.55)); PH.rip.style.display = 'block'; PH.rip.style.transform = `translate(${x * PK - 10}px, ${y * PK - 10}px) scale(${1 + q * 4})`; PH.rip.style.opacity = 1 - q; }
+  else PH.rip.style.display = 'none';
+  calloutDraw(PH.c1, t, 28.5, 30.3, 1);
+  calloutDraw(PH.c2, t, 31.2, 33.3, z.s);
+  calloutDraw(PH.c3, t, 35.4, 36.2, 1);
+  PH.lts.forEach(([l, a, b]) => ltDraw(l, t, a, b));
+});
+
+/* ================= S6 · Stacked split: parlimen / kampung (36.25 – 40.95) ================= */
+const S6 = {};
+function cropBand(parent, src, cx, cy, y0, fromTop) {
+  const h = $('div', 'abs', parent); css(h, { left: 0, top: y0, width: VW, height: 960, overflow: 'hidden' });
+  const inner = $('div', 'abs', h); css(inner, { left: 0, top: 0, width: VW, height: 960, transformOrigin: '50% 50%' });
+  const im = $('img', 'abs', inner); im.src = SH(src);
+  const sc = 960 / (380 * 2);
+  css(im, { width: 3200 * sc, height: 1800 * sc, left: CX - cx * 2 * sc, top: 480 - cy * 2 * sc });
+  const shade = $('div', 'abs', h);
+  css(shade, { inset: 0, background: fromTop ? 'linear-gradient(180deg, rgba(4,8,16,.97) 0%, rgba(4,8,16,.88) 30%, rgba(4,8,16,.4) 46%, rgba(4,8,16,0) 64%)' : 'linear-gradient(0deg, rgba(4,8,16,.97) 0%, rgba(4,8,16,.88) 30%, rgba(4,8,16,.4) 46%, rgba(4,8,16,0) 64%)' });
+  return { h, inner };
+}
+scene(36.25, 40.95, 50, (r) => {
+  S6.T = cropBand(r, 'parl', 720, 300, 0, false);
+  S6.B = cropBand(r, 'village', 760, 262, 960, true);
+  S6.div = $('div', 'abs', r); css(S6.div, { left: 0, top: 958, width: VW, height: 4, background: 'var(--gold)', transformOrigin: '0 50%' });
+  const mk = (y, kick, n, lab, cap) => {
+    const g = $('div', 'abs', r); css(g, { left: 70, top: y, width: 860 });
+    const kk = $('div', 'kick', g, kick); kk.style.marginBottom = '6px';
+    const num = $('div', 'disp', g, '0'); css(num, { fontSize: '150px', fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.04em' });
+    const l = K(g, lab, 'disp2', { fontSize: '50px' });
+    const c = $('div', '', g, cap); css(c, { fontSize: '27px', color: '#c7d4e6', marginTop: '12px', fontWeight: 500 });
+    return { g, kk, num, l, c, n };
+  };
+  S6.a = mk(560, 'Parlimen · DOSM', 222, 'kawasan parlimen', 'Tukar Daerah ⇄ Parlimen terus di peta');
+  S6.b = mk(1010, 'Kampung · GeoNames', 21566, 'kampung & penempatan', 'Klik kampung → statistik daerahnya');
+}, (t) => {
+  const pl = E.outExpo(P(t, 36.25, 37.1)), pr = E.outExpo(P(t, 36.37, 37.2));
+  const ol = E.inCubic(P(t, 40.4, 40.95));
+  S6.T.h.style.transform = `translate(${(1 - pl) * -VW - ol * VW}px, 0)`;
+  S6.B.h.style.transform = `translate(${(1 - pr) * VW + ol * VW}px, 0)`;
+  S6.T.inner.style.transform = `scale(${1.0 + 0.08 * P(t, 36.25, 40.95)})`;
+  S6.B.inner.style.transform = `scale(${1.08 - 0.08 * P(t, 36.25, 40.95)})`;
+  S6.div.style.transform = `scaleX(${E.outExpo(P(t, 36.8, 37.8)) * (1 - ol)})`;
+  [[S6.a, 37.0], [S6.b, 37.3]].forEach(([o, a]) => {
+    const p = E.outExpo(P(t, a, a + 0.8));
+    o.g.style.opacity = 1 - P(t, 40.25, 40.55);
+    o.kk.style.opacity = p; o.c.style.opacity = P(t, a + 0.6, a + 1.0);
+    o.num.style.opacity = p; o.num.style.transform = `translateY(${(1 - p) * 40}px)`;
+    o.num.textContent = fmt(o.n * E.outExpo(P(t, a + 0.05, a + 1.6)));
+    kDraw(o.l, t, a + 0.3, null);
+  });
+});
+
+/* ================= S7 · Vertical carousel: time machine, compare (flags), themes (40.6 – 46.55) ================= */
+const S7 = {};
+const SLOTS = { F: { x: CX, y: 1030, s: 1, rx: 0, o: 1, z: 3 }, U: { x: CX, y: 690, s: 0.5, rx: -26, o: 0.35, z: 1 }, D: { x: CX, y: 1440, s: 0.5, rx: 26, o: 0.35, z: 2 } };
+const ORDER = [['F', 'D', 'U'], ['U', 'F', 'D'], ['D', 'U', 'F']];
+const SWITCH = [42.55, 44.5];
+scene(40.6, 46.55, 45, (r) => {
+  r.style.background = 'radial-gradient(ellipse 90% 70% at 50% 55%, #0f2443, #060b15 72%)';
+  r.style.perspective = '2200px';
+  S7.veil = $('div', 'abs', r); css(S7.veil, { left: 0, top: 0, width: VW, height: 640, zIndex: 5, background: 'linear-gradient(180deg, #060b15 0%, #060b15 70%, rgba(6,11,21,0) 100%)' });
+  S7.kick = Kick(r, 'Lebih daripada peta', { left: 84, top: 262 }); S7.kick.style.zIndex = 6;
+  S7.title = K(r, 'Analisis lebih|*mendalam.*', 'disp', { position: 'absolute', left: 80, top: 300, fontSize: '84px', zIndex: 6 });
+  S7.cards = ['proj', 'compare', 'light-hl'].map((n) => {
+    const w = 980, h = Math.round(w * 900 / 1600) + 30;
+    const c = $('div', 'browser', r); css(c, { left: 0, top: 0, width: w, height: h, transformOrigin: '50% 50%' });
+    const ch = $('div', 'chrome', c); ch.style.height = '30px'; $('i', '', ch); $('i', '', ch); $('i', '', ch);
+    const ct = $('div', 'content', c); css(ct, { top: 30, width: w, height: h - 30 });
+    const im = $('img', '', ct); im.src = SH(n); css(im, { width: w, height: h - 30, display: 'block', transformOrigin: '50% 50%' });
+    return { c, im, w, h };
+  });
+  S7.flags = $('div', 'abs', r); css(S7.flags, { left: 70, width: 860, top: 610, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', zIndex: 10 });
+  S7.fl = [['my', 'Malaysia'], ['id', 'Indonesia'], ['th', 'Thailand'], ['sg', 'Singapura']].map(([iso, n]) => {
+    const c = $('div', 'chip', S7.flags, `<img src="${flagUrl(iso)}" style="width:36px;height:27px;border-radius:3px;display:block;box-shadow:0 0 0 1px rgba(255,255,255,.15)">${n}`);
+    c.style.fontSize = '17px'; c.style.background = 'rgba(5,10,20,.94)'; return c;
+  });
+  S7.lts = [
+    [LT(r, 'Mesin masa', '1950 → 2100 · unjuran UN WPP 2024', { left: 70, top: 1340 }), 41.2, 42.45],
+    [LT(r, 'Perbandingan', 'Sehingga 6 lokasi · tahun dipadankan', { left: 70, top: 1340 }), 43.1, 44.4],
+    [LT(r, 'Cerah & gelap · BM / EN', 'Selesa dibaca, siang atau malam', { left: 70, top: 1340 }), 45.05, 46.1],
+  ];
+}, (t) => {
+  kickDraw(S7.kick, t, 40.75, 46.05);
+  kDraw(S7.title, t, 40.85, 46.05, { st: 0.07 });
+  const enter = E.outExpo(P(t, 40.6, 41.5)), leave = E.inCubic(P(t, 46.1, 46.55));
+  const ph = t < SWITCH[0] ? 0 : t < SWITCH[1] ? 1 : 2;
+  const sw = ph === 0 ? 0 : E.inOutCubic(P(t, SWITCH[ph - 1], SWITCH[ph - 1] + 0.6));
+  S7.cards.forEach((o, i) => {
+    const from = SLOTS[ORDER[Math.max(0, ph - 1)][i]], to = SLOTS[ORDER[ph][i]];
+    const q = ph === 0 ? 1 : sw;
+    const v = {}; for (const kk of ['x', 'y', 's', 'rx', 'o']) v[kk] = lerp(from[kk], to[kk], q);
+    const cross = ph > 0 && ((from === SLOTS.U && to === SLOTS.D) || (from === SLOTS.D && to === SLOTS.U));
+    o.c.style.zIndex = cross && q < 1 ? 0 : q > 0.5 ? to.z : from.z;
+    o.c.style.opacity = v.o * enter * (1 - leave) * (cross ? 1 - 0.75 * Math.sin(Math.PI * q) : 1);
+    o.c.style.transform = `translate(${v.x - o.w / 2}px, ${v.y - o.h / 2 + (1 - enter) * 320 + leave * -40}px) rotateX(${v.rx}deg) scale(${v.s * (1 - leave * 0.05)})`;
+    o.im.style.transform = `scale(${1.0 + 0.05 * Math.sin((t - 40.6) * 0.6 + i)})`;
+  });
+  S7.fl.forEach((c, i) => { const a = 43.0 + i * 0.09, p = E.outBack(P(t, a, a + 0.5)), q = P(t, 44.35, 44.6); c.style.opacity = P(t, a, a + 0.15) * (1 - q); c.style.transform = `translateY(${(1 - p) * 24}px) scale(${0.85 + 0.15 * p})`; });
+  S7.lts.forEach(([l, a, z]) => ltDraw(l, t, a, z));
+});
+
+/* ================= S8 · Phones + app motion (46.2 – 52.2) ================= */
+const S8 = {};
+const SC8 = scene(46.2, 52.2, 55, (r) => {
+  r.style.background = 'radial-gradient(ellipse 90% 60% at 50% 72%, #12305a 0%, #070d18 70%)';
+  r.style.perspective = '2000px';
+  S8.kick = Kick(r, 'Telefon · tablet · desktop', { left: 84, top: 262 });
+  S8.l1 = K(r, 'Di mana-mana.', 'disp', { position: 'absolute', left: 80, top: 300, fontSize: '70px' });
+  S8.l2 = K(r, 'Pasang sebagai *aplikasi.*', 'disp', { position: 'absolute', left: 80, top: 386, fontSize: '70px' });
+  S8.l3 = K(r, 'Kemas kini *sendiri.*', 'disp', { position: 'absolute', left: 80, top: 472, fontSize: '70px' });
+  S8.feats = ['<span class="ic">↻</span>Versi baharu dipasang automatik', '<span class="ic">⦿</span>Berfungsi luar talian', '<span class="ic">◷</span>Data disemak setiap minggu']
+    .map((h, i) => { const f = $('div', 'feat abs', r, h); css(f, { left: 80, top: 600 + i * 70, fontSize: '28px' }); return f; });
+  S8.p1 = Phone(r, 'ph-peek', 300, 60, 900);
+  S8.p2 = Phone(r, 'ph-parl', 340, 370, 860);
+  S8.p3 = Phone(r, 'ph-install', 300, 720, 920);
+  S8.toast = $('div', 'toast', r, '<span style="font-size:24px;color:var(--gold)">↻</span>Versi baharu tersedia <span class="btn">Muat semula</span>'); css(S8.toast, { left: 180, top: 790, fontSize: '22px' });
+  S8.off = $('div', 'chip abs', r, '<span style="width:10px;height:10px;border-radius:50%;background:#f2b84b;display:inline-block"></span>Luar talian — data tersimpan dipaparkan'); css(S8.off, { left: 70, top: 1440, textTransform: 'none', letterSpacing: '0.02em', fontSize: '18px' });
+}, (t) => {
+  SC8.root.style.opacity = P(t, 46.2, 46.6) * (1 - P(t, 51.875, 52.2));
+  kickDraw(S8.kick, t, 46.4, null);
+  kDraw(S8.l1, t, 46.5, null); kDraw(S8.l2, t, 47.25, null); kDraw(S8.l3, t, 48.0, null);
+  S8.feats.forEach((f, i) => { const p = E.outExpo(P(t, 49.0 + i * 0.3, 49.8 + i * 0.3)); f.style.opacity = p; f.style.transform = `translateX(${(1 - p) * -40}px)`; });
+  [[S8.p1, 46.6, 0, -8], [S8.p2, 46.75, 1.3, 0], [S8.p3, 46.9, 2.6, 8]].forEach(([p, a, ph, ry]) => {
+    const q = E.outExpo(P(t, a, a + 1.1));
+    p.style.transform = `translateY(${(1 - q) * 700 + Math.sin(t * 1.7 + ph) * 9}px) rotateY(${ry + Math.sin(t * 0.6 + ph) * 3}deg) rotateX(4deg)`;
+    p.style.opacity = Math.min(1, q * 2);
+  });
+  S8.p2.style.zIndex = 3;
+  const tq = E.outBack(P(t, 49.6, 50.15)), to = P(t, 51.5, 51.8);
+  S8.toast.style.opacity = P(t, 49.6, 49.8) * (1 - to); S8.toast.style.zIndex = 5;
+  S8.toast.style.transform = `translateY(${(1 - tq) * -60}px) scale(${0.9 + 0.1 * tq})`;
+  const oq = E.outExpo(P(t, 50.5, 51.1));
+  S8.off.style.opacity = oq; S8.off.style.transform = `translateY(${(1 - oq) * 30}px)`;
+});
+
+/* ================= S9 · Trust montage (51.875 – 55.95) ================= */
+const S9 = {};
+const CUTS = [
+  ['sources', 51.875, 'Sumber|*rasmi.*', 'DOSM · UN WPP 2024 · World Bank<br>GeoNames · Natural Earth', 1.0],
+  ['quality', 53.125, 'Kualiti|*disemak.*', 'Nilai hilang · pendua · outlier<br>tahun & unit tidak sepadan', 1.0],
+  ['download', 54.375, 'Muat turun|*terbuka.*', 'CSV · Excel · JSON<br>GeoJSON · PNG · PDF', 1.2],
+];
+scene(51.875, 55.95, 60, (r) => {
+  r.style.background = '#05080f';
+  S9.items = CUTS.map(([n, a, w, sub, z]) => {
+    const g = $('div', 'abs', r); css(g, { inset: 0 });
+    const im = $('img', 'abs', g); im.src = SH(n); const sc = VH / 1800; css(im, { width: 3200 * sc, height: VH, left: CX - 1600 * sc, top: 0, transformOrigin: '50% 45%' });
+    $('div', 'abs', g).style.cssText = 'position:absolute;inset:0;background:radial-gradient(ellipse at 50% 48%, rgba(4,8,16,.7), rgba(4,8,16,.93))';
+    const k = K(g, w, 'disp shadow', { position: 'absolute', left: 0, right: 0, top: 660, textAlign: 'center', fontSize: '140px' });
+    const s = $('div', 'abs', g, sub); css(s, { left: 0, right: 0, top: 1020, textAlign: 'center', fontSize: '31px', lineHeight: '1.45', color: '#d6e2f3', fontWeight: 500 });
+    return { g, im, k, s, a, z };
+  });
+}, (t) => {
+  S9.items.forEach((o, i) => {
+    const z = i < 2 ? S9.items[i + 1].a : 55.95;
+    const on = t >= o.a && t < z;
+    o.g.style.display = on ? 'block' : 'none';
+    if (!on) return;
+    o.im.style.transform = `scale(${o.z + 0.12 * P(t, o.a, z)})`;
+    kDraw(o.k, t, o.a + 0.02, null, { st: 0.05, d: 0.55 });
+    o.s.style.opacity = P(t, o.a + 0.25, o.a + 0.45);
+  });
+});
+
+/* ================= S10 · Minimalist clean CTA (55.625 – 60) ================= */
+const S10 = {};
+const SC10 = scene(55.625, 60.01, 70, (r) => {
+  r.style.background = '#f5f7fb';
+  S10.grid = $('div', 'abs', r); css(S10.grid, { inset: 0, backgroundImage: 'linear-gradient(rgba(16,66,129,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(16,66,129,.045) 1px, transparent 1px)', backgroundSize: '60px 60px' });
+  S10.mark = $('div', 'abs', r, globe()); css(S10.mark, { left: CX - 64, top: 420, width: 128, height: 128 });
+  S10.word = $('div', 'abs disp', r, 'WORLDSTAT<br><span style="color:#1c5cab">ATLAS</span>'); css(S10.word, { left: 0, right: 0, top: 590, textAlign: 'center', fontSize: '116px', lineHeight: '1.04', color: '#0d1b2e', letterSpacing: '0.1em' });
+  S10.rule = $('div', 'abs', r); css(S10.rule, { left: CX - 140, top: 862, width: 280, height: 3, background: '#f2b84b', borderRadius: '2px' });
+  S10.line = K(r, 'Terokai dunia melalui|statistik rasmi.', '', { position: 'absolute', left: 0, right: 0, top: 900, textAlign: 'center', fontSize: '42px', fontWeight: 500, color: '#3b4a60', lineHeight: '1.3' });
+  S10.url = $('div', 'abs', r, '<span>worldstat-atlas.netlify.app</span><span style="color:#f2b84b;margin-left:14px">→</span>');
+  css(S10.url, { left: CX - 420, top: 1068, width: 840, height: 96, borderRadius: '999px', background: '#0d1b2e', color: '#fff', fontFamily: 'var(--f-disp)', fontSize: '36px', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 24px 60px rgba(13,27,46,.25)' });
+  S10.sub = $('div', 'abs', r, 'Percuma · Pasang di telefon & desktop · BM / EN'); css(S10.sub, { left: 0, right: 0, top: 1196, textAlign: 'center', fontSize: '27px', color: '#5b6b82', fontWeight: 500 });
+  S10.foot = $('div', 'abs', r, 'Projek bebas — tidak mewakili atau disahkan oleh DOSM.<br>Data: DOSM (OpenDOSM), UN WPP 2024, World Bank, GeoNames (CC BY 4.0), Natural Earth.<br>Imej Bumi: NASA · Satelit & jalan: Esri, Maxar, Earthstar Geographics · Bendera: flag-icons (MIT).');
+  css(S10.foot, { left: 70, width: 860, top: 1330, textAlign: 'center', fontSize: '19px', lineHeight: '1.6', color: '#7a889c' });
+}, (t) => {
+  const rv = E.inOutCubic(P(t, 55.625, 56.3));
+  SC10.root.style.clipPath = `circle(${rv * 1150}px at 50% 50%)`;
+  const m = E.outBack(P(t, 55.95, 56.55));
+  S10.mark.style.transform = `scale(${0.4 + 0.6 * m})`; S10.mark.style.opacity = P(t, 55.95, 56.15);
+  const w = E.outExpo(P(t, 56.1, 57.05));
+  S10.word.style.opacity = w; S10.word.style.letterSpacing = `${0.3 - 0.2 * w}em`;
+  S10.rule.style.transform = `scaleX(${E.outExpo(P(t, 56.5, 57.3))})`;
+  kDraw(S10.line, t, 56.55, null, { st: 0.04 });
+  const u = E.outBack(P(t, 56.95, 57.55));
+  S10.url.style.opacity = P(t, 56.95, 57.15); S10.url.style.transform = `translateY(${(1 - u) * 30}px) scale(${0.92 + 0.08 * u})`;
+  S10.sub.style.opacity = P(t, 57.35, 57.75);
+  S10.foot.style.opacity = P(t, 57.55, 58.05);
+});
+
+/* ---------- global overlays + render ---------- */
+const grain = $('div', '', stage); grain.id = 'grain'; css(grain, { position: 'absolute', inset: 0, zIndex: 80, pointerEvents: 'none' });
+const grains = [0, 1, 2, 3, 4, 5].map((i) => { const g = $('div', '', grain); g.style.backgroundImage = `url(shots/noise${i}.png)`; return g; });
+const vig = $('div', '', stage); vig.id = 'vig'; vig.style.zIndex = 81;
+const flash = $('div', '', stage); flash.id = 'flash';
+
+async function render(t) {
+  const earthOn = t < 8.45 || (t >= 12.45 && t < 16.5);
+  earthRoot.style.display = earthOn ? 'block' : 'none';
+  if (earthOn) {
+    EARTH.draw(earthState(t));
+    earthRoot.style.opacity = t < 8.45 ? 1 - P(t, 8.125, 8.45) : 1 - P(t, 16.1, 16.45);
+  }
+  for (const s of scenes) {
+    const on = t >= s.a && t < s.b;
+    s.root.style.display = on ? 'block' : 'none';
+    if (on) await s.draw(t);
+  }
+  const f = Math.round(t * FPS);
+  grains.forEach((g, i) => { g.style.display = i === f % 6 ? 'block' : 'none'; g.style.backgroundPosition = `${(f * 73) % 256}px ${(f * 151) % 256}px`; });
+  grain.style.opacity = t < 25 ? 0.09 : t < 55.7 ? 0.05 : 0.02;
+  vig.style.opacity = t < 55.7 ? 1 : 0;
+  const fl = [[53.125, 0.22], [54.375, 0.22]].map(([c, a]) => (t >= c && t < c + 0.12 ? a * (1 - P(t, c, c + 0.12)) : 0));
+  const dive = t >= 12.2 && t < 12.95 ? (t < 12.5 ? 0.9 * P(t, 12.2, 12.5) : 0.9 * (1 - P(t, 12.5, 12.95))) : 0;
+  flash.style.opacity = Math.max(dive, ...fl);
+}
+window.render = render;
+await document.fonts.ready;
+await Promise.all([...document.images].map((i) => i.decode().catch(() => {})));
+const q = new URL(location.href).searchParams.get('t');
+await render(q ? Number(q) : 0);
+window.ready = true;
+
+</script>
+</body>
+</html>
