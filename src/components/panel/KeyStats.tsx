@@ -9,6 +9,9 @@ import { breakYear } from '../../services/stats';
 
 export const KEY_INDICATORS = ['population', 'population_male', 'population_female', 'density', 'births', 'deaths', 'gdp', 'gdp_per_capita'];
 
+/** The Malaysian agency behind a figure in the DOSM snapshot: school data comes from the Ministry of Education. */
+export const myAgency = (ind: Indicator | null | undefined): string => (ind?.original_source?.startsWith('Ministry of Education') ? 'KPM' : 'DOSM');
+
 export function shortSource(id: string | undefined, catalog: ReturnType<typeof useAtlas.getState>['catalog']): string {
   if (!id || !catalog) return '';
   const s = catalog.sources[id];

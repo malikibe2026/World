@@ -32,5 +32,44 @@
     "Terengganu": {
       "Hulu": "Hulu Terengganu"
     }
+  },
+  "moe_ppd_description": "Ministry of Education enrolment, teacher and completion data are published by District Education Office (PPD), which do not always match administrative districts. Each office below was checked against the district list of the map: a name is the district the office lies in (counts of several offices in one district are added; their completion rates are left out, as rates cannot be added), null marks an office that spans two districts and cannot be split (no district figures for those districts). Perlis and the three federal territories take their state rows.",
+  "moe_ppd": {
+    "Johor": {
+      "Pasir Gudang": "Johor Bahru"
+    },
+    "Kedah": {
+      "Kuala Muda/Yan": null,
+      "Kulim/Bandar Baharu": null
+    },
+    "Kelantan": {
+      "Pasir Putih": "Pasir Puteh"
+    },
+    "Negeri Sembilan": {
+      "Jempol/Jelebu": null
+    },
+    "Pahang": {
+      "Kuala Lipis": "Lipis"
+    },
+    "Perak": {
+      "Kinta Utara": "Kinta",
+      "Kinta Selatan": "Kinta",
+      "Larut Matang & Selama": null,
+      "Larut/Matang/Selama": null
+    },
+    "Sabah": {
+      "Pensiangan": "Nabawan / Persiangan",
+      "Telupid/Tongod": null
+    },
+    "Sarawak": {
+      "Padawan": "Kuching",
+      "Meradong": "Maradong",
+      "Baram": null,
+      "Tatau/Sebauh": null
+    },
+    "Selangor": {
+      "Petaling Perdana": "Petaling",
+      "Petaling Utama": "Petaling"
+    }
   }
 }

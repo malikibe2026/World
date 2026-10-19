@@ -33,6 +33,8 @@ dilihat dalam aplikasi: **Sumber → Kamus indikator**).
   sebagai **1 Januari tahun t+1** (konvensyen rasmi UN). Tiada interpolasi. Anggaran hingga 1 Jan 2024.
 - **Aliran & kadar (UN WPP)**: tahun kalendar *t*. Anggaran hingga 2023; 2024+ unjuran.
 - **DOSM**: anggaran penduduk pertengahan tahun; tahun banci (1970, 1980, 1991, 2000, 2010, 2020) = OFFICIAL.
+- **Jangka hayat DOSM**: setiap keluaran menyemak semula dua tahun terkini (tahun terakhir = anggaran, tahun sebelumnya = awalan), jadi kedua-duanya ESTIMATE; tahun lebih awal OFFICIAL.
+- **Sekolah (KPM, EMIS)**: tahun persekolahan; sekolah kerajaan sahaja. Data daerah ikut Pejabat Pendidikan Daerah (PPD) — lihat `moe_ppd` dalam `data/registry/mys_district_crosswalk.json`.
 - **World Bank**: tahun siri; `last_updated` daripada pengepala API.
 
 ## Indikator terbitan (DERIVED)
@@ -43,6 +45,9 @@ dilihat dalam aplikasi: **Sumber → Kamus indikator**).
 | `median_age` | Median taburan umur tahun tunggal (0–100+), interpolasi linear |
 | `pop_0_14`, `pop_15_64`, `pop_65_plus` | Jumlah umur tahun tunggal |
 | `pop_*_pct` | Bahagian daripada jumlah penduduk |
+| `eth_*_pct` | Kumpulan etnik / jumlah **warganegara** × 100 (cara DOSM melaporkan komposisi etnik); negeri dan daerah sahaja |
+| `noncitizen_pct` | Bukan warganegara / jumlah penduduk × 100; semua aras termasuk parlimen dan DUN |
+| `ptr_primary`, `ptr_secondary` | Enrolmen / guru (sekolah kerajaan) |
 | `natural_increase` | `births − deaths` |
 | `density` | `population / area_geometry_km2` (keluasan geodesik sempadan, termasuk perairan pedalaman) |
 | `area_geometry_km2` | Keluasan geodesik WGS84 poligon (pyproj) |

@@ -2,7 +2,7 @@ import { ESTIMATE_LAST_YEAR, useAtlas } from '../store/atlas';
 import { useLayer, visibleMyAdmin } from '../hooks/useLayer';
 import { t } from '../utils/i18n';
 import { QualityBadge } from './QualityBadge';
-import { shortSource } from './panel/KeyStats';
+import { myAgency, shortSource } from './panel/KeyStats';
 
 /**
  * The year of the data on the map, not just the slider's position. With projections off and the
@@ -17,7 +17,7 @@ export function YearChip() {
   const my = visibleMyAdmin(L, selection, mapZoom);
   const shown = atNow ? my?.year ?? L.yearUsed : year;
   // the source that sets the year: a derived layer (density) takes its inputs' source
-  const source = atNow ? (my ? 'DOSM' : shortSource(L.indicator?.inputs_source_id ?? L.indicator?.source_id, catalog) || null) : null;
+  const source = atNow ? (my ? myAgency(L.indicator) : shortSource(L.indicator?.inputs_source_id ?? L.indicator?.source_id, catalog) || null) : null;
   const quality = year > ESTIMATE_LAST_YEAR ? 'PROJECTION' : atNow ? my?.quality ?? L.quality ?? 'ESTIMATE' : L.quality ?? 'ESTIMATE';
   const worldYear = atNow && my && L.doc && L.yearUsed !== my.year ? L.yearUsed : null;
   const title = atNow

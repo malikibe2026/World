@@ -1,7 +1,7 @@
 {
   "app": "WorldStat Atlas",
-  "snapshot_built_at": "2026-10-19T01:48:40Z",
-  "run_id": "20261019T014834Z",
+  "snapshot_built_at": "2026-10-19T03:18:18Z",
+  "run_id": "20261019T031745Z",
   "datasets": [
     {
       "source_id": "un_wpp_2024",
@@ -278,6 +278,38 @@
         "lfs_dun": {
           "last_updated": "2025-12-31 12:00",
           "next_update": "2026-12-31 12:00"
+        },
+        "life_expectancy": {
+          "last_updated": "2026-09-30 18:00",
+          "next_update": "2027-10-31 12:00"
+        },
+        "life_expectancy_state": {
+          "last_updated": "2026-09-30 18:00",
+          "next_update": "2027-10-31 12:00"
+        },
+        "life_expectancy_district": {
+          "last_updated": "2026-09-30 18:00",
+          "next_update": "2027-10-31 12:00"
+        },
+        "schools_district": {
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2027-12-31 18:00"
+        },
+        "enrolment_school_district": {
+          "last_updated": "2026-08-03 12:00",
+          "next_update": "—"
+        },
+        "teachers_district": {
+          "last_updated": "2026-08-03 12:00",
+          "next_update": "—"
+        },
+        "completion_school_district": {
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2027-12-31 18:00"
+        },
+        "completion_school_state": {
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2027-12-31 18:00"
         }
       },
       "data_loaded": true

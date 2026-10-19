@@ -1,5 +1,6 @@
 import { InstallButton } from './AppBanners';
 import { MyDivisionSwitch } from './MyDivisionSwitch';
+import { myAgency } from './panel/KeyStats';
 import { useAtlas, type Basemap, type OverlayKey } from '../store/atlas';
 import { indicatorName, t, type I18nKey } from '../utils/i18n';
 import { SearchBox } from './SearchBox';
@@ -12,6 +13,7 @@ const LAYER_GROUPS: Array<{ key: I18nKey; codes: string[] }> = [
   { key: 'economicIntelligence', codes: ['gdp', 'gdp_per_capita', 'gdp_growth', 'inflation', 'unemployment'] },
   // DOSM only: Malaysia's states, districts, parlimen and DUN (no world layer)
   { key: 'malaysiaDosm', codes: ['hh_income_median', 'hh_expenditure_mean', 'gini_coef', 'poverty_absolute'] },
+  { key: 'malaysiaPeople', codes: ['noncitizen_pct', 'eth_bumi_malay_pct', 'eth_bumi_other_pct', 'eth_chinese_pct', 'eth_indian_pct', 'ptr_primary', 'completion_secondary_upper'] },
   { key: 'urban', codes: ['urban_pct'] },
   { key: 'tourism', codes: ['tourism_arrivals'] },
   { key: 'climate', codes: ['precipitation'] },
@@ -61,7 +63,7 @@ export function Sidebar() {
               return (
                 <button key={c} className={`layer-opt ${layer === c ? 'on' : ''}`} onClick={() => setLayer(c)} title={`${ind.unit} · ${ind.source_id === 'wb_wdi' ? 'World Bank WDI' : ind.source_id === 'un_wpp_2024' || ind.inputs_source_id === 'un_wpp_2024' ? 'UN WPP 2024' : ind.source_id === 'dosm_opendosm' ? 'DOSM (Malaysia sahaja / Malaysia only)' : ind.source_id}`}>
                   <span>{indicatorName(lang, ind)}</span>
-                  <span className="layer-src">{ind.source_id === 'wb_wdi' ? 'WB' : ind.source_id === 'dosm_opendosm' ? 'DOSM' : 'UN'}</span>
+                  <span className="layer-src">{ind.source_id === 'wb_wdi' ? 'WB' : ind.source_id === 'dosm_opendosm' ? myAgency(ind) : 'UN'}</span>
                 </button>
               );
             })}

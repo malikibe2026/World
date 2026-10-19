@@ -55,6 +55,8 @@ const INDICATOR_PHRASES: Array<[string, string]> = [
   ['urbanisation', 'urban_pct'], ['urbanization', 'urban_pct'], ['urban population', 'urban_pct'], ['pembandaran', 'urban_pct'],
   ['poverty', 'poverty'], ['kemiskinan', 'poverty'], ['pekali gini', 'gini_coef'], ['gini coefficient', 'gini_coef'], ['gini', 'gini'], ['household income', 'hh_income_median'], ['pendapatan isi rumah', 'hh_income_median'],
   ['perbelanjaan isi rumah', 'hh_expenditure_mean'], ['household expenditure', 'hh_expenditure_mean'],
+  ['bukan warganegara', 'noncitizen_pct'], ['non-citizens', 'noncitizen_pct'], ['non citizens', 'noncitizen_pct'],
+  ['nisbah murid guru', 'ptr_primary'], ['pupil teacher ratio', 'ptr_primary'], ['kadar tamat sekolah', 'completion_secondary_upper'], ['school completion', 'completion_secondary_upper'],
   ['growth rate', 'growth_rate'], ['kadar pertumbuhan', 'growth_rate'], ['migration', 'net_migration'], ['migrasi', 'net_migration'],
   ['precipitation', 'precipitation'], ['rainfall', 'precipitation'], ['hujan', 'precipitation'],
 ];

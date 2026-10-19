@@ -1,44 +1,228 @@
 {
-  "run_id": "20261019T014834Z",
-  "generated_at": "2026-10-19T01:48:43Z",
+  "run_id": "20261019T031745Z",
+  "generated_at": "2026-10-19T03:18:21Z",
   "counts": {
-    "info": 46,
-    "warning": 13,
+    "info": 90,
+    "warning": 29,
     "error": 0
   },
   "steps": {
-    "opendosm": {
-      "started": "2026-10-19T01:48:34Z",
+    "registry": {
+      "started": "2026-10-19T03:17:47Z",
       "status": "ok",
-      "finished": "2026-10-19T01:48:40Z",
-      "catalogue": 32,
+      "finished": "2026-10-19T03:17:49Z",
+      "entities": 258,
+      "wpp_matched": 230,
+      "wpp_unmapped": 7
+    },
+    "opendosm": {
+      "started": "2026-10-19T03:17:49Z",
+      "status": "ok",
+      "finished": "2026-10-19T03:18:18Z",
+      "catalogue": 40,
       "files": 5,
       "unmatched_districts": 8
     },
     "publish": {
-      "started": "2026-10-19T01:48:40Z",
+      "started": "2026-10-19T03:18:18Z",
       "status": "ok",
-      "finished": "2026-10-19T01:48:40Z",
+      "finished": "2026-10-19T03:18:18Z",
       "sources": 13,
-      "indicators": 76
+      "indicators": 94
     },
     "quality": {
-      "started": "2026-10-19T01:48:40Z",
+      "started": "2026-10-19T03:18:18Z",
       "status": "ok",
-      "finished": "2026-10-19T01:48:43Z",
-      "issues": 497,
+      "finished": "2026-10-19T03:18:21Z",
+      "issues": 513,
       "duplicate_records": 9,
       "missing_values": 28,
       "outliers": 441,
       "unit_mismatch": 1,
       "year_mismatch": 3,
-      "geographic_mismatch": 15
+      "geographic_mismatch": 31
     }
   },
   "warnings": [
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "ATA",
+        "m49": 10
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "PCN",
+        "m49": 612
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "ATF",
+        "m49": 260
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "UMI",
+        "m49": 581
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "HMD",
+        "m49": 334
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "ALD",
+        "m49": 248
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "IOT",
+        "m49": 86
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "NFK",
+        "m49": 574
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "NE numeric code not in UN WPP locations",
+      "context": {
+        "ne": "SGS",
+        "m49": 239
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 175,
+        "name": "Mayotte"
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 254,
+        "name": "French Guiana"
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 312,
+        "name": "Guadeloupe"
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 474,
+        "name": "Martinique"
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 535,
+        "name": "Bonaire, Sint Eustatius and Saba"
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 638,
+        "name": "Reunion"
+      }
+    },
+    {
+      "ts": "2026-10-19T03:17:48Z",
+      "run_id": "20261019T031745Z",
+      "step": "registry",
+      "level": "warning",
+      "message": "UN WPP location has no Natural Earth polygon (statistics available, not mappable)",
+      "context": {
+        "m49": 772,
+        "name": "Tokelau"
+      }
+    },
+    {
+      "ts": "2026-10-19T03:18:01Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "structural break: district redefined (area moved to new districts)",
@@ -53,8 +237,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:01Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "structural break: district redefined (area moved to new districts)",
@@ -69,8 +253,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:01Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "structural break: district redefined (area moved to new districts)",
@@ -89,8 +273,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:01Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "structural break: district redefined (area moved to new districts)",
@@ -109,8 +293,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:01Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "structural break: district redefined (area moved to new districts)",
@@ -129,8 +313,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:17Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
@@ -140,8 +324,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:17Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
@@ -151,8 +335,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:17Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
@@ -162,8 +346,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:17Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
@@ -173,8 +357,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:17Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
@@ -184,8 +368,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:17Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
@@ -195,8 +379,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:17Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "geographic mismatch: DOSM district not matched to a boundary polygon",
@@ -206,8 +390,8 @@
       }
     },
     {
-      "ts": "2026-10-19T01:48:39Z",
-      "run_id": "20261019T014834Z",
+      "ts": "2026-10-19T03:18:17Z",
+      "run_id": "20261019T031745Z",
       "step": "opendosm",
       "level": "warning",
       "message": "geographic mismatch: DOSM district not matched to a boundary polygon",

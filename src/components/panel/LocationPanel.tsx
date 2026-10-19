@@ -29,12 +29,15 @@ function Section({ id, title, children, defaultOpen = true, extra }: { id: strin
   );
 }
 
-const VITAL = ['births', 'deaths', 'cbr', 'cdr', 'tfr', 'imr', 'e0', 'natural_increase', 'median_age', 'sex_ratio'];
+const VITAL = ['births', 'deaths', 'cbr', 'cdr', 'tfr', 'imr', 'e0', 'e0_male', 'e0_female', 'natural_increase', 'median_age', 'sex_ratio'];
 const ECON = ['gdp', 'gdp_per_capita', 'gdp_growth', 'inflation', 'unemployment', 'labour_force', 'exports', 'imports', 'trade_balance', 'gni_per_capita', 'poverty', 'hh_income_median'];
 const TOURISM = ['tourism_arrivals', 'tourism_receipts', 'tourism_receipts_pct_exports', 'tourism_departures'];
 const SOCIAL = ['urban_pct', 'urban_population', 'rural_population', 'electricity_access', 'renewable_energy'];
 // Malaysia below national level: DOSM household survey (HIES) and labour force survey (LFS) by area
 const MY_SOCIO = ['hh_income_median', 'hh_income_mean', 'hh_expenditure_mean', 'gini_coef', 'poverty_absolute', 'unemployment', 'lfpr', 'labour_force'];
+// citizen ethnic groups in DOSM's order (shares of citizens) and government schools (Ministry of Education)
+const MY_ETH = ['eth_bumi_malay_pct', 'eth_bumi_other_pct', 'eth_chinese_pct', 'eth_indian_pct', 'eth_other_citizen_pct'];
+const MY_EDU = ['schools_primary', 'schools_secondary', 'students_primary', 'students_secondary', 'ptr_primary', 'ptr_secondary', 'completion_primary', 'completion_secondary_lower', 'completion_secondary_upper'];
 
 export function LocationPanel() {
   const { selection, point, lang, catalog, year, projection, addCompare, removeCompare, compare, setModal, setDashTab, select } = useAtlas();
@@ -150,6 +153,30 @@ export function LocationPanel() {
             </Section>
           )}
 
+          {isMys && b.dosm && (b.dosm.series.noncitizen_pct?.length || b.dosm.series.eth_bumi_malay_pct?.length) ? (
+            <Section id="ethnic" title={lang === 'ms' ? 'Etnik & kewarganegaraan' : 'Ethnicity & citizenship'}>
+              <EthnicComposition s={s} />
+              <div className="stat-grid stat-grid-3 mt">
+                {['pop_noncitizen', 'noncitizen_pct'].map((c) => { const ss = s(c); const p = latest(ss, year); return <StatCard key={c} ind={inds[c]} value={p?.value} year={p?.year} quality={p?.quality} sourceLabel={ss ? 'DOSM' : undefined} />; })}
+              </div>
+              {!b.dosm.series.eth_bumi_malay_pct?.length && (
+                <p className="fineprint" role="note">{lang === 'ms'
+                  ? 'DOSM tidak menerbitkan pecahan etnik bagi kawasan parlimen dan DUN, hanya warganegara dan bukan warganegara. Atlas ini tidak menganggarkannya daripada data daerah.'
+                  : 'DOSM does not publish an ethnic breakdown for parlimen or DUN constituencies, only citizens and non-citizens. This atlas does not estimate one from district data.'}</p>
+              )}
+              <SourceNote sourceId="dosm_opendosm" note={lang === 'ms' ? 'Anggaran Penduduk Semasa DOSM; 2020 ialah Banci. Peratus etnik dikira daripada warganegara, seperti terbitan DOSM; bukan warganegara daripada jumlah penduduk.' : 'DOSM current population estimates; 2020 is the census. Ethnic shares are of citizens, as DOSM publishes them; non-citizens are a share of the whole population.'} />
+            </Section>
+          ) : null}
+
+          {isMys && b.dosm && MY_EDU.some((c) => b.dosm!.series[c]?.length) && (
+            <Section id="education" title={lang === 'ms' ? 'Pendidikan (sekolah kerajaan)' : 'Education (government schools)'}>
+              <div className="stat-grid stat-grid-3">
+                {MY_EDU.map((c) => { const ss = s(c); const p = latest(ss, year); return <StatCard key={c} ind={inds[c]} value={p?.value} year={p?.year} quality={p?.quality} sourceLabel={ss ? 'KPM' : undefined} hint={inds[c]?.notes} />; })}
+              </div>
+              <SourceNote sourceId="dosm_opendosm" note={lang === 'ms' ? 'Kementerian Pendidikan Malaysia (EMIS), melalui data.gov.my. Sekolah kerajaan sahaja. Daerah ikut Pejabat Pendidikan Daerah (PPD): PPD yang meliputi dua daerah tidak dipecahkan, jadi daerah itu tiada angka. Kadar tamat boleh melebihi 100% kerana murid mengulang atau berpindah.' : 'Ministry of Education Malaysia (EMIS), via data.gov.my. Government schools only. Districts follow District Education Offices (PPD): an office covering two districts is not split, so those districts have no figures. Completion can exceed 100% because of repeaters and transfers.'} />
+            </Section>
+          )}
+
           {selection.level === 'country' && (
             <Section id="economy" title={t(lang, 'economicIntelligence')} extra={<button className="link small" onClick={(e) => { e.preventDefault(); setDashTab('economy'); }}>{lang === 'ms' ? 'Analisis ›' : 'Analyse ›'}</button>}>
               {wb.loading && !wb.data ? <div className="muted small">{t(lang, 'loading')}</div> : (
@@ -218,6 +245,27 @@ export function LocationPanel() {
 
 function sourceShort(id: string) {
   return id === 'un_wpp_2024' ? 'UN WPP 2024' : id === 'wb_wdi' ? 'World Bank' : id === 'dosm_opendosm' ? 'DOSM' : id === 'worldstat_derived' ? 'Derived' : id;
+}
+
+/** Ethnic composition of citizens (DOSM groups), all from one year so the shares add up. */
+function EthnicComposition({ s }: { s: (c: string) => Series | null }) {
+  const { lang, year } = useAtlas();
+  const first = latest(s(MY_ETH[0]), year);
+  if (!first) return null;
+  const names: Record<string, [string, string]> = {
+    eth_bumi_malay_pct: ['Bumiputera Melayu', 'Bumiputera Malay'], eth_bumi_other_pct: ['Bumiputera lain', 'Other Bumiputera'],
+    eth_chinese_pct: ['Cina', 'Chinese'], eth_indian_pct: ['India', 'Indian'], eth_other_citizen_pct: ['Lain-lain', 'Others'],
+  };
+  const items = MY_ETH.map((c) => {
+    const v = s(c)?.points.find((p) => p.year === first.year)?.value;
+    return v === undefined ? null : { name: `${names[c][lang === 'ms' ? 0 : 1]} · ${v.toFixed(1)}%`, value: v };
+  }).filter((x): x is { name: string; value: number } => x !== null);
+  return (
+    <div>
+      <div className="mini-title">{lang === 'ms' ? 'Komposisi etnik warganegara' : 'Ethnic composition of citizens'} · {first.year} <span className="muted">(% {lang === 'ms' ? 'warganegara' : 'of citizens'})</span></div>
+      <DonutChart items={items} lang={lang} height={190} />
+    </div>
+  );
 }
 
 function StructureDonut({ s }: { s: (c: string) => Series | null }) {

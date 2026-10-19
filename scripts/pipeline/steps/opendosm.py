@@ -40,7 +40,13 @@ DATASETS = [
     "hh_expenditure_parlimen", "hh_inequality_parlimen", "lfs_parlimen",
     "hh_inequality", "hh_inequality_state", "hh_inequality_district",
     "population_dun", "hh_income_dun", "hh_poverty_dun", "hh_expenditure_dun", "hh_inequality_dun", "lfs_dun",
+    "life_expectancy", "life_expectancy_state", "life_expectancy_district",
+    "schools_district", "enrolment_school_district", "teachers_district", "completion_school_district", "completion_school_state",
 ]
+# citizen ethnic groups in DOSM's order; DOSM reports ethnic shares of citizens, non-citizens as a share of everyone
+ETH_CITIZEN = ["bumi_malay", "bumi_other", "chinese", "indian", "other_citizen"]
+# states with no district of their own: their single map district takes the state's figures
+SINGLE_DISTRICT = {"MY-09", "MY-14", "MY-15", "MY-16"}
 AGE5 = ["0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49",
         "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80-84", "85+"]
 STATE_ISO = {
@@ -149,7 +155,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
     def state_id(name: str) -> str | None:
         return STATE_ISO.get(name.strip().lower())
 
-    def district_id(state: str, district: str) -> str | None:
+    def district_id(state: str, district: str, unmatched: set | None = None) -> str | None:
         sid = state_id(state)
         if sid is None:
             return None
@@ -158,7 +164,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
         if did is None and norm(district) == norm(state):
             did = next((v for (s, _), v in a2_by_key.items() if s == sid), None) if sid in ("MY-09", "MY-14", "MY-15") else None
         if did is None:
-            unmatched_d.add((state, district))
+            (unmatched_d if unmatched is None else unmatched).add((state, district))
         return did
 
     def population(ds: str, store: Store, key, ethnicity: bool = True):
@@ -167,6 +173,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
             return
         pyr = defaultdict(lambda: {"male": {}, "female": {}})
         eth = defaultdict(dict)
+        cit = defaultdict(dict)
         for r in data:
             unit = key(r)
             if unit is None:
@@ -182,6 +189,9 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
                 pyr[(unit, y)][r["sex"]][r["age"]] = v
             elif ethnicity and r["age"] == "overall" and r["sex"] == "both" and r["ethnicity"] != "overall" and v is not None:
                 eth[(unit, y)][r["ethnicity"]] = v
+            elif not ethnicity and r["sex"] == "both" and v is not None and {r["age"], r["ethnicity"]} in ({"overall", "citizen"}, {"overall", "noncitizen"}):
+                # parlimen / DUN: citizenship only (in 'ethnicity' for 2020, in 'age' from 2021)
+                cit[(unit, y)][r["ethnicity"] if r["age"] == "overall" else r["age"]] = v
         by_unit = defaultdict(dict)
         for (unit, y), d in pyr.items():
             by_unit[unit][y] = d
@@ -208,6 +218,19 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
                 store.put(unit, "pop_65_plus_pct", y, sum(tot[13:]) / s * 100, q, ds)
         for (unit, y), d in eth.items():
             store.units[unit].setdefault("ethnicity", {})[str(y)] = d
+            citizens = sum(d.get(g, 0) for g in ETH_CITIZEN)
+            if "other_noncitizen" in d:
+                cit[(unit, y)] = {"citizen": citizens, "noncitizen": d["other_noncitizen"]}
+            if citizens > 0:
+                for g in ETH_CITIZEN:
+                    if g in d:
+                        store.put(unit, f"eth_{g}_pct", y, d[g] / citizens * 100, "DERIVED", ds)
+        for (unit, y), d in cit.items():
+            c, n = d.get("citizen"), d.get("noncitizen")
+            if c is None or n is None or c + n <= 0:
+                continue
+            store.put(unit, "pop_noncitizen", y, n, pop_quality(y), ds)
+            store.put(unit, "noncitizen_pct", y, n / (c + n) * 100, "DERIVED", ds)
         for unit, d in store.units.items():
             pm, pf = d["series"].get("population_male", {}), d["series"].get("population_female", {})
             for y in set(pm) & set(pf):
@@ -395,6 +418,109 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
             u = key(r)
             if u:
                 store.put(u, "gini_coef", year(r["date"]), r.get("gini"), "OFFICIAL", ds)
+
+    def life(ds: str, store: Store, key):
+        """Life expectancy at birth. Each release revises the two latest years (the last is an
+        estimate, the one before preliminary), so those two are ESTIMATE; earlier years are final."""
+        data = rows(ds)
+        if not data:
+            return
+        last = max(year(r["date"]) for r in data)
+        for r in data:
+            if r.get("ethnicity", "overall") != "overall":
+                continue
+            ind = {"both": "e0", "male": "e0_male", "female": "e0_female"}.get(r["sex"])
+            u = key(r)
+            if ind and u:
+                y = year(r["date"])
+                store.put(u, ind, y, r["life_expectancy"], "ESTIMATE" if y >= last - 1 else "OFFICIAL", ds)
+
+    life("life_expectancy", nat, lambda r: "MYS")
+    life("life_expectancy_state", st, lambda r: state_id(r["state"]))
+    life("life_expectancy_district", di, lambda r: district_id(r["state"], r["district"]))
+
+    # ---- government schools (Ministry of Education, EMIS, via data.gov.my) -----------------
+    # District rows are District Education Offices (PPD), not always administrative districts:
+    # a PPD inside one district is added to it (counts only), a PPD spanning two districts cannot be
+    # split and is left out (logged), and the four single-district states take their state rows.
+    ppd = read_json(REGISTRY / "mys_district_crosswalk.json").get("moe_ppd", {})
+    ppd_unmatched: set[tuple[str, str]] = set()
+    ppd_spanning: set[tuple[str, str]] = set()
+
+    def edu_unit(r) -> tuple[Store, str] | None:
+        if r["state"] == "Malaysia":
+            return (nat, "MYS") if r["district"] == "All Districts" else None
+        sid = state_id(r["state"])
+        if sid is None:
+            return None
+        if r["district"] == "All Districts":
+            return st, sid
+        return None
+
+    def edu_district(r) -> str | None:
+        if r["state"] == "Malaysia" or r["district"] == "All Districts" or state_id(r["state"]) in SINGLE_DISTRICT:
+            return None
+        name = ppd.get(r["state"], {}).get(r["district"], r["district"])
+        if name is None:
+            ppd_spanning.add((r["state"], r["district"]))
+            return None
+        return district_id(r["state"], name, ppd_unmatched)
+
+    edu_sum: dict[tuple[str, str, int], float] = defaultdict(float)
+    edu_n: dict[tuple[str, str, int], int] = defaultdict(int)
+    edu_ds: dict[str, str] = {}
+
+    def edu(ds: str, col: str, ind_of, filt=lambda r: True):
+        for r in rows(ds) or []:
+            ind = ind_of(r)
+            if not ind or not filt(r) or num(r.get(col)) is None:
+                continue
+            y, v = year(r["date"]), num(r[col])
+            edu_ds[ind] = ds
+            hit = edu_unit(r)
+            if hit:
+                hit[0].put(hit[1], ind, y, v, "OFFICIAL", ds)
+                if hit[1] in SINGLE_DISTRICT:
+                    did = district_id(r["state"], r["state"], ppd_unmatched) if hit[1] != "MY-16" else None
+                    if did:
+                        di.put(did, ind, y, v, "OFFICIAL", ds)
+                continue
+            did = edu_district(r)
+            if did:
+                edu_sum[(did, ind, y)] += v
+                edu_n[(did, ind, y)] += 1
+
+    stage = {"primary": "primary", "secondary": "secondary"}
+    edu("schools_district", "schools", lambda r: f"schools_{stage[r['stage']]}" if r["stage"] in stage else None)
+    edu("enrolment_school_district", "students", lambda r: f"students_{stage[r['stage']]}" if r["stage"] in stage else None, lambda r: r["sex"] == "both")
+    edu("teachers_district", "teachers", lambda r: f"teachers_{stage[r['stage']]}" if r["stage"] in stage else None, lambda r: r["sex"] == "both")
+    # state rows here only matter for the single-district states; other states take the state dataset below
+    edu("completion_school_district", "completion", lambda r: f"completion_{r['stage']}")
+    for r in rows("completion_school_state") or []:
+        if r["sex"] != "both" or num(r.get("completion")) is None:
+            continue
+        u = (nat, "MYS") if r["state"] == "Malaysia" else (st, state_id(r["state"]))
+        if u[1]:
+            u[0].put(u[1], f"completion_{r['stage']}", year(r["date"]), r["completion"], "OFFICIAL", "completion_school_state")
+    combined_rates = 0
+    for (did, ind, y), v in edu_sum.items():
+        if ind.startswith("completion_") and edu_n[(did, ind, y)] > 1:
+            combined_rates += 1  # a rate cannot be added up across offices: left out
+            continue
+        di.put(did, ind, y, v, "OFFICIAL", edu_ds[ind])
+    for store in (nat, st, di):  # pupil–teacher ratio from the totals just stored
+        for unit, d in store.units.items():
+            for lvl in ("primary", "secondary"):
+                sts, tch = d["series"].get(f"students_{lvl}", {}), d["series"].get(f"teachers_{lvl}", {})
+                for y in set(sts) & set(tch):
+                    if tch[y][0] > 0:
+                        store.put(unit, f"ptr_{lvl}", y, sts[y][0] / tch[y][0], "DERIVED", edu_ds.get(f"students_{lvl}", "enrolment_school_district"))
+    for state, office in sorted(ppd_spanning):
+        log.info(STEP, "education office spans two districts: not split, no district figures", state=state, office=office)
+    for state, office in sorted(ppd_unmatched):
+        log.warning(STEP, "geographic mismatch: education office not matched to a district", state=state, office=office)
+    if combined_rates:
+        log.info(STEP, "completion rates of districts with several education offices left out (rates cannot be added)", unit_years=combined_rates)
 
     lookup = {r.get("sector"): r for r in (rows("gdp_lookup") or [])}
     sectors = defaultdict(lambda: defaultdict(dict))

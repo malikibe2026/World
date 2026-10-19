@@ -54,6 +54,7 @@ const dict = {
   vitalStatistics: { en: 'Vital statistics', ms: 'Statistik vital' },
   economicIntelligence: { en: 'Economic intelligence', ms: 'Risikan ekonomi' },
   malaysiaDosm: { en: 'Malaysia · household (DOSM)', ms: 'Malaysia · isi rumah (DOSM)' },
+  malaysiaPeople: { en: 'Malaysia · people & schools (DOSM, MOE)', ms: 'Malaysia · penduduk & sekolah (DOSM, KPM)' },
   economicStructure: { en: 'Economic structure', ms: 'Struktur ekonomi' },
   labour: { en: 'Labour market', ms: 'Pasaran buruh' },
   trade: { en: 'Trade', ms: 'Perdagangan' },

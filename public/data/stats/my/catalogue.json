@@ -1622,6 +1622,419 @@
           "description_en": "[Float] Ratio of the number of employed people to the working-age (15-64) population"
         }
       ]
+    },
+    "life_expectancy": {
+      "title_en": "Life Expectancy by Sex & Ethnicity",
+      "title_ms": "Jangkaan Hayat mengikut Jantina & Etnik",
+      "description_en": "Life expectancy at birth in Malaysia, with breakdowns by sex and ethnic group.",
+      "description_ms": "Jangkaan hayat ketika lahir di Malaysia, dengan pecahan mengikut jantina dan kumpulan etnik.",
+      "methodology_en": "Life tables are compiled by DOSM from deaths registered with the National Registration Department (JPN) and mid-year population estimates, using the Coale-Demeny (West) model life tables. To smooth out random fluctuations, the final life table for a year uses the average number of deaths in that year and the years immediately before and after it; preliminary figures use an estimate of deaths for the following year, while estimates for the latest year use deaths in that year only. Life expectancy is the average number of years a person is expected to live from a given age, if the age-specific mortality rates of that year were to remain the same throughout their lifetime. Life expectancy at birth is not affected by the age structure of the population.",
+      "methodology_ms": "Jadual hayat disusun oleh DOSM berdasarkan kematian yang didaftarkan dengan Jabatan Pendaftaran Negara (JPN) dan anggaran penduduk pertengahan tahun, menggunakan jadual hayat model Coale-Demeny (West). Bagi mengurangkan turun naik rawak, jadual hayat muktamad bagi sesuatu tahun menggunakan purata bilangan kematian bagi tahun tersebut serta tahun sebelum dan selepasnya; angka permulaan menggunakan anggaran kematian bagi tahun berikutnya, manakala anggaran bagi tahun terkini menggunakan kematian bagi tahun tersebut sahaja. Jangkaan hayat ialah purata bilangan tahun seseorang dijangka hidup dari sesuatu umur, sekiranya kadar kematian mengikut umur bagi tahun tersebut kekal sepanjang hayatnya. Jangkaan hayat ketika lahir tidak dipengaruhi oleh struktur umur penduduk.",
+      "caveat_en": "Figures for both sexes combined, citizens, non-citizens, and the split of Bumiputera into Malay and other Bumiputera are available from 1991 onwards; earlier years cover males and females for all persons, Bumiputera, Chinese and Indians. There are no figures for 1958-1965.\n\nEach annual release revises the two preceding years: figures for the latest year are estimates and those for the year before are preliminary, and both will be revised in the next release. Every year in this dataset is taken from the most recent release that covers it. Figures from 2020 onwards are based on population estimates from the Population and Housing Census of Malaysia 2020, while figures for 2010-2019 are based on the 2010 Census and will be revised in future.",
+      "caveat_ms": "Angka bagi kedua-dua jantina, warganegara, bukan warganegara, serta pecahan Bumiputera kepada Melayu dan Bumiputera lain tersedia mulai 1991; tahun-tahun sebelumnya meliputi lelaki dan perempuan bagi semua penduduk, Bumiputera, Cina dan India. Tiada angka bagi 1958-1965.\n\nSetiap keluaran tahunan menyemak semula dua tahun sebelumnya: angka bagi tahun terkini adalah anggaran dan angka bagi tahun sebelumnya adalah permulaan, dan kedua-duanya akan disemak semula dalam keluaran berikutnya. Setiap tahun dalam set data ini diambil daripada keluaran terkini yang meliputi tahun tersebut. Angka dari 2020 dan seterusnya adalah berdasarkan anggaran penduduk daripada Banci Penduduk dan Perumahan Malaysia 2020, manakala angka bagi 2010-2019 adalah berdasarkan Banci 2010 dan akan disemak semula pada masa hadapan.",
+      "data_as_of": "2026",
+      "last_updated": "2026-09-30 18:00",
+      "next_update": "2027-10-31 12:00",
+      "link_csv": "https://storage.dosm.gov.my/demography/life_expectancy.csv",
+      "link_parquet": "https://storage.dosm.gov.my/demography/life_expectancy.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [
+        "SEX",
+        "ETHNICITY"
+      ],
+      "dataset_begin": 1957,
+      "dataset_end": 2026,
+      "data_source": [
+        "JPN",
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/life_expectancy.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')"
+        },
+        {
+          "name": "ethnicity",
+          "description_en": "[Categorical] One of all persons, including non-citizens ('overall'), all citizens ('citizen'), Bumiputera ('bumi'), Malay ('bumi_malay'), other Bumiputera ('bumi_other'), Chinese ('chinese'), Indian ('indian'), or non-citizens ('noncitizen')"
+        },
+        {
+          "name": "life_expectancy",
+          "description_en": "[Float] Average number of years a newborn is expected to live"
+        }
+      ]
+    },
+    "life_expectancy_state": {
+      "title_en": "Life Expectancy by State & Sex",
+      "title_ms": "Jangkaan Hayat mengikut Negeri & Jantina",
+      "description_en": "Life expectancy at birth by state and sex.",
+      "description_ms": "Jangkaan hayat ketika lahir mengikut negeri dan jantina.",
+      "methodology_en": "Life tables are compiled by DOSM from deaths registered with the National Registration Department (JPN) and mid-year population estimates, using the Coale-Demeny (West) model life tables. To smooth out random fluctuations, the final life table for a year uses the average number of deaths in that year and the years immediately before and after it; preliminary figures use an estimate of deaths for the following year, while estimates for the latest year use deaths in that year only. Life expectancy is the average number of years a person is expected to live from a given age, if the age-specific mortality rates of that year were to remain the same throughout their lifetime. Life expectancy at birth is not affected by the age structure of the population.",
+      "methodology_ms": "Jadual hayat disusun oleh DOSM berdasarkan kematian yang didaftarkan dengan Jabatan Pendaftaran Negara (JPN) dan anggaran penduduk pertengahan tahun, menggunakan jadual hayat model Coale-Demeny (West). Bagi mengurangkan turun naik rawak, jadual hayat muktamad bagi sesuatu tahun menggunakan purata bilangan kematian bagi tahun tersebut serta tahun sebelum dan selepasnya; angka permulaan menggunakan anggaran kematian bagi tahun berikutnya, manakala anggaran bagi tahun terkini menggunakan kematian bagi tahun tersebut sahaja. Jangkaan hayat ialah purata bilangan tahun seseorang dijangka hidup dari sesuatu umur, sekiranya kadar kematian mengikut umur bagi tahun tersebut kekal sepanjang hayatnya. Jangkaan hayat ketika lahir tidak dipengaruhi oleh struktur umur penduduk.",
+      "caveat_en": "Before 2016 (life expectancy at birth) and before 2020 (life tables), DOSM published Sabah including W.P. Labuan and Selangor including W.P. Putrajaya; in those years, 'Sabah' and 'Selangor' cover both areas, and W.P. Labuan and W.P. Putrajaya have no separate figures. Figures for Sabah were not published for 2001-2007. Figures for Sabah for 2008-2009 (and, in the life tables, 2008-2012) were compiled before a downward revision of Sabah's estimates from 2010 onwards, and are not comparable with later years. Figures for both sexes combined are available from 2012 onwards.\n\nEach annual release revises the two preceding years: figures for the latest year are estimates and those for the year before are preliminary, and both will be revised in the next release. Every year in this dataset is taken from the most recent release that covers it. Figures from 2020 onwards are based on population estimates from the Population and Housing Census of Malaysia 2020, while figures for 2010-2019 are based on the 2010 Census and will be revised in future.",
+      "caveat_ms": "Sebelum 2016 (jangkaan hayat ketika lahir) dan sebelum 2020 (jadual hayat), DOSM menerbitkan Sabah termasuk W.P. Labuan dan Selangor termasuk W.P. Putrajaya; bagi tahun-tahun tersebut, 'Sabah' dan 'Selangor' meliputi kedua-dua kawasan, dan tiada angka berasingan bagi W.P. Labuan dan W.P. Putrajaya. Angka bagi Sabah tidak diterbitkan bagi 2001-2007. Angka bagi Sabah bagi 2008-2009 (dan, dalam jadual hayat, 2008-2012) disusun sebelum semakan semula ke bawah anggaran Sabah dari 2010 dan seterusnya, dan tidak boleh dibandingkan dengan tahun-tahun kemudian. Angka bagi kedua-dua jantina tersedia mulai 2012.\n\nSetiap keluaran tahunan menyemak semula dua tahun sebelumnya: angka bagi tahun terkini adalah anggaran dan angka bagi tahun sebelumnya adalah permulaan, dan kedua-duanya akan disemak semula dalam keluaran berikutnya. Setiap tahun dalam set data ini diambil daripada keluaran terkini yang meliputi tahun tersebut. Angka dari 2020 dan seterusnya adalah berdasarkan anggaran penduduk daripada Banci Penduduk dan Perumahan Malaysia 2020, manakala angka bagi 2010-2019 adalah berdasarkan Banci 2010 dan akan disemak semula pada masa hadapan.",
+      "data_as_of": "2026",
+      "last_updated": "2026-09-30 18:00",
+      "next_update": "2027-10-31 12:00",
+      "link_csv": "https://storage.dosm.gov.my/demography/life_expectancy_state.csv",
+      "link_parquet": "https://storage.dosm.gov.my/demography/life_expectancy_state.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE"
+      ],
+      "demography": [
+        "SEX"
+      ],
+      "dataset_begin": 2001,
+      "dataset_end": 2026,
+      "data_source": [
+        "JPN",
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/life_expectancy_state.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')"
+        },
+        {
+          "name": "life_expectancy",
+          "description_en": "[Float] Average number of years a newborn is expected to live"
+        }
+      ]
+    },
+    "life_expectancy_district": {
+      "title_en": "Life Expectancy by District & Sex",
+      "title_ms": "Jangkaan Hayat mengikut Daerah & Jantina",
+      "description_en": "Life expectancy at birth by administrative district and sex.",
+      "description_ms": "Jangkaan hayat ketika lahir mengikut daerah pentadbiran dan jantina.",
+      "methodology_en": "Life tables are compiled by DOSM from deaths registered with the National Registration Department (JPN) and mid-year population estimates, using the Coale-Demeny (West) model life tables. To smooth out random fluctuations, the final life table for a year uses the average number of deaths in that year and the years immediately before and after it; preliminary figures use an estimate of deaths for the following year, while estimates for the latest year use deaths in that year only. Life expectancy is the average number of years a person is expected to live from a given age, if the age-specific mortality rates of that year were to remain the same throughout their lifetime. Life expectancy at birth is not affected by the age structure of the population.",
+      "methodology_ms": "Jadual hayat disusun oleh DOSM berdasarkan kematian yang didaftarkan dengan Jabatan Pendaftaran Negara (JPN) dan anggaran penduduk pertengahan tahun, menggunakan jadual hayat model Coale-Demeny (West). Bagi mengurangkan turun naik rawak, jadual hayat muktamad bagi sesuatu tahun menggunakan purata bilangan kematian bagi tahun tersebut serta tahun sebelum dan selepasnya; angka permulaan menggunakan anggaran kematian bagi tahun berikutnya, manakala anggaran bagi tahun terkini menggunakan kematian bagi tahun tersebut sahaja. Jangkaan hayat ialah purata bilangan tahun seseorang dijangka hidup dari sesuatu umur, sekiranya kadar kematian mengikut umur bagi tahun tersebut kekal sepanjang hayatnya. Jangkaan hayat ketika lahir tidak dipengaruhi oleh struktur umur penduduk.",
+      "caveat_en": "The number of administrative districts increased from 160 to 166 from 2024, due to the creation of new districts in Sabah (Membakut) and Sarawak (Gedong, Sebuyau, Siburan, Pantu and Lingga). Perlis and the 3 Federal Territories, which have no districts, are each shown as a single district.\n\nEach annual release revises the two preceding years: figures for the latest year are estimates and those for the year before are preliminary, and both will be revised in the next release. Every year in this dataset is taken from the most recent release that covers it. Figures from 2020 onwards are based on population estimates from the Population and Housing Census of Malaysia 2020, while figures for 2010-2019 are based on the 2010 Census and will be revised in future.",
+      "caveat_ms": "Bilangan daerah pentadbiran bertambah daripada 160 kepada 166 mulai 2024, kerana pewujudan daerah baru di Sabah (Membakut) dan Sarawak (Gedong, Sebuyau, Siburan, Pantu dan Lingga). Perlis dan 3 Wilayah Persekutuan, yang tidak mempunyai daerah, masing-masing ditunjukkan sebagai satu daerah.\n\nSetiap keluaran tahunan menyemak semula dua tahun sebelumnya: angka bagi tahun terkini adalah anggaran dan angka bagi tahun sebelumnya adalah permulaan, dan kedua-duanya akan disemak semula dalam keluaran berikutnya. Setiap tahun dalam set data ini diambil daripada keluaran terkini yang meliputi tahun tersebut. Angka dari 2020 dan seterusnya adalah berdasarkan anggaran penduduk daripada Banci Penduduk dan Perumahan Malaysia 2020, manakala angka bagi 2010-2019 adalah berdasarkan Banci 2010 dan akan disemak semula pada masa hadapan.",
+      "data_as_of": "2026",
+      "last_updated": "2026-09-30 18:00",
+      "next_update": "2027-10-31 12:00",
+      "link_csv": "https://storage.dosm.gov.my/demography/life_expectancy_district.csv",
+      "link_parquet": "https://storage.dosm.gov.my/demography/life_expectancy_district.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE",
+        "DISTRICT"
+      ],
+      "demography": [
+        "SEX"
+      ],
+      "dataset_begin": 2021,
+      "dataset_end": 2026,
+      "data_source": [
+        "JPN",
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/life_expectancy_district.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 166 administrative districts, including the 4 states (Perlis and the 3 Federal Territories) which do not have subdivisions"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')"
+        },
+        {
+          "name": "life_expectancy",
+          "description_en": "[Float] Average number of years a newborn is expected to live"
+        }
+      ]
+    },
+    "schools_district": {
+      "title_en": "Public Education Institutions by District",
+      "title_ms": "Institusi Pendidikan Awam mengikut Daerah",
+      "description_en": "Number of primary, secondary, and tertiary public education institutions at national, state, and district level.",
+      "description_ms": "Bilangan institusi awam pendidikan rendah, menengah, dan tinggi di peringkat nasional, negeri, dan daerah.",
+      "methodology_en": "This dataset is tabulated from school-level administrative records maintained by the Ministry of Education Malaysia via the Education Management Information System (EMIS). Counts of higher education institutions are tabulated from administrative records maintained by the Ministry of Education Malaysia.",
+      "methodology_ms": "Dataset ini disusun daripada rekod pentadbiran peringkat sekolah yang dikawalselia oleh Kementerian Pendidikan Malaysia melalui Sistem Pengurusan Maklumat Pendidikan (EMIS). Bilangan institusi pengajian tinggi disusun daripada rekod pentadbiran yang dikawalselia oleh Kementerian Pendidikan Malaysia.",
+      "caveat_en": "For tertiary education, teacher education institutes, polytechnics, and community colleges are available at national level only.",
+      "caveat_ms": "Bagi pengajian tinggi, institut pendidikan guru, politeknik, dan kolej komuniti hanya tersedia di peringkat nasional.",
+      "data_as_of": "2025",
+      "last_updated": "2026-10-11 12:00",
+      "next_update": "2027-12-31 18:00",
+      "link_csv": "https://storage.data.gov.my/education/schools_district.csv",
+      "link_parquet": "https://storage.data.gov.my/education/schools_district.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL",
+        "STATE",
+        "DISTRICT"
+      ],
+      "demography": [],
+      "dataset_begin": 2017,
+      "dataset_end": 2025,
+      "data_source": [
+        "MOE"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/schools_district.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] Date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, or Malaysia for national-level data"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 160 administrative districts, or 'All Districts' for state-level data"
+        },
+        {
+          "name": "stage",
+          "description_en": "[Categorical] Either primary, secondary, or tertiary education"
+        },
+        {
+          "name": "type",
+          "description_en": "[Categorical] Type of public school or institution"
+        },
+        {
+          "name": "schools",
+          "description_en": "[Integer] Number of schools or institutions"
+        }
+      ]
+    },
+    "enrolment_school_district": {
+      "title_en": "Enrolment in Government Schools by District",
+      "title_ms": "Enrolmen di Sekolah Kerajaan mengikut Daerah",
+      "description_en": "Number of students enrolled in primary, secondary, and post-secondary government schools at national, state, and district level.",
+      "description_ms": "Bilangan pelajar yang berdaftar bagi pendidikan rendah, menengah, dan pasca menengah di sekolah kerajaan di peringkat nasional, negeri, dan daerah.",
+      "methodology_en": "This dataset is tabulated from individual-level administrative records maintained by the Ministry of Education Malaysia via the Education Management Information System (EMIS).",
+      "methodology_ms": "Dataset ini disusun daripada rekod pentadbiran peringkat individu yang dikawalselia oleh Kementerian Pendidikan Malaysia melalui Sistem Pengurusan Maklumat Pendidikan (EMIS).",
+      "caveat_en": "—",
+      "caveat_ms": "—",
+      "data_as_of": "2025",
+      "last_updated": "2026-08-03 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.data.gov.my/education/enrolment_school_district.csv",
+      "link_parquet": "https://storage.data.gov.my/education/enrolment_school_district.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL",
+        "STATE",
+        "DISTRICT"
+      ],
+      "demography": [
+        "SEX"
+      ],
+      "dataset_begin": 2017,
+      "dataset_end": 2025,
+      "data_source": [
+        "MOE"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/enrolment_school_district.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] Date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, or Malaysia for national-level data"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of the administrative districts, or 'All Districts' for state-level data"
+        },
+        {
+          "name": "stage",
+          "description_en": "[Categorical] Either primary (Standards 1 to 6), secondary (Form 1 to 5), or post-secondary education (Form 6)"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes, male, or female"
+        },
+        {
+          "name": "students",
+          "description_en": "[Integer] Number of students enrolled"
+        }
+      ]
+    },
+    "teachers_district": {
+      "title_en": "Teachers in Government Schools by District",
+      "title_ms": "Guru di Sekolah Kerajaan mengikut Daerah",
+      "description_en": "Number of teachers in primary and secondary government schools at national, state, and district level.",
+      "description_ms": "Bilangan guru di sekolah rendah dan menengah kerajaan di peringkat nasional, negeri, dan daerah.",
+      "methodology_en": "This dataset is tabulated from individual-level administrative records maintained by the Ministry of Education Malaysia via the Education Management Information System (EMIS).",
+      "methodology_ms": "Dataset ini disusun daripada rekod pentadbiran peringkat individu yang dikawalselia oleh Kementerian Pendidikan Malaysia melalui Sistem Pengurusan Maklumat Pendidikan (EMIS).",
+      "caveat_en": "—",
+      "caveat_ms": "—",
+      "data_as_of": "2025",
+      "last_updated": "2026-08-03 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.data.gov.my/education/teachers_district.csv",
+      "link_parquet": "https://storage.data.gov.my/education/teachers_district.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL",
+        "STATE",
+        "DISTRICT"
+      ],
+      "demography": [
+        "SEX"
+      ],
+      "dataset_begin": 2017,
+      "dataset_end": 2025,
+      "data_source": [
+        "MOE"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/teachers_district.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] Date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, or Malaysia for national-level data"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of the administrative districts, or 'All Districts' for state-level data"
+        },
+        {
+          "name": "stage",
+          "description_en": "[Categorical] Either primary or secondary education"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male'), or female ('female')"
+        },
+        {
+          "name": "teachers",
+          "description_en": "[Integer] Number of teachers"
+        }
+      ]
+    },
+    "completion_school_district": {
+      "title_en": "School Completion Rates by District",
+      "title_ms": "Kadar Tamat Pengajian Sekolah mengikut Daerah",
+      "description_en": "Proportion of students who complete primary, lower secondary, and upper secondary education at state and district level.",
+      "description_ms": "Peratusan pelajar yang menamatkan pendidikan rendah, menengah rendah, dan menengah atas di peringkat negeri dan daerah.",
+      "methodology_en": "This dataset is derived from administrative records maintained by the Ministry of Education Malaysia via the Education Management Information System (EMIS). Completion rates are calculated by comparing the number of students who complete a given education level with the total cohort that started that level. Districts are those of the District Education Offices (Pejabat Pendidikan Daerah).",
+      "methodology_ms": "Dataset ini diperolehi daripada rekod pentadbiran yang dikendalikan oleh Kementerian Pendidikan Malaysia melalui Sistem Pengurusan Maklumat Pendidikan (EMIS). Kadar tamat pengajian dikira dengan membandingkan bilangan pelajar yang selesai bagi tahap pendidikan tertentu dengan jumlah kohort yang memulakan tahap tersebut. Daerah adalah mengikut Pejabat Pendidikan Daerah.",
+      "caveat_en": "Because Malaysia's dropout rates are extremely low, completion rates may exceed 100% due to a small number of students repeating grades or transferring between districts; in small districts, such movements can push the rate well above 100%. The data refers to government schools only. State-level figures in this dataset are compiled on the same basis as the district figures, and may differ from those in the dataset of completion rates by state. Rates are blank where unavailable, such as for districts before they had their own District Education Office.",
+      "caveat_ms": "Oleh sebab kadar 'dropout' di Malaysia amat rendah, kadar tamat pengajian mungkin melebihi 100% disebabkan sebilangan kecil pelajar yang mengulang gredi atau berpindah antara daerah; di daerah kecil, pergerakan sebegini boleh menyebabkan kadar jauh melebihi 100%. Data ini merujuk kepada sekolah kerajaan sahaja. Angka peringkat negeri dalam dataset ini disusun atas asas yang sama dengan angka daerah, dan mungkin berbeza daripada angka dalam dataset kadar tamat pengajian mengikut negeri. Kadar dibiarkan kosong jika tiada, seperti bagi daerah sebelum mempunyai Pejabat Pendidikan Daerah sendiri.",
+      "data_as_of": "2025",
+      "last_updated": "2026-10-11 12:00",
+      "next_update": "2027-12-31 18:00",
+      "link_csv": "https://storage.data.gov.my/education/completion_school_district.csv",
+      "link_parquet": "https://storage.data.gov.my/education/completion_school_district.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE",
+        "DISTRICT"
+      ],
+      "demography": [],
+      "dataset_begin": 2021,
+      "dataset_end": 2025,
+      "data_source": [
+        "MOE"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/completion_school_district.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] Date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of the District Education Offices, or 'All Districts' for state-level data"
+        },
+        {
+          "name": "stage",
+          "description_en": "[Categorical] Either primary (Standards 1 to 6), lower secondary (Form 1 to 3), or upper secondary (Form 4 to 5)"
+        },
+        {
+          "name": "completion",
+          "description_en": "[Float] Proportion of students who complete that stage of education, relative to the total cohort that started that stage"
+        }
+      ]
+    },
+    "completion_school_state": {
+      "title_en": "School Completion Rates by State",
+      "title_ms": "Kadar Tamat Pengajian Sekolah mengikut Negeri",
+      "description_en": "Proportion of students who complete primary, lower secondary, and upper secondary education at national and state level.",
+      "description_ms": "Peratusan pelajar yang menamatkan pendidikan rendah, menengah rendah, dan menengah atas di peringkat nasional dan negeri.",
+      "methodology_en": "This dataset is derived from administrative records maintained by the Ministry of Education Malaysia via the Education Management Information System (EMIS). Completion rates are calculated by comparing the number of students who complete a given education level with the total cohort that started that level.",
+      "methodology_ms": "Dataset ini diperolehi daripada rekod pentadbiran yang dikendalikan oleh Kementerian Pendidikan Malaysia melalui Sistem Pengurusan Maklumat Pendidikan (EMIS). Kadar tamat pengajian dikira dengan membandingkan bilangan pelajar yang selesai bagi tahap pendidikan tertentu dengan jumlah kohort yang memulakan tahap tersebut.",
+      "caveat_en": "Because Malaysia's dropout rates are extremely low, completion rates may exceed 100% due to a small number of students repeating grades or transferring between states. Furthermore, it should be noted that the data refers to government schools only.",
+      "caveat_ms": "Oleh sebab kadar 'dropout' di Malaysia amat rendah, kadar tamat pengajian mungkin melebihi 100% disebabkan sebilangan kecil pelajar yang mengulang gredi atau berpindah antara negeri. Tambahan, data ini merujuk kepada sekolah kerajaan sahaja.",
+      "data_as_of": "2025",
+      "last_updated": "2026-10-11 12:00",
+      "next_update": "2027-12-31 18:00",
+      "link_csv": "https://storage.data.gov.my/education/completion_school_state.csv",
+      "link_parquet": "https://storage.data.gov.my/education/completion_school_state.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL",
+        "STATE"
+      ],
+      "demography": [
+        "SEX"
+      ],
+      "dataset_begin": 2016,
+      "dataset_end": 2025,
+      "data_source": [
+        "MOE"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/completion_school_state.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] Date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, or Malaysia for national-level data"
+        },
+        {
+          "name": "stage",
+          "description_en": "[Categorical] Either primary (Standards 1 to 6), lower secondary (Form 1 to 3), or upper secondary (Form 4 to 5)"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes, male, or female"
+        },
+        {
+          "name": "completion",
+          "description_en": "[Float] Proportion of students who complete that stage of education, relative to the total cohort that started that stage"
+        }
+      ]
     }
   }
 }

@@ -2,6 +2,7 @@ import { divisionLabel } from '../utils/geoRefs';
 import { useState } from 'react';
 import { useAtlas } from '../store/atlas';
 import { useLayer, visibleMyAdmin } from '../hooks/useLayer';
+import { myAgency } from './panel/KeyStats';
 import { formatValue } from '../utils/format';
 import { indicatorName, t } from '../utils/i18n';
 import { mapColors, type Classification } from '../maps/palette';
@@ -47,7 +48,7 @@ export function Legend() {
       {open && L.classification && <Classes c={L.classification} ind={ind} lang={lang} noData={noData} />}
       {open && myAdmin?.classification && (
         <>
-          <div className="legend-sub">🇲🇾 {myAdmin.level === 'admin1' ? (lang === 'ms' ? 'Negeri' : 'States') : divisionLabel(myDivision, lang)} · DOSM · {myAdmin.year}</div>
+          <div className="legend-sub">🇲🇾 {myAdmin.level === 'admin1' ? (lang === 'ms' ? 'Negeri' : 'States') : divisionLabel(myDivision, lang)} · {myAgency(ind)} · {myAdmin.year}</div>
           <Classes c={myAdmin.classification} ind={ind} lang={lang} noData={noData} />
         </>
       )}
