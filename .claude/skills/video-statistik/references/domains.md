@@ -1,6 +1,6 @@
 # Domain rangkaian untuk kerja statistik & video
 
-Semak dengan `scripts/check_domains.sh [kumpulan]`. Kumpulan: `data`, `peta`, `video`, `deploy`, `semua`.
+Semak dengan `scripts/check_domains.sh [kumpulan]`. Kumpulan: `data`, `nso`, `peta`, `video`, `deploy`, `semua`.
 Status "18 Okt 2026" ialah hasil semakan terakhir dalam persekitaran awan projek ini
 (200/302 = boleh capai; 000 = disekat atau tiada sambungan; 404 di akar hos biasanya masih OK).
 
@@ -12,7 +12,7 @@ https://code.claude.com/docs/en/cloud-environments#network-access
 
 | Hos | Untuk apa | Wajib? | Status 18 Okt 2026 |
 |---|---|---|---|
-| `storage.dosm.gov.my` | CSV/Parquet OpenDOSM (penduduk negeri/daerah/parlimen, pendapatan, kemiskinan) | Ya | 200 |
+| `storage.dosm.gov.my` | CSV/Parquet OpenDOSM (penduduk negeri/daerah/parlimen/DUN, pendapatan, perbelanjaan, Gini, kemiskinan, LFS) | Ya | 200 |
 | `storage.data.gov.my` | Sebahagian set data data.gov.my (`link_csv`) | Ya | 200 |
 | `raw.githubusercontent.com` | Metadata katalog `data-gov-my/datagovmy-meta`, geodata DOSM (`dosm-malaysia/data-open`), UN WPP 2024 (`PPgp/wpp2024`), Natural Earth, fon peta | Ya | 200 |
 | `media.githubusercontent.com` | geoBoundaries (fail LFS) | Ya (geo) | 302 |
@@ -27,6 +27,30 @@ https://code.claude.com/docs/en/cloud-environments#network-access
 
 Untuk keluaran DOSM akan datang: semak dahulu di mana fail berada (`link_csv`/`link_parquet` dalam
 metadata katalog). Jika hos baharu muncul, uji dengan `curl -sI <url>` dan tambah ke jadual ini.
+
+### Jabatan statistik negara lain (kumpulan `nso`)
+
+API terbuka (tiada kunci) yang sesuai untuk angka rasmi terkini negara lain. Semuanya **000 pada
+19 Okt 2026** dalam sesi ini. GitHub Actions (kemas kini mingguan) mempunyai internet terbuka, jadi
+adapter boleh berjalan di sana, tetapi tulis dan uji adapter hanya selepas hos dibenarkan di sesi.
+
+| Hos | Agensi | Contoh |
+|---|---|---|
+| `ec.europa.eu` | Eurostat (EU/EFTA) | `/eurostat/api/dissemination/statistics/1.0/data/tps00001?format=JSON` |
+| `tablebuilder.singstat.gov.sg` | SingStat | `/api/table/tabledata/M810001` |
+| `data.api.abs.gov.au` | ABS Australia | SDMX `ERP_Q` |
+| `www150.statcan.gc.ca` | Statistics Canada | WDS REST |
+| `api.census.gov` | US Census Bureau | PEP |
+| `api.beta.ons.gov.uk` | ONS UK | `/v1/datasets` |
+| `openstat.psa.gov.ph` | PSA Filipina | PXWeb |
+
+Perlu kunci API (daftar dahulu; simpan sebagai rahsia GitHub, **jangan commit**): BPS Indonesia
+(`webapi.bps.go.id`), e-Stat Jepun, KOSIS Korea, Stats NZ.
+
+Alat `WebSearch` boleh dicapai walaupun hos di atas disekat. Gunakannya untuk **semakan** sahaja
+(jadual perbandingan dengan pautan sumber), bukan untuk memasukkan angka ke dalam aplikasi atau
+video: ringkasan carian bukan data primer. Perhatikan definisi: UN WPP = penduduk de facto pada
+1 Januari; NSO lain guna pertengahan tahun, akhir tahun, daftar sivil atau bancian.
 
 ## 2. Peta & imej (kumpulan `peta`)
 

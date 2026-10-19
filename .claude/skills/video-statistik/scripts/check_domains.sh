@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Checks which hosts this session can reach, grouped by purpose (see references/domains.md).
-# usage: check_domains.sh [data|peta|video|deploy|semua]   (default: semua)
+# usage: check_domains.sh [data|nso|peta|video|deploy|semua]   (default: semua)
 # Prints one line per host: OK / SEKAT, the HTTP code and what the host is for. Exit code 1 when a
 # required host of the chosen group is blocked, so callers can stop before starting long work.
 set -u
@@ -16,6 +16,13 @@ data|1|https://api.worldbank.org/v2/country/MYS?format=json|World Bank WDI
 data|1|https://download.geonames.org/export/dump/readme.txt|GeoNames (kampung)
 data|0|https://query.wikidata.org/sparql?query=ASK%7B%7D|Wikidata (mercu tanda)
 data|0|https://api.data.gov.my/data-catalogue?id=population_state&limit=1|API data.gov.my
+nso|0|https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/tps00001?format=JSON&geo=DE|Eurostat (EU/EFTA)
+nso|0|https://tablebuilder.singstat.gov.sg/api/table/tabledata/M810001|SingStat (Singapura)
+nso|0|https://data.api.abs.gov.au/rest/dataflow|ABS (Australia)
+nso|0|https://www150.statcan.gc.ca/t1/wds/rest/getAllCubesListLite|Statistics Canada
+nso|0|https://api.census.gov/data.json|US Census Bureau
+nso|0|https://api.beta.ons.gov.uk/v1/datasets|ONS (UK)
+nso|0|https://openstat.psa.gov.ph/|PSA OpenSTAT (Filipina)
 peta|1|https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/2/1/3|Esri satelit
 peta|1|https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/2/1/3|Esri jalan & nama jalan
 peta|0|https://s3.amazonaws.com/elevation-tiles-prod/terrarium/2/1/1.png|AWS rupa bumi
