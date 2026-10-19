@@ -1,6 +1,8 @@
+import { divisionLabel } from '../utils/geoRefs';
 import { useState } from 'react';
 import { useAtlas } from '../store/atlas';
-import { useLayer } from '../hooks/useLayer';
+import { useLayer, visibleMyAdmin } from '../hooks/useLayer';
+import { myAgency } from './panel/KeyStats';
 import { formatValue } from '../utils/format';
 import { indicatorName, t } from '../utils/i18n';
 import { mapColors, type Classification } from '../maps/palette';
@@ -25,14 +27,14 @@ function Classes({ c, ind, lang, noData }: { c: Classification; ind: Indicator; 
 
 /** Dynamic choropleth legend: indicator, year, quality, unit, classes and source. */
 export function Legend() {
-  const { lang, theme, catalog, selection , myDivision } = useAtlas();
+  const { lang, theme, catalog, selection, myDivision, mapZoom } = useAtlas();
   const L = useLayer();
   const [open, setOpen] = useState(() => typeof window === 'undefined' || window.innerWidth > 700);
   if (!L.indicator || !catalog) return null;
   const ind = L.indicator;
   const src = catalog.sources[ind.source_id];
   const noData = mapColors(theme).noData;
-  const myAdmin = selection?.countryId === 'MYS' ? L.admin.find((a) => a.level === (selection.level === 'admin2' ? 'admin2' : 'admin1')) : undefined;
+  const myAdmin = visibleMyAdmin(L, selection, mapZoom);
   return (
     <div className="legend" aria-live="polite">
       <div className="legend-title">{indicatorName(lang, ind)}<button onClick={() => setOpen(!open)} aria-expanded={open} aria-label="Legend">{open ? '▾' : '▸'}</button></div>
@@ -46,7 +48,7 @@ export function Legend() {
       {open && L.classification && <Classes c={L.classification} ind={ind} lang={lang} noData={noData} />}
       {open && myAdmin?.classification && (
         <>
-          <div className="legend-sub">🇲🇾 {myAdmin.level === 'admin1' ? (lang === 'ms' ? 'Negeri' : 'States') : (myDivision === 'parlimen' ? (lang === 'ms' ? 'Parlimen' : 'Constituencies') : lang === 'ms' ? 'Daerah' : 'Districts')} · DOSM · {myAdmin.year}</div>
+          <div className="legend-sub">🇲🇾 {myAdmin.level === 'admin1' ? (lang === 'ms' ? 'Negeri' : 'States') : divisionLabel(myDivision, lang)} · {myAgency(ind)} · {myAdmin.year}</div>
           <Classes c={myAdmin.classification} ind={ind} lang={lang} noData={noData} />
         </>
       )}

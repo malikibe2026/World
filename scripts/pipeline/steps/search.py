@@ -67,6 +67,12 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
         # "P.094 Hulu Selangor": searchable by code ("P094", "P.094") and by name alone
         code, name = u["code"], u["name"].split(" ", 1)[1] if " " in u["name"] else u["name"]
         entries.append(["parlimen", u["id"], u["name"], [name, code.replace(".", ""), f"Parlimen {name}"], "MYS", ["WORLD", mys["continent_id"], "MYS", u["state"]], u["label"][0], u["label"][1], 48])
+    for u in admin.get("dun", {}).get("MYS", []):
+        # "N.01 Sungai Air Tawar": by name, "DUN <name>" and state + code ("Selangor N01"), since N codes repeat per state
+        code, name = u["code"], u["name"].split(" ", 1)[1] if " " in u["name"] else u["name"]
+        sname = next((x["name"] for x in admin["admin1"]["MYS"] if x["id"] == u["state"]), "")
+        entries.append(["dun", u["id"], u["name"], [name, f"DUN {name}", f"{sname} {code.replace('.', '')}".strip(), f"{sname} {code}".strip()], "MYS",
+                        ["WORLD", mys["continent_id"], "MYS", u["state"], u["parlimen"]], u["label"][0], u["label"][1], 44])
     for u in admin["admin2"]["MYS"]:
         alts = [u["name_source"]] if u["name_source"] != u["name"] else []
         entries.append(["admin2", u["id"], u["name"], alts, "MYS", ["WORLD", mys["continent_id"], "MYS", u["state"]], u["label"][0], u["label"][1], 50])

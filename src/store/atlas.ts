@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { GeoRef, Lang, Landmark, Theme } from '../types';
 import type { Catalog } from '../services/catalog';
-import { isParlimen, type MyDivision } from '../utils/geoRefs';
+import { divisionOf, stateIdOf, type MyDivision } from '../utils/geoRefs';
 import { profiles } from '../services/geo';
 
 export type Basemap = 'statistical' | 'street' | 'satellite' | 'terrain';
@@ -79,7 +79,7 @@ interface AtlasState {
   globe: boolean;
   overlays: Record<OverlayKey, boolean>;
   regionFilter: string | null;
-  /** Malaysia below state level: districts or parliamentary constituencies */
+  /** Malaysia below state level: districts, parliamentary or state assembly (DUN) constituencies */
   myDivision: MyDivision;
   compare: GeoRef[];
   modal: Modal;
@@ -159,7 +159,7 @@ export const useAtlas = create<AtlasState>((set, get) => ({
   select: (selection, fly) => {
     set({ selection, point: null, rightOpen: true, landmarkFilter: null, ...(isPhone() ? { sheet: 'peek' as const, leftOpen: false } : {}) });
     if (selection?.level === 'admin2' && selection.countryId === 'MYS') {
-      const d: MyDivision = isParlimen(selection.id) ? 'parlimen' : 'district';
+      const d = divisionOf(selection.id);
       if (d !== get().myDivision) { store.set('myDivision', d); set({ myDivision: d }); }
     }
     if (selection?.level !== get().selection?.level) set({ dashTab: get().dashTab });
@@ -182,11 +182,21 @@ export const useAtlas = create<AtlasState>((set, get) => ({
     store.set('myDivision', myDivision);
     const sel = get().selection;
     set({ myDivision });
-    // a district stays meaningful only in district view (and a constituency only in parlimen view): step up to its state
-    if (sel?.level === 'admin2' && sel.countryId === 'MYS' && isParlimen(sel.id) !== (myDivision === 'parlimen')) {
-      const stateId = sel.parents[sel.parents.length - 1];
-      const parents = sel.parents.slice(0, -1);
-      profiles.admin('MYS').then((d) => get().select({ id: stateId, level: 'admin1', name: d?.admin1.find((u) => u.id === stateId)?.name ?? stateId, countryId: 'MYS', parents }));
+    // a unit stays meaningful only in its own division: a DUN steps up to its parlimen (which contains it),
+    // anything else steps up to its state
+    if (sel?.level === 'admin2' && sel.countryId === 'MYS' && divisionOf(sel.id) !== myDivision) {
+      const stateId = stateIdOf(sel.parents);
+      if (!stateId) return;
+      const at = sel.parents.indexOf(stateId);
+      const parlimenId = divisionOf(sel.id) === 'dun' && myDivision === 'parlimen' ? sel.parents[at + 1] : undefined;
+      if (parlimenId) {
+        profiles.admin('MYS', 'parlimen').then((d) => {
+          const u = d?.admin2?.find((x) => x.id === parlimenId);
+          get().select({ id: parlimenId, level: 'admin2', name: u?.name ?? parlimenId, countryId: 'MYS', parents: sel.parents.slice(0, at + 1) }, u ? { bbox: u.bbox } : undefined);
+        });
+      } else {
+        profiles.admin('MYS').then((d) => get().select({ id: stateId, level: 'admin1', name: d?.admin1.find((u) => u.id === stateId)?.name ?? stateId, countryId: 'MYS', parents: sel.parents.slice(0, at) }));
+      }
     }
   },
   addCompare: (g) => set((s) => (s.compare.some((c) => c.id === g.id) || s.compare.length >= 6 ? s : { compare: [...s.compare, g] })),

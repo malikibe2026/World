@@ -1,7 +1,7 @@
 {
   "app": "WorldStat Atlas",
-  "snapshot_built_at": "2026-10-08T03:41:34Z",
-  "run_id": "20261008T034125Z",
+  "snapshot_built_at": "2026-10-19T03:44:00Z",
+  "run_id": "20261019T034348Z",
   "datasets": [
     {
       "source_id": "un_wpp_2024",
@@ -164,36 +164,36 @@
           "next_update": "2027-10-31 12:00"
         },
         "births_district_sex": {
-          "last_updated": "2025-10-16 12:00",
-          "next_update": "2026-10-16 12:30"
+          "last_updated": "2026-10-15 13:00",
+          "next_update": "2027-10-31 18:00"
         },
         "deaths_state": {
-          "last_updated": "2025-10-16 12:00",
-          "next_update": "2026-10-15 12:30"
+          "last_updated": "2026-10-15 13:00",
+          "next_update": "2027-10-31 18:00"
         },
         "deaths_district_sex": {
-          "last_updated": "2025-10-16 12:00",
-          "next_update": "2026-10-15 12:30"
+          "last_updated": "2026-10-15 13:00",
+          "next_update": "2027-10-31 18:00"
         },
         "marriages": {
-          "last_updated": "2023-11-23 12:00",
-          "next_update": "2024-11-21 12:00"
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2026-11-19 18:00"
         },
         "fertility_state": {
-          "last_updated": "2025-10-16 12:00",
-          "next_update": "2026-10-15 12:30"
+          "last_updated": "2026-10-15 13:00",
+          "next_update": "2027-10-31 18:00"
         },
         "fertility": {
-          "last_updated": "2025-10-16 12:00",
-          "next_update": "2026-10-15 12:30"
+          "last_updated": "2026-10-15 13:00",
+          "next_update": "2027-10-31 18:00"
         },
         "lfs_district": {
           "last_updated": "2025-06-30 12:00",
           "next_update": "2026-12-31 12:00"
         },
         "lfs_year": {
-          "last_updated": "2024-02-09 12:00",
-          "next_update": "2025-02-09 12:00"
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2027-06-30 18:00"
         },
         "hh_income_state": {
           "last_updated": "2025-12-31 12:00",
@@ -215,10 +215,6 @@
           "last_updated": "2026-07-01 12:30",
           "next_update": "2027-07-01 12:30"
         },
-        "gdp_lookup": {
-          "last_updated": "2024-05-17 12:00",
-          "next_update": "—"
-        },
         "population_parlimen": {
           "last_updated": "2025-10-31 13:00",
           "next_update": "2026-10-31 13:00"
@@ -229,6 +225,138 @@
         },
         "hh_poverty_parlimen": {
           "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_expenditure_parlimen": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_inequality_parlimen": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "lfs_parlimen": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "2026-12-31 12:00"
+        },
+        "hh_inequality": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_inequality_state": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_inequality_district": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "population_dun": {
+          "last_updated": "2025-10-31 13:00",
+          "next_update": "2026-10-31 13:00"
+        },
+        "hh_income_dun": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_poverty_dun": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_expenditure_dun": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_inequality_dun": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "lfs_dun": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "2026-12-31 12:00"
+        },
+        "life_expectancy": {
+          "last_updated": "2026-09-30 18:00",
+          "next_update": "2027-10-31 12:00"
+        },
+        "life_expectancy_state": {
+          "last_updated": "2026-09-30 18:00",
+          "next_update": "2027-10-31 12:00"
+        },
+        "life_expectancy_district": {
+          "last_updated": "2026-09-30 18:00",
+          "next_update": "2027-10-31 12:00"
+        },
+        "schools_district": {
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2027-12-31 18:00"
+        },
+        "enrolment_school_district": {
+          "last_updated": "2026-08-03 12:00",
+          "next_update": "—"
+        },
+        "teachers_district": {
+          "last_updated": "2026-08-03 12:00",
+          "next_update": "—"
+        },
+        "completion_school_district": {
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2027-12-31 18:00"
+        },
+        "completion_school_state": {
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2027-12-31 18:00"
+        },
+        "gdp_district_real_supply": {
+          "last_updated": "2024-11-02 12:00",
+          "next_update": "2025-11-02 12:00"
+        },
+        "wages_state": {
+          "last_updated": "2026-09-21 12:00",
+          "next_update": "2027-09-30 12:00"
+        },
+        "wages_real_state": {
+          "last_updated": "2026-09-21 12:00",
+          "next_update": "2027-09-30 12:00"
+        },
+        "cpi_headline": {
+          "last_updated": "2026-09-18 12:25",
+          "next_update": "2026-10-19 12:30"
+        },
+        "cpi_state": {
+          "last_updated": "2026-09-18 12:25",
+          "next_update": "2026-10-19 12:30"
+        },
+        "cpi_headline_inflation": {
+          "last_updated": "2026-09-18 12:25",
+          "next_update": "2026-10-19 12:30"
+        },
+        "cpi_state_inflation": {
+          "last_updated": "2026-09-18 12:25",
+          "next_update": "2026-10-19 12:30"
+        },
+        "crime_district": {
+          "last_updated": "2024-10-16 12:00",
+          "next_update": "2027-12-31 18:00"
+        },
+        "crops_state": {
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2026-12-31 18:00"
+        },
+        "crops_district_area": {
+          "last_updated": "2023-12-31 12:00",
+          "next_update": "—"
+        },
+        "crops_district_production": {
+          "last_updated": "2023-12-31 12:00",
+          "next_update": "—"
+        },
+        "state_finance_revenue": {
+          "last_updated": "2024-09-01 12:00",
+          "next_update": "—"
+        },
+        "state_finance_expenditure": {
+          "last_updated": "2024-09-01 12:00",
           "next_update": "—"
         }
       },

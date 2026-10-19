@@ -53,7 +53,13 @@ const INDICATOR_PHRASES: Array<[string, string]> = [
   ['exports', 'exports'], ['eksport', 'exports'], ['imports', 'imports'], ['import', 'imports'], ['trade balance', 'trade_balance'],
   ['tourist arrivals', 'tourism_arrivals'], ['tourism', 'tourism_arrivals'], ['pelancong', 'tourism_arrivals'], ['pelancongan', 'tourism_arrivals'],
   ['urbanisation', 'urban_pct'], ['urbanization', 'urban_pct'], ['urban population', 'urban_pct'], ['pembandaran', 'urban_pct'],
-  ['poverty', 'poverty'], ['kemiskinan', 'poverty'], ['gini', 'gini'], ['household income', 'hh_income_median'], ['pendapatan isi rumah', 'hh_income_median'],
+  ['poverty', 'poverty'], ['kemiskinan', 'poverty'], ['pekali gini', 'gini_coef'], ['gini coefficient', 'gini_coef'], ['gini', 'gini'], ['household income', 'hh_income_median'], ['pendapatan isi rumah', 'hh_income_median'],
+  ['perbelanjaan isi rumah', 'hh_expenditure_mean'], ['household expenditure', 'hh_expenditure_mean'],
+  ['gaji', 'wages_median'], ['upah', 'wages_median'], ['wages', 'wages_median'], ['salary', 'wages_median'],
+  ['jenayah', 'crime_rate'], ['crime', 'crime_rate'], ['padi', 'crop_area_paddy'], ['paddy', 'crop_area_paddy'],
+  ['kdnk daerah', 'gdp_real_myr'], ['hasil kerajaan negeri', 'state_revenue'], ['state revenue', 'state_revenue'],
+  ['bukan warganegara', 'noncitizen_pct'], ['non-citizens', 'noncitizen_pct'], ['non citizens', 'noncitizen_pct'],
+  ['nisbah murid guru', 'ptr_primary'], ['pupil teacher ratio', 'ptr_primary'], ['kadar tamat sekolah', 'completion_secondary_upper'], ['school completion', 'completion_secondary_upper'],
   ['growth rate', 'growth_rate'], ['kadar pertumbuhan', 'growth_rate'], ['migration', 'net_migration'], ['migrasi', 'net_migration'],
   ['precipitation', 'precipitation'], ['rainfall', 'precipitation'], ['hujan', 'precipitation'],
 ];
@@ -96,7 +102,7 @@ function scoreEntry(e: SearchEntry, q: string): number {
     }
   }
   if (!s) return 0;
-  const typeBoost: Partial<Record<SearchEntryType, number>> = { country: 30, continent: 28, admin1: 18, admin2: 14, parlimen: 14, city: 10, town: 4, village: 2, peak: 6, physical: 3, sea: 3, airport: 0, port: -6 };
+  const typeBoost: Partial<Record<SearchEntryType, number>> = { country: 30, continent: 28, admin1: 18, admin2: 14, parlimen: 14, dun: 13, city: 10, town: 4, village: 2, peak: 6, physical: 3, sea: 3, airport: 0, port: -6 };
   return s + (typeBoost[e.type] ?? 0) + e.importance * 0.3;
 }
 

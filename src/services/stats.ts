@@ -6,6 +6,7 @@ import type { Catalog } from './catalog';
 import { loadOptional } from './http';
 import { wbCountrySeries, wbIndicatorUrl, wbLayer } from './worldbank';
 import { wppQuality } from '../utils/quality';
+import type { DosmLevel } from '../utils/geoRefs';
 
 const STOCKS = new Set(['population', 'population_male', 'population_female', 'sex_ratio', 'median_age', 'pop_0_14', 'pop_15_64', 'pop_65_plus', 'pop_0_14_pct', 'pop_15_64_pct', 'pop_65_plus_pct', 'density']);
 
@@ -64,13 +65,18 @@ export interface DosmUnit {
   datasets: Record<string, string>;
   pyramid?: { groups: string[]; years: number[]; male: number[][]; female: number[][]; dataset: string };
   ethnicity?: Record<string, Record<string, number>>;
-  gdp_sectors?: Record<string, Array<{ code: string; name_en: string; value: number }>>;
+  /** latest police-district (IPD) table of a state: [name, violent, property] */
+  crime_ipd?: { year: number; rows: Array<[string, number, number]> };
+  /** latest monthly CPI: the current year is not averaged until it is complete */
+  cpi_latest?: { month: string; index: number; inflation_yoy: number | null; dataset: string };
+  /** a district's largest crops by planted area: [species, hectares, tonnes] */
+  crops_top?: { year: number; rows: Array<[string, number | null, number | null]> };
   /** boundary redefinitions detected by the pipeline (figures from `year` are on the new boundary) */
   breaks?: Array<{ year: number; change_pct: number; new_districts: string[] }>;
 }
 export interface DosmDoc { source_id: string; level: string; units: Record<string, DosmUnit> }
 
-export function loadDosm(level: 'national' | 'admin1' | 'admin2' | 'parlimen'): Promise<DosmDoc | null> {
+export function loadDosm(level: DosmLevel): Promise<DosmDoc | null> {
   return loadOptional<DosmDoc>(`stats/my/${level}.json`);
 }
 

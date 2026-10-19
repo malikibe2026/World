@@ -1,19 +1,20 @@
 import { MyDivisionSwitch } from '../MyDivisionSwitch';
-import { adminTypeLabel } from '../../utils/geoRefs';
+import { adminTypeLabel, divisionOf } from '../../utils/geoRefs';
 import { useMemo, useState, type ReactNode } from 'react';
 import { useAtlas } from '../../store/atlas';
 import { useHistory, useLandmarks, useLocationBundle, useWorldBank } from '../../hooks/useLocation';
 import { latest, resolveSeries, type SourcePref } from '../../hooks/resolve';
-import { KeyStats } from './KeyStats';
+import { KeyStats, myAgency } from './KeyStats';
 import { GeographyProfile } from './GeographyProfile';
 import { LandmarkList } from './LandmarkList';
 import { HistoryTimeline } from './HistoryTimeline';
 import { PointCard } from './PointCard';
 import { StatCard } from '../StatCard';
+import { QualityBadge } from '../QualityBadge';
 import { NotAvailable } from '../NotAvailable';
 import { SourceNote } from '../SourceNote';
 import { TrendChart, PyramidChart, DonutChart } from '../../charts/charts';
-import { breakYear, dosmPyramid, lastEstimateYear, wppPyramid } from '../../services/stats';
+import { breakYear, dosmPyramid, lastEstimateYear, wppPyramid, type DosmUnit } from '../../services/stats';
 import { ESTIMATE_LAST_YEAR } from '../../store/atlas';
 import { t } from '../../utils/i18n';
 import { compact } from '../../utils/format';
@@ -29,10 +30,21 @@ function Section({ id, title, children, defaultOpen = true, extra }: { id: strin
   );
 }
 
-const VITAL = ['births', 'deaths', 'cbr', 'cdr', 'tfr', 'imr', 'e0', 'natural_increase', 'median_age', 'sex_ratio'];
+const VITAL = ['births', 'deaths', 'cbr', 'cdr', 'tfr', 'imr', 'e0', 'e0_male', 'e0_female', 'natural_increase', 'median_age', 'sex_ratio'];
 const ECON = ['gdp', 'gdp_per_capita', 'gdp_growth', 'inflation', 'unemployment', 'labour_force', 'exports', 'imports', 'trade_balance', 'gni_per_capita', 'poverty', 'hh_income_median'];
 const TOURISM = ['tourism_arrivals', 'tourism_receipts', 'tourism_receipts_pct_exports', 'tourism_departures'];
 const SOCIAL = ['urban_pct', 'urban_population', 'rural_population', 'electricity_access', 'renewable_energy'];
+// Malaysia below national level: DOSM household survey (HIES) and labour force survey (LFS) by area
+const MY_SOCIO = ['hh_income_median', 'hh_income_mean', 'hh_expenditure_mean', 'gini_coef', 'poverty_absolute', 'unemployment', 'lfpr', 'labour_force'];
+// citizen ethnic groups in DOSM's order (shares of citizens) and government schools (Ministry of Education)
+const MY_ETH = ['eth_bumi_malay_pct', 'eth_bumi_other_pct', 'eth_chinese_pct', 'eth_indian_pct', 'eth_other_citizen_pct'];
+const MY_GDP = ['gdp_real_myr', 'gdp_real_growth', 'gdp_real_per_capita_myr'];
+const GDP_SHARES: Array<[string, string, string]> = [['gdp_share_agriculture', 'Pertanian', 'Agriculture'], ['gdp_share_mining', 'Perlombongan', 'Mining'], ['gdp_share_manufacturing', 'Pembuatan', 'Manufacturing'], ['gdp_share_construction', 'Pembinaan', 'Construction'], ['gdp_share_services', 'Perkhidmatan', 'Services']];
+const MY_WAGES = ['wages_median', 'wages_mean', 'wages_median_male', 'wages_median_female', 'wages_median_real', 'wage_recipients', 'inflation', 'cpi'];
+const MY_CRIME = ['crime_index', 'crime_rate', 'crime_violent', 'crime_property', 'crime_murder', 'crime_rape', 'crime_robbery', 'crime_injury', 'crime_break_in', 'crime_vehicle_theft', 'crime_theft_other'];
+const MY_CROPS = ['crop_area_paddy', 'crop_prod_paddy', 'crop_area_fruit', 'crop_prod_fruit', 'crop_area_vegetables', 'crop_prod_vegetables'];
+const MY_FINANCE = ['state_revenue', 'state_revenue_tax', 'state_revenue_nontax', 'state_expenditure', 'state_expenditure_operating', 'state_expenditure_development', 'state_current_balance'];
+const MY_EDU = ['schools_primary', 'schools_secondary', 'students_primary', 'students_secondary', 'ptr_primary', 'ptr_secondary', 'completion_primary', 'completion_secondary_lower', 'completion_secondary_upper'];
 
 export function LocationPanel() {
   const { selection, point, lang, catalog, year, projection, addCompare, removeCompare, compare, setModal, setDashTab, select } = useAtlas();
@@ -139,6 +151,90 @@ export function LocationPanel() {
             </Section>
           )}
 
+          {isMys && statsLevel && b.dosm && MY_SOCIO.some((c) => b.dosm!.series[c]?.length) && (
+            <Section id="socio" title={lang === 'ms' ? 'Sosioekonomi isi rumah & tenaga buruh' : 'Household economy & labour'}>
+              <div className="stat-grid stat-grid-3">
+                {MY_SOCIO.map((c) => { const ss = s(c); const p = latest(ss, year); return <StatCard key={c} ind={inds[c]} value={p?.value} year={p?.year} quality={p?.quality} sourceLabel={ss ? 'DOSM' : undefined} hint={inds[c]?.notes} />; })}
+              </div>
+              <SourceNote sourceId="dosm_opendosm" note={lang === 'ms' ? 'Pendapatan, perbelanjaan, Gini dan kemiskinan: Penyiasatan Pendapatan dan Perbelanjaan Isi Rumah (HIES, 2019/2022/2024). Tenaga buruh: Survei Tenaga Buruh (LFS). Nilai nominal.' : 'Income, expenditure, Gini and poverty: Household Income and Expenditure Survey (HIES, 2019/2022/2024). Labour: Labour Force Survey (LFS). Nominal values.'} />
+            </Section>
+          )}
+
+          {isMys && b.dosm && (b.dosm.series.noncitizen_pct?.length || b.dosm.series.eth_bumi_malay_pct?.length) ? (
+            <Section id="ethnic" title={lang === 'ms' ? 'Etnik & kewarganegaraan' : 'Ethnicity & citizenship'}>
+              <EthnicComposition s={s} />
+              <div className="stat-grid stat-grid-3 mt">
+                {['pop_noncitizen', 'noncitizen_pct'].map((c) => { const ss = s(c); const p = latest(ss, year); return <StatCard key={c} ind={inds[c]} value={p?.value} year={p?.year} quality={p?.quality} sourceLabel={ss ? 'DOSM' : undefined} />; })}
+              </div>
+              {!b.dosm.series.eth_bumi_malay_pct?.length && (
+                <p className="fineprint" role="note">{lang === 'ms'
+                  ? 'DOSM tidak menerbitkan pecahan etnik bagi kawasan parlimen dan DUN, hanya warganegara dan bukan warganegara. Atlas ini tidak menganggarkannya daripada data daerah.'
+                  : 'DOSM does not publish an ethnic breakdown for parlimen or DUN constituencies, only citizens and non-citizens. This atlas does not estimate one from district data.'}</p>
+              )}
+              <SourceNote sourceId="dosm_opendosm" note={lang === 'ms' ? 'Anggaran Penduduk Semasa DOSM; 2020 ialah Banci. Peratus etnik dikira daripada warganegara, seperti terbitan DOSM; bukan warganegara daripada jumlah penduduk.' : 'DOSM current population estimates; 2020 is the census. Ethnic shares are of citizens, as DOSM publishes them; non-citizens are a share of the whole population.'} />
+            </Section>
+          ) : null}
+
+          {isMys && b.dosm && MY_EDU.some((c) => b.dosm!.series[c]?.length) && (
+            <Section id="education" title={lang === 'ms' ? 'Pendidikan (sekolah kerajaan)' : 'Education (government schools)'}>
+              <div className="stat-grid stat-grid-3">
+                {MY_EDU.map((c) => { const ss = s(c); const p = latest(ss, year); return <StatCard key={c} ind={inds[c]} value={p?.value} year={p?.year} quality={p?.quality} sourceLabel={ss ? 'KPM' : undefined} hint={inds[c]?.notes} />; })}
+              </div>
+              <SourceNote sourceId="dosm_opendosm" note={lang === 'ms' ? 'Kementerian Pendidikan Malaysia (EMIS), melalui data.gov.my. Sekolah kerajaan sahaja. Daerah ikut Pejabat Pendidikan Daerah (PPD): PPD yang meliputi dua daerah tidak dipecahkan, jadi daerah itu tiada angka. Kadar tamat boleh melebihi 100% kerana murid mengulang atau berpindah.' : 'Ministry of Education Malaysia (EMIS), via data.gov.my. Government schools only. Districts follow District Education Offices (PPD): an office covering two districts is not split, so those districts have no figures. Completion can exceed 100% because of repeaters and transfers.'} />
+            </Section>
+          )}
+
+          {isMys && statsLevel && b.dosm && MY_GDP.some((c) => b.dosm!.series[c]?.length) && (
+            <Section id="my-gdp" title={lang === 'ms' ? 'KDNK (harga malar 2015)' : 'GDP (constant 2015 prices)'}>
+              <DosmCards codes={MY_GDP} s={s} />
+              <GdpShares s={s} />
+              <SourceNote sourceId="dosm_opendosm" note={selection.level === 'admin2'
+                ? (lang === 'ms' ? 'KDNK daerah hanya diterbitkan bagi 2015–2020 (data lama). KDNK per kapita guna penduduk DOSM 2020.' : 'District GDP is published for 2015–2020 only (old data). Per capita uses DOSM 2020 population.')
+                : (lang === 'ms' ? 'KDNK negeri, pendekatan pengeluaran. Putrajaya termasuk dalam Kuala Lumpur hingga 2022.' : 'State GDP, production approach. Putrajaya is included in Kuala Lumpur until 2022.')} />
+            </Section>
+          )}
+
+          {isMys && b.dosm && selection.level !== 'admin2' && MY_WAGES.some((c) => b.dosm!.series[c]?.length) && (
+            <Section id="my-wages" title={lang === 'ms' ? 'Upah & harga pengguna' : 'Wages & consumer prices'}>
+              <CpiLatest unit={b.dosm} />
+              <DosmCards codes={MY_WAGES} s={s} />
+              <SourceNote sourceId="dosm_opendosm" note={lang === 'ms' ? 'Survei Gaji & Upah (bersama LFS): upah bulanan pekerjaan utama, sektor awam dan swasta. Upah benar pada harga 2010. Inflasi tahunan = perubahan purata IHP bulanan bagi tahun lengkap (dikira atlas).' : 'Salaries & Wages Survey (with the LFS): monthly wages from the principal job, public and private sectors. Real wages at 2010 prices. Annual inflation = change in the average monthly CPI over complete years (computed by the atlas).'} />
+            </Section>
+          )}
+
+          {isMys && b.dosm && (selection.level === 'admin2' && divisionOf(selection.id) === 'district' ? (
+            <Section id="my-crime" title={lang === 'ms' ? 'Jenayah' : 'Crime'} defaultOpen={false}>
+              <p className="fineprint" role="note">{lang === 'ms'
+                ? 'PDRM menerbitkan jenayah ikut daerah polis (IPD), yang sempadannya tidak sama dengan daerah pentadbiran (cth. Petaling mempunyai lima IPD). Lihat jadual IPD pada paparan negeri.'
+                : 'The police publish crime by police district (IPD), whose boundaries differ from administrative districts (Petaling, for example, has five). See the IPD table on the state view.'}</p>
+            </Section>
+          ) : MY_CRIME.some((c) => b.dosm!.series[c]?.length) ? (
+            <Section id="my-crime" title={lang === 'ms' ? 'Jenayah indeks' : 'Index crime'} defaultOpen={false}>
+              <DosmCards codes={MY_CRIME} s={s} />
+              {b.dosm.crime_ipd && <IpdTable t={b.dosm.crime_ipd} />}
+              <SourceNote sourceId="dosm_opendosm" note={lang === 'ms' ? 'PDRM, disusun DOSM ikut klasifikasi jenayah UNODC. Mengira jenayah dalam Sistem Laporan Polis yang disifatkan sumber sebagai jenayah sebenar; jenayah yang tidak dilaporkan tidak termasuk. W.P. Putrajaya dan W.P. Labuan diasingkan daripada Kuala Lumpur dan Sabah.' : 'Royal Malaysian Police, compiled by DOSM to the UNODC crime classification. Counts crimes in the Police Reporting System that the source describes as actual crimes; unreported crimes are not included. W.P. Putrajaya and W.P. Labuan are separated from Kuala Lumpur and Sabah.'} />
+            </Section>
+          ) : null)}
+
+          {isMys && b.dosm && MY_CROPS.some((c) => b.dosm!.series[c]?.length) && (
+            <Section id="my-crops" title={lang === 'ms' ? 'Pertanian (tanaman)' : 'Agriculture (crops)'} defaultOpen={false}>
+              <DosmCards codes={selection.level === 'admin2' ? MY_CROPS.filter((c) => !c.includes('paddy')) : MY_CROPS} s={s} />
+              {b.dosm.crops_top && <CropsTop t={b.dosm.crops_top} />}
+              <SourceNote sourceId="dosm_opendosm" note={lang === 'ms' ? 'Jabatan Pertanian / DOSM. Tidak termasuk kelapa sawit, getah dan tanaman ladang lain. Negeri 2014–2024; daerah 2017 sahaja dan tanpa padi.' : 'Department of Agriculture / DOSM. Excludes oil palm, rubber and other plantation crops. States 2014–2024; districts 2017 only, without paddy.'} />
+            </Section>
+          )}
+
+          {isMys && selection.level === 'admin1' && b.dosm && (MY_FINANCE.some((c) => b.dosm!.series[c]?.length) ? (
+            <Section id="my-finance" title={lang === 'ms' ? 'Kewangan kerajaan negeri' : 'State government finance'} defaultOpen={false}>
+              <DosmCards codes={MY_FINANCE} s={s} />
+              <SourceNote sourceId="dosm_opendosm" note={lang === 'ms' ? 'Penyata kewangan kerajaan negeri dalam Laporan Ketua Audit Negara: angka sebenar 2022 (Sarawak 2020). Imbangan semasa = hasil − perbelanjaan mengurus (dikira atlas).' : "State financial statements in the Auditor-General's Report: actual figures for 2022 (Sarawak 2020). Current balance = revenue − operating expenditure (computed by the atlas)."} />
+            </Section>
+          ) : ['MY-14', 'MY-15', 'MY-16'].includes(selection.id) ? (
+            <Section id="my-finance" title={lang === 'ms' ? 'Kewangan kerajaan negeri' : 'State government finance'} defaultOpen={false}>
+              <p className="fineprint">{lang === 'ms' ? 'Wilayah Persekutuan tiada kerajaan negeri, jadi tiada penyata kewangan negeri.' : 'Federal territories have no state government, so there are no state accounts.'}</p>
+            </Section>
+          ) : null)}
+
           {selection.level === 'country' && (
             <Section id="economy" title={t(lang, 'economicIntelligence')} extra={<button className="link small" onClick={(e) => { e.preventDefault(); setDashTab('economy'); }}>{lang === 'ms' ? 'Analisis ›' : 'Analyse ›'}</button>}>
               {wb.loading && !wb.data ? <div className="muted small">{t(lang, 'loading')}</div> : (
@@ -207,6 +303,105 @@ export function LocationPanel() {
 
 function sourceShort(id: string) {
   return id === 'un_wpp_2024' ? 'UN WPP 2024' : id === 'wb_wdi' ? 'World Bank' : id === 'dosm_opendosm' ? 'DOSM' : id === 'worldstat_derived' ? 'Derived' : id;
+}
+
+/** Stat tiles for DOSM-snapshot indicators, labelled with the agency that produced each one. */
+function DosmCards({ codes, s }: { codes: string[]; s: (c: string) => Series | null }) {
+  const { catalog, year } = useAtlas();
+  const inds = catalog!.indicators;
+  return (
+    <div className="stat-grid stat-grid-3">
+      {codes.map((c) => { const ss = s(c); const p = latest(ss, year); return <StatCard key={c} ind={inds[c]} value={p?.value} year={p?.year} quality={p?.quality} sourceLabel={ss ? (ss.sourceId === 'dosm_opendosm' ? myAgency(inds[c]) : sourceShort(ss.sourceId)) : undefined} hint={inds[c]?.notes} />; })}
+    </div>
+  );
+}
+
+/** GDP by sector (constant prices), one year. */
+function GdpShares({ s }: { s: (c: string) => Series | null }) {
+  const { lang, year } = useAtlas();
+  const first = latest(s('gdp_share_services'), year);
+  if (!first) return null;
+  const items = GDP_SHARES.map(([c, ms, en]) => {
+    const v = s(c)?.points.find((p) => p.year === first.year)?.value;
+    return v === undefined ? null : { name: `${lang === 'ms' ? ms : en} · ${v.toFixed(1)}%`, value: v };
+  }).filter((x): x is { name: string; value: number } => x !== null);
+  return (
+    <div className="mt">
+      <div className="mini-title">{lang === 'ms' ? 'Struktur ekonomi' : 'Economic structure'} · {first.year} <span className="muted">(% {lang === 'ms' ? 'KDNK, harga malar' : 'of GDP, constant prices'})</span></div>
+      <DonutChart items={items} lang={lang} height={180} />
+    </div>
+  );
+}
+
+/** Latest month of the CPI (the current year is not averaged until it is complete). */
+function CpiLatest({ unit }: { unit: DosmUnit }) {
+  const { lang } = useAtlas();
+  const c = unit.cpi_latest;
+  if (!c) return null;
+  const month = new Date(`${c.month}-01T00:00:00Z`).toLocaleDateString(lang === 'ms' ? 'ms-MY' : 'en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+  return (
+    <div className="stat mb">
+      <div className="stat-label">{lang === 'ms' ? 'Inflasi terkini (tahun ke tahun)' : 'Latest inflation (year on year)'}</div>
+      <div className="stat-value">{c.inflation_yoy === null ? '—' : `${c.inflation_yoy.toFixed(1)}%`}</div>
+      <div className="stat-meta"><span>{month}</span><QualityBadge q="OFFICIAL" small /><span className="stat-src">DOSM · IHP {c.index.toFixed(1)} (2010 = 100)</span></div>
+    </div>
+  );
+}
+
+/** Crimes by police district (IPD) for a state, latest year. */
+function IpdTable({ t: tb }: { t: NonNullable<DosmUnit['crime_ipd']> }) {
+  const { lang } = useAtlas();
+  const ms = lang === 'ms';
+  return (
+    <div className="mt">
+      <div className="mini-title">{ms ? 'Ikut daerah polis (IPD)' : 'By police district (IPD)'} · {tb.year}</div>
+      <div className="table-wrap">
+        <table className="data-table">
+          <thead><tr><th>IPD</th><th className="num">{ms ? 'Kekerasan' : 'Violent'}</th><th className="num">{ms ? 'Harta benda' : 'Property'}</th><th className="num">{ms ? 'Jumlah' : 'Total'}</th></tr></thead>
+          <tbody>{tb.rows.map(([n, v, p]) => <tr key={n}><td>{n}</td><td className="num">{compact(v, lang)}</td><td className="num">{compact(p, lang)}</td><td className="num">{compact(v + p, lang)}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+/** A district's largest crops by planted area (the district crop survey is 2017 only). */
+function CropsTop({ t: tb }: { t: NonNullable<DosmUnit['crops_top']> }) {
+  const { lang } = useAtlas();
+  const ms = lang === 'ms';
+  const name = (sp: string) => sp.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
+  return (
+    <div className="mt">
+      <div className="mini-title">{ms ? 'Tanaman utama ikut keluasan' : 'Main crops by planted area'} · {tb.year}</div>
+      <div className="table-wrap">
+        <table className="data-table">
+          <thead><tr><th>{ms ? 'Tanaman' : 'Crop'}</th><th className="num">{ms ? 'Hektar' : 'Hectares'}</th><th className="num">{ms ? 'Tan' : 'Tonnes'}</th></tr></thead>
+          <tbody>{tb.rows.map(([sp, a, p]) => <tr key={sp}><td>{name(sp)}</td><td className="num">{a === null ? '—' : compact(a, lang)}</td><td className="num">{p === null ? '—' : compact(p, lang)}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+/** Ethnic composition of citizens (DOSM groups), all from one year so the shares add up. */
+function EthnicComposition({ s }: { s: (c: string) => Series | null }) {
+  const { lang, year } = useAtlas();
+  const first = latest(s(MY_ETH[0]), year);
+  if (!first) return null;
+  const names: Record<string, [string, string]> = {
+    eth_bumi_malay_pct: ['Bumiputera Melayu', 'Bumiputera Malay'], eth_bumi_other_pct: ['Bumiputera lain', 'Other Bumiputera'],
+    eth_chinese_pct: ['Cina', 'Chinese'], eth_indian_pct: ['India', 'Indian'], eth_other_citizen_pct: ['Lain-lain', 'Others'],
+  };
+  const items = MY_ETH.map((c) => {
+    const v = s(c)?.points.find((p) => p.year === first.year)?.value;
+    return v === undefined ? null : { name: `${names[c][lang === 'ms' ? 0 : 1]} · ${v.toFixed(1)}%`, value: v };
+  }).filter((x): x is { name: string; value: number } => x !== null);
+  return (
+    <div>
+      <div className="mini-title">{lang === 'ms' ? 'Komposisi etnik warganegara' : 'Ethnic composition of citizens'} · {first.year} <span className="muted">(% {lang === 'ms' ? 'warganegara' : 'of citizens'})</span></div>
+      <DonutChart items={items} lang={lang} height={190} />
+    </div>
+  );
 }
 
 function StructureDonut({ s }: { s: (c: string) => Series | null }) {

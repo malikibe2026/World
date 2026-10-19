@@ -1,7 +1,9 @@
 /* WorldStat Atlas — design tokens. Light and dark are each *selected* (not auto-inverted). */
 :root {
   color-scheme: light;
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* headings, figures and the brand (same family as the briefing video and backdrop) */
+  --font-display: "Plus Jakarta Sans Variable", "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /* surfaces */
@@ -26,6 +28,11 @@
   --accent-soft: #e6effb;
   --accent-ink: #0d366b;
   --brand-navy: #0d1b2e;
+  --brand-navy-2: #132a48;
+  /* brand gold: kickers, "latest", the brand word. --gold-on-navy is for the always-dark top bar */
+  --gold: #94600a;
+  --gold-soft: rgba(242, 184, 75, 0.16);
+  --gold-on-navy: #f2b84b;
   --highlight: #d97706;
 
   /* status (reserved meaning; always icon + label) */
@@ -79,6 +86,8 @@
     --accent-soft: rgba(85, 152, 231, 0.14);
     --accent-ink: #cde2fb;
     --highlight: #ffd166;
+    --gold: #f2b84b;
+    --gold-soft: rgba(242, 184, 75, 0.14);
     --q-official-bg: rgba(12, 163, 12, 0.16); --q-official-fg: #7fdc8f;
     --q-estimate-bg: rgba(85, 152, 231, 0.16); --q-estimate-fg: #9ec5f4;
     --q-projection-bg: rgba(144, 133, 233, 0.18); --q-projection-fg: #c2b9ff;
@@ -111,6 +120,8 @@
   --accent-soft: rgba(85, 152, 231, 0.14);
   --accent-ink: #cde2fb;
   --highlight: #ffd166;
+  --gold: #f2b84b;
+  --gold-soft: rgba(242, 184, 75, 0.14);
   --q-official-bg: rgba(12, 163, 12, 0.16); --q-official-fg: #7fdc8f;
   --q-estimate-bg: rgba(85, 152, 231, 0.16); --q-estimate-fg: #9ec5f4;
   --q-projection-bg: rgba(144, 133, 233, 0.18); --q-projection-fg: #c2b9ff;

@@ -12,7 +12,7 @@ export function Header() {
     <header className="topbar">
       <button className="icon-btn only-narrow" onClick={() => togglePanel('left')} aria-expanded={leftOpen} aria-label={t(lang, 'layers')}>☰</button>
       <div className="brand">
-        <svg className="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#3987e5" /><stop offset="1" stopColor="#104281" /></linearGradient></defs><circle cx="32" cy="32" r="28" fill="url(#bm)" /><g fill="none" stroke="#fff" strokeOpacity=".9" strokeWidth="2.6"><ellipse cx="32" cy="32" rx="12" ry="28" /><path d="M4 32h56M9 18h46M9 46h46" /></g></svg>
+        <svg className="brand-mark" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#3987e5" /><stop offset="1" stopColor="#104281" /></linearGradient></defs><circle cx="32" cy="32" r="28" fill="url(#bm)" /><circle cx="32" cy="32" r="30.6" fill="none" stroke="#f2b84b" strokeOpacity=".8" strokeWidth="1.6" /><g fill="none" stroke="#fff" strokeOpacity=".9" strokeWidth="2.6"><ellipse cx="32" cy="32" rx="12" ry="28" /><path d="M4 32h56M9 18h46M9 46h46" /></g></svg>
         <div>
           <div className="brand-name">WORLDSTAT <span>ATLAS</span></div>
           <div className="brand-tag">{t(lang, 'appTagline')}</div>

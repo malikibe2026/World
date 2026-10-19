@@ -194,6 +194,37 @@ def run(log: ImportLog, registry: dict) -> dict:
     else:
         log.warning(STEP, "DOSM constituency boundaries missing; run the fetch step", path=str(src))
 
+    # ---- Malaysia state assembly constituencies, DUN (DOSM geodata) -----------------
+    # One level below parliamentary constituencies: every DUN lies inside one parlimen, so its
+    # parent chain is state › parlimen › DUN. The federal territories have no state assembly.
+    dun, dun_index = [], []
+    src = RAW / "dosm" / "electoral_1_dun.geojson"
+    if src.exists():
+        from steps.opendosm import STATE_ISO
+        for f in read_json(src)["features"]:
+            p = f["properties"]
+            state = STATE_ISO.get(p["state"].strip().lower())
+            if state is None:
+                log.warning(STEP, "geographic mismatch: DUN state not recognised", state=p["state"], dun=p["dun"])
+                continue
+            code = p["code_dun"]  # "N.01"
+            did = f"{state}-{code.replace('.', '').lower()}"  # MY-10-n01
+            pid = f"{state}-{p['code_parlimen'].replace('.', '').lower()}"  # MY-10-p092
+            g = shape(f["geometry"])
+            pt = g.representative_point()
+            props = {"id": did, "name": p["dun"], "name_source": p["dun"], "code": code, "state": state, "parlimen": pid,
+                     "parlimen_name": p["parlimen"], "country": "MYS", "type": "State assembly constituency"}
+            dun.append({"type": "Feature", "properties": props, "geometry": f["geometry"]})
+            dun_index.append({**props, "area_km2": round(geodesic_km2(g), 1), "label": [round(pt.x, 4), round(pt.y, 4)], "bbox": [round(v, 4) for v in g.bounds]})
+        known_p = {u["id"] for u in parlimen_index}
+        for u in dun_index:
+            if known_p and u["parlimen"] not in known_p:
+                log.warning(STEP, "geographic mismatch: DUN parent constituency not in the parlimen file", dun=u["name"], parlimen=u["parlimen"])
+        sizes["admin2/MYS-dun"] = to_topo("dun", dun, OUT / "admin2" / "MYS-dun.topo.json", "45%")
+        log.info(STEP, "state assembly constituencies written", dun=len(dun))
+    else:
+        log.warning(STEP, "DOSM DUN boundaries missing; run the fetch step", path=str(src))
+
     # ---- populated places --------------------------------------------------------
     pp = read_json(RAW / "ne" / "ne_10m_populated_places_simple.geojson")
     cities = []
@@ -301,7 +332,7 @@ def run(log: ImportLog, registry: dict) -> dict:
     sizes["urban"] = to_topo("urban", urban, OUT / "infra" / "urban.topo.json", "10%")
     log.info(STEP, "infrastructure layers", airports=len(airports), ports=len(ports), roads=len(roads), urban=len(urban))
 
-    write_json(WORK / "admin_index.json", {"admin1": admin1_index, "admin2": {"MYS": admin2_index}, "parlimen": {"MYS": parlimen_index}, "country_area_km2": areas})
+    write_json(WORK / "admin_index.json", {"admin1": admin1_index, "admin2": {"MYS": admin2_index}, "parlimen": {"MYS": parlimen_index}, "dun": {"MYS": dun_index}, "country_area_km2": areas})
     for k, v in sizes.items():
         if v > 3_000_000:
             log.warning(STEP, "large geometry file for the browser", file=k, bytes=v)

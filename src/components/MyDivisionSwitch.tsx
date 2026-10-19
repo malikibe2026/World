@@ -1,13 +1,16 @@
 import { useAtlas } from '../store/atlas';
+import { divisionLabel, type MyDivision } from '../utils/geoRefs';
 
-/** Malaysia below state level: districts (daerah) or parliamentary constituencies (parlimen). */
+const DIVISIONS: MyDivision[] = ['district', 'parlimen', 'dun'];
+
+/** Malaysia below state level: districts (daerah), parliamentary constituencies (parlimen) or state seats (DUN). */
 export function MyDivisionSwitch() {
   const { lang, myDivision, setMyDivision } = useAtlas();
-  const ms = lang === 'ms';
   return (
-    <div className="seg seg-xs" role="radiogroup" aria-label={ms ? 'Pembahagian Malaysia' : 'Malaysia division'}>
-      <button className={myDivision === 'district' ? 'on' : ''} onClick={() => setMyDivision('district')} role="radio" aria-checked={myDivision === 'district'}>{ms ? 'Daerah' : 'Districts'}</button>
-      <button className={myDivision === 'parlimen' ? 'on' : ''} onClick={() => setMyDivision('parlimen')} role="radio" aria-checked={myDivision === 'parlimen'}>{ms ? 'Parlimen' : 'Constituencies'}</button>
+    <div className="seg seg-xs" role="radiogroup" aria-label={lang === 'ms' ? 'Pembahagian Malaysia' : 'Malaysia division'}>
+      {DIVISIONS.map((d) => (
+        <button key={d} className={myDivision === d ? 'on' : ''} onClick={() => setMyDivision(d)} role="radio" aria-checked={myDivision === d}>{divisionLabel(d, lang)}</button>
+      ))}
     </div>
   );
 }

@@ -1,22 +1,25 @@
 import { useAtlas } from '../store/atlas';
 import { useAsync } from '../hooks/useAsync';
 import { profiles } from '../services/geo';
-import { countryRef, isParlimen, regionBBox, regionRef } from '../utils/geoRefs';
+import { countryRef, divisionOf, isParlimen, regionBBox, regionRef } from '../utils/geoRefs';
 import type { GeoRef } from '../types';
 
-/** WORLD › Asia › Malaysia › Selangor › Hulu Langat › Kajang */
+/** WORLD › Asia › Malaysia › Selangor › Hulu Langat › Kajang  (a DUN: … › Selangor › P.092 Sabak Bernam › N.01 …) */
 export function Breadcrumb() {
   const { selection, point, catalog, lang, select, setPoint } = useAtlas();
   const countryId = selection?.countryId ?? null;
-  const division = isParlimen(selection?.id) ? 'parlimen' : 'district';
+  const division = divisionOf(selection?.id);
   const admin = useAsync(() => (countryId ? profiles.admin(countryId, division) : Promise.resolve(null)), [countryId, division]);
+  // a DUN's chain runs through its parliamentary constituency, whose name lives in the parlimen file
+  const parlimen = useAsync(() => (countryId === 'MYS' && division === 'dun' ? profiles.admin('MYS', 'parlimen') : Promise.resolve(null)), [countryId, division]);
   if (!catalog || !selection) return null;
+  const findUnit = (id: string) => (isParlimen(id) && division === 'dun' ? parlimen.data?.admin2?.find((a) => a.id === id) : undefined) ?? admin.data?.admin1.find((a) => a.id === id) ?? admin.data?.admin2?.find((a) => a.id === id);
   const chain: GeoRef[] = [];
   for (const id of [...selection.parents, selection.id]) {
     if (id === 'WORLD' || id.startsWith('UN_')) chain.push(regionRef(catalog, id, lang));
     else if (catalog.countries[id]) chain.push(countryRef(catalog, id));
     else {
-      const u = admin.data?.admin1.find((a) => a.id === id) ?? admin.data?.admin2?.find((a) => a.id === id);
+      const u = findUnit(id);
       chain.push(id === selection.id ? selection : { id, level: u?.level ?? 'admin1', name: u?.name ?? id, countryId, parents: chain.map((c) => c.id) });
     }
   }
@@ -25,7 +28,7 @@ export function Breadcrumb() {
     if (g.level === 'world' || g.level === 'continent' || g.level === 'subregion') select(g, { bbox: regionBBox(catalog, g.id) });
     else if (g.level === 'country') select(g, { bbox: catalog.countries[g.id]?.bbox });
     else {
-      const u = admin.data?.admin1.find((a) => a.id === g.id) ?? admin.data?.admin2?.find((a) => a.id === g.id);
+      const u = findUnit(g.id);
       select({ ...g, parents: chain.slice(0, chain.findIndex((c) => c.id === g.id)).map((c) => c.id) }, u ? { bbox: u.bbox } : undefined);
     }
     setPoint(null);

@@ -3,12 +3,12 @@ import { useAtlas } from '../store/atlas';
 import { findById, loadSearchIndex, parseQuery, searchLocal } from '../services/search';
 import { entityLocation, searchEntities } from '../services/wikidata';
 import { indicatorName, t } from '../utils/i18n';
-import { countryRef, regionBBox, regionRef } from '../utils/geoRefs';
+import { countryRef, regionBBox, regionRef, stateIdOf } from '../utils/geoRefs';
 import type { SearchEntry } from '../types';
-import { settlementParlimen } from '../services/villages';
+import { settlementConstituency } from '../services/villages';
 
-const TYPE_LABEL_MS: Record<string, string> = { continent: 'benua', country: 'negara', admin1: 'negeri / wilayah', admin2: 'daerah', parlimen: 'kawasan parlimen', city: 'bandar', town: 'pekan', village: 'kampung / penempatan', peak: 'gunung', physical: 'ciri fizikal', sea: 'laut', airport: 'lapangan terbang', port: 'pelabuhan', landmark: 'mercu tanda' };
-const TYPE_ICON: Record<string, string> = { continent: '🌐', country: '🏳️', admin1: '🗺️', admin2: '📍', parlimen: '🏛️', city: '🏙️', town: '🏘️', village: '🏡', peak: '🏔️', physical: '🏝️', sea: '🌊', airport: '✈️', port: '⚓', landmark: '⭐' };
+const TYPE_LABEL_MS: Record<string, string> = { continent: 'benua', country: 'negara', admin1: 'negeri / wilayah', admin2: 'daerah', parlimen: 'kawasan parlimen', dun: 'kawasan DUN', city: 'bandar', town: 'pekan', village: 'kampung / penempatan', peak: 'gunung', physical: 'ciri fizikal', sea: 'laut', airport: 'lapangan terbang', port: 'pelabuhan', landmark: 'mercu tanda' };
+const TYPE_ICON: Record<string, string> = { continent: '🌐', country: '🏳️', admin1: '🗺️', admin2: '📍', parlimen: '🏛️', dun: '🗳️', city: '🏙️', town: '🏘️', village: '🏡', peak: '🏔️', physical: '🏝️', sea: '🌊', airport: '✈️', port: '⚓', landmark: '⭐' };
 
 interface WdHit { id: string; label: string; description?: string }
 
@@ -58,18 +58,19 @@ export function SearchBox() {
     if (statInd) setLayer(statInd.layer ? statInd.code : useAtlas.getState().layer);
     if (e.type === 'continent') { select(regionRef(catalog, e.id, lang), { bbox: regionBBox(catalog, e.id) }); return; }
     if (e.type === 'country') { select(countryRef(catalog, e.id), { bbox: catalog.countries[e.id]?.bbox, center: e.lon !== null ? [e.lon, e.lat!] : undefined, zoom: 4 }); return; }
-    if (e.type === 'admin1' || e.type === 'admin2' || e.type === 'parlimen') {
-      // a constituency is an admin2-depth unit; selecting it switches the Malaysia view to parlimen
-      select({ id: e.id, level: e.type === 'admin1' ? 'admin1' : 'admin2', name: e.name, countryId: e.country, parents: e.parents }, { center: [e.lon!, e.lat!], zoom: e.type === 'admin1' ? 6 : 8.5 });
+    if (e.type === 'admin1' || e.type === 'admin2' || e.type === 'parlimen' || e.type === 'dun') {
+      // a constituency is an admin2-depth unit; selecting it switches the Malaysia view to its division
+      select({ id: e.id, level: e.type === 'admin1' ? 'admin1' : 'admin2', name: e.name, countryId: e.country, parents: e.parents }, { center: [e.lon!, e.lat!], zoom: e.type === 'admin1' ? 6 : e.type === 'dun' ? 10 : 8.5 });
       return;
     }
     // point-like entries select their deepest administrative parent, then show the point card;
-    // in parlimen view a Malaysian town or village selects its constituency instead of its district
-    const stateId = e.parents.find((p) => /^MY-\d{2}$/.test(p));
+    // in parlimen or DUN view a Malaysian town or village selects its constituency instead of its district
+    const stateId = stateIdOf(e.parents);
     const gid = /^gn:(\d+)$/.exec(e.id)?.[1];
-    const pa = useAtlas.getState().myDivision === 'parlimen' && e.country === 'MYS' && stateId && gid && (e.type === 'village' || e.type === 'town') ? await settlementParlimen(Number(gid), stateId) : null;
+    const division = useAtlas.getState().myDivision;
+    const pa = division !== 'district' && e.country === 'MYS' && stateId && gid && (e.type === 'village' || e.type === 'town') ? await settlementConstituency(Number(gid), stateId, division) : null;
     const parentId = e.parents[e.parents.length - 1];
-    if (pa) select({ id: pa.id, level: 'admin2', name: pa.name, countryId: 'MYS', parents: e.parents.slice(0, e.parents.indexOf(stateId!) + 1) });
+    if (pa) select({ id: pa.id, level: 'admin2', name: pa.name, countryId: 'MYS', parents: [...e.parents.slice(0, e.parents.indexOf(stateId!) + 1), ...(division === 'dun' && pa.parlimen ? [pa.parlimen] : [])] });
     else if (parentId && parentId !== 'WORLD' && e.country) {
       const level = parentId === e.country ? 'country' : /-[a-z]/.test(parentId) && parentId.startsWith('MY-') ? 'admin2' : 'admin1';
       if (level === 'country') select(countryRef(catalog, e.country));

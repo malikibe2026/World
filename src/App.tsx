@@ -10,15 +10,14 @@ import { Sidebar } from './components/Sidebar';
 import { LocationPanel } from './components/panel/LocationPanel';
 import { Dashboard } from './components/Dashboard';
 import { Legend } from './components/Legend';
+import { YearChip } from './components/YearChip';
 import { DownloadModal } from './components/DownloadModal';
 import { QualityPage, SourcesPage } from './pages/SourcesPage';
 import { countryRef, regionBBox, regionRef } from './utils/geoRefs';
-import { QualityBadge } from './components/QualityBadge';
-import { ESTIMATE_LAST_YEAR } from './store/atlas';
 import { t } from './utils/i18n';
 
 export function App() {
-  const { catalog, setCatalog, modal, leftOpen, rightOpen, lang, theme, year, togglePanel, select , sheet } = useAtlas();
+  const { catalog, setCatalog, modal, leftOpen, rightOpen, lang, theme, togglePanel, select, sheet } = useAtlas();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export function App() {
     loadCatalog().then(setCatalog, (e: Error) => setError(e.message));
   }, [setCatalog]);
 
-  // deep link: ?geo=MYS | UN_935 | MY-10 | MY-10-hulu-langat | MY-10-p094
+  // deep link: ?geo=MYS | UN_935 | MY-10 | MY-10-hulu-langat | MY-10-p094 | MY-10-n01
   useEffect(() => {
     if (!catalog) return;
     const id = new URL(location.href).searchParams.get('geo');
@@ -39,7 +38,7 @@ export function App() {
     else if (catalog.countries[id]) select(countryRef(catalog, id), { bbox: catalog.countries[id].bbox });
     else loadSearchIndex().then(() => {
       const e = findById(id);
-      if (e && (e.type === 'admin1' || e.type === 'admin2' || e.type === 'parlimen')) select({ id: e.id, level: e.type === 'admin1' ? 'admin1' : 'admin2', name: e.name, countryId: e.country, parents: e.parents }, { center: [e.lon!, e.lat!], zoom: e.type === 'admin1' ? 6 : 8.5 });
+      if (e && (e.type === 'admin1' || e.type === 'admin2' || e.type === 'parlimen' || e.type === 'dun')) select({ id: e.id, level: e.type === 'admin1' ? 'admin1' : 'admin2', name: e.name, countryId: e.country, parents: e.parents }, { center: [e.lon!, e.lat!], zoom: e.type === 'admin1' ? 6 : e.type === 'dun' ? 10 : 8.5 });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catalog]);
@@ -57,10 +56,7 @@ export function App() {
           <div className="map-area">
             <MapView />
             <div className="map-overlay left-stack">
-              <div className="year-chip">
-                <span className="year-chip-y">{year}</span>
-                <QualityBadge q={year > ESTIMATE_LAST_YEAR ? 'PROJECTION' : 'ESTIMATE'} small />
-              </div>
+              <YearChip />
               <Legend />
             </div>
             <button className="panel-toggle left hide-narrow" onClick={() => togglePanel('left')} aria-label={t(lang, 'layers')} aria-expanded={leftOpen}>{leftOpen ? '‹' : '›'}</button>
