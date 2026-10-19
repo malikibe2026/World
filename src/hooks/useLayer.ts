@@ -17,7 +17,7 @@ export interface LayerState {
   loading: boolean;
   error: Error | null;
   /** Malaysia states / districts from OpenDOSM (when the snapshot exists and has this indicator). */
-  admin: { level: 'admin1' | 'admin2'; values: Record<string, number>; year: number; classification: Classification | null }[];
+  admin: { level: 'admin1' | 'admin2'; values: Record<string, number>; year: number; quality: Quality | null; classification: Classification | null }[];
 }
 
 export function useLayer(): LayerState {
@@ -58,6 +58,7 @@ export function useLayer(): LayerState {
       if (!d) return;
       const vals: Record<string, number> = {};
       let yy = -Infinity;
+      const qn: Partial<Record<Quality, number>> = {};
       for (const [uid, u] of Object.entries(d.units)) {
         const s = u.series[ind.code];
         if (!s?.length) continue;
@@ -65,8 +66,10 @@ export function useLayer(): LayerState {
         const pt = !projection && year >= ESTIMATE_LAST_YEAR ? [...s].reverse().find(([, , q]) => q !== 'PROJECTION') ?? s[s.length - 1] : [...s].reverse().find(([py]) => py <= year) ?? s[0];
         vals[uid] = pt[1];
         yy = Math.max(yy, pt[0]);
+        if (pt[2]) qn[pt[2] as Quality] = (qn[pt[2] as Quality] ?? 0) + 1;
       }
-      if (Object.keys(vals).length) admin.push({ level, values: vals, year: yy, classification: classify(Object.values(vals), kind, theme) });
+      const quality = (Object.entries(qn).sort((a, b) => b[1] - a[1])[0]?.[0] as Quality | undefined) ?? null; // what most units show
+      if (Object.keys(vals).length) admin.push({ level, values: vals, year: yy, quality, classification: classify(Object.values(vals), kind, theme) });
     };
     add('admin1', dosm.data?.a1);
     add('admin2', dosm.data?.a2);

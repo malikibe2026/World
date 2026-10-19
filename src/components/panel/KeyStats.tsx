@@ -9,7 +9,7 @@ import { breakYear } from '../../services/stats';
 
 export const KEY_INDICATORS = ['population', 'population_male', 'population_female', 'density', 'births', 'deaths', 'gdp', 'gdp_per_capita'];
 
-function shortSource(id: string | undefined, catalog: ReturnType<typeof useAtlas.getState>['catalog']): string {
+export function shortSource(id: string | undefined, catalog: ReturnType<typeof useAtlas.getState>['catalog']): string {
   if (!id || !catalog) return '';
   const s = catalog.sources[id];
   if (id === 'un_wpp_2024') return 'UN WPP 2024';

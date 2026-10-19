@@ -10,15 +10,14 @@ import { Sidebar } from './components/Sidebar';
 import { LocationPanel } from './components/panel/LocationPanel';
 import { Dashboard } from './components/Dashboard';
 import { Legend } from './components/Legend';
+import { YearChip } from './components/YearChip';
 import { DownloadModal } from './components/DownloadModal';
 import { QualityPage, SourcesPage } from './pages/SourcesPage';
 import { countryRef, regionBBox, regionRef } from './utils/geoRefs';
-import { QualityBadge } from './components/QualityBadge';
-import { ESTIMATE_LAST_YEAR } from './store/atlas';
 import { t } from './utils/i18n';
 
 export function App() {
-  const { catalog, setCatalog, modal, leftOpen, rightOpen, lang, theme, year, togglePanel, select , sheet } = useAtlas();
+  const { catalog, setCatalog, modal, leftOpen, rightOpen, lang, theme, togglePanel, select, sheet } = useAtlas();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -57,10 +56,7 @@ export function App() {
           <div className="map-area">
             <MapView />
             <div className="map-overlay left-stack">
-              <div className="year-chip">
-                <span className="year-chip-y">{year}</span>
-                <QualityBadge q={year > ESTIMATE_LAST_YEAR ? 'PROJECTION' : 'ESTIMATE'} small />
-              </div>
+              <YearChip />
               <Legend />
             </div>
             <button className="panel-toggle left hide-narrow" onClick={() => togglePanel('left')} aria-label={t(lang, 'layers')} aria-expanded={leftOpen}>{leftOpen ? '‹' : '›'}</button>
