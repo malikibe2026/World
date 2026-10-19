@@ -1,13 +1,15 @@
 name: Deploy to Netlify
 
-# Auto-deploy: production on every push to main, a preview for every PR.
-# Requires the repository secret NETLIFY_AUTH_TOKEN (Netlify → User settings →
-# Applications → Personal access tokens). Without it the job is skipped.
+# Auto-deploy: production on every push to main, or on demand (Actions → Run workflow).
+# No PR previews: every Netlify deploy uses the team's monthly credits, and previews used
+# them up. Requires the repository secret NETLIFY_AUTH_TOKEN (Netlify → User settings →
+# Applications → Personal access tokens) from an account in the team that owns the site.
+# Without it the job is skipped.
 
 on:
   push:
     branches: [main]
-  pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -49,9 +51,4 @@ jobs:
         if: steps.token.outputs.present == 'true'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            npx -y netlify-cli@17 deploy --dir=dist --prod --site "$NETLIFY_SITE_ID" --message "main ${GITHUB_SHA::7}"
-          else
-            npx -y netlify-cli@17 deploy --dir=dist --site "$NETLIFY_SITE_ID" --alias "pr-${{ github.event.number }}" --message "PR #${{ github.event.number }}"
-          fi
+        run: npx -y netlify-cli@17 deploy --dir=dist --prod --site "$NETLIFY_SITE_ID" --message "main ${GITHUB_SHA::7}"

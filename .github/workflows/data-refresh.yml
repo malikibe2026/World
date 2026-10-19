@@ -1,6 +1,7 @@
 # Scheduled data refresh: rebuild the snapshot from the official sources and, when the data
 # changed, open (or update) a pull request with a summary for review. Nothing is published until
 # a person merges that pull request; the merge then deploys to production (deploy-netlify.yml).
+# No preview deploy: Netlify deploys use the team's monthly credits; review the summary and CI instead.
 name: Data refresh
 
 on:
@@ -23,7 +24,6 @@ concurrency:
 
 env:
   BRANCH: data-refresh/auto
-  NETLIFY_SITE_ID: 90045eca-674e-48d2-accd-63f8cd7ee626
 
 jobs:
   refresh:
@@ -78,15 +78,6 @@ jobs:
           npm run typecheck
           npm test
           npm run build
-
-      - name: Preview deploy
-        if: steps.report.outputs.changed == 'true'
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        run: |
-          if [ -z "$NETLIFY_AUTH_TOKEN" ]; then echo "No NETLIFY_AUTH_TOKEN; skipping preview."; exit 0; fi
-          npx -y netlify-cli@17 deploy --dir=dist --site "$NETLIFY_SITE_ID" --alias data-refresh --message "Data refresh ${{ github.run_id }}"
-          printf '\nPratonton: https://data-refresh--worldstat-atlas.netlify.app\n' >> "$RUNNER_TEMP/summary.md"
 
       - name: Open or update the pull request
         if: steps.report.outputs.changed == 'true'

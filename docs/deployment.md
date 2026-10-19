@@ -47,9 +47,12 @@ style-src 'self' 'unsafe-inline';
 ## Auto-deploy ke Netlify (GitHub Actions)
 
 `.github/workflows/deploy-netlify.yml` deploy ke projek Netlify `worldstat-atlas`:
-production pada setiap push ke `main`, pratonton (`pr-<nombor>--worldstat-atlas.netlify.app`) untuk setiap PR.
+production pada setiap push ke `main`, atau secara manual (Actions → *Deploy to Netlify* → *Run workflow*).
+Tiada pratonton untuk PR atau kemas kini data: setiap deploy Netlify menggunakan kredit bulanan pasukan, dan
+pratonton pernah menghabiskannya (deploy disekat sehingga kitaran bil seterusnya).
 
-Sekali sahaja: cipta *Personal access token* di Netlify (User settings → Applications) dan simpan sebagai
+Sekali sahaja: cipta *Personal access token* di Netlify (User settings → Applications) **dengan akaun dalam
+pasukan yang memiliki projek `worldstat-atlas`** (token akaun lain memberi ralat "Site not found") dan simpan sebagai
 secret repositori **`NETLIFY_AUTH_TOKEN`** (GitHub → Settings → Secrets and variables → Actions).
 Tanpa secret itu, kerja deploy dilangkau (CI tidak gagal). Alternatif: pautkan repo terus dalam Netlify UI.
 
@@ -87,8 +90,7 @@ bila-bila masa: GitHub → Actions → *Data refresh* → *Run workflow*):
    Wikidata dilangkau secara lalai kerana perlahan; tanda *wikidata* semasa larian manual untuk memasukkannya.
 2. `scripts/pipeline/refresh_report.py` membandingkan hasil dengan snapshot semasa. Jika hanya metadata
    larian berubah (cap masa), tiada apa-apa dibuat.
-3. Jika data berubah: typecheck, ujian dan build dijalankan; pratonton diterbitkan di
-   `data-refresh--worldstat-atlas.netlify.app`; PR **“Kemas kini data automatik …”** dibuka (atau dikemas
+3. Jika data berubah: typecheck, ujian dan build dijalankan; PR **“Kemas kini data automatik …”** dibuka (atau dikemas
    kini) daripada cawangan `data-refresh/auto` dengan ringkasan: dataset OpenDOSM yang dikemas kini,
    fail berubah, laporan kualiti dan perubahan sempadan yang dikesan.
 4. **Tiada apa-apa diterbitkan sehingga PR digabungkan oleh manusia.** Gabungan itu mencetuskan deploy production.
