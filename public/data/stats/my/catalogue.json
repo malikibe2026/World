@@ -821,50 +821,6 @@
         }
       ]
     },
-    "gdp_lookup": {
-      "title_en": "Lookup Table: GDP",
-      "title_ms": "Jadual Carian: KDNK",
-      "description_en": "Lookup table, to be left-joined against other GDP datasets if specified.",
-      "description_ms": "Jadual carian, untuk dipadankan (left-join) dengan set data KDNK lain sekiranya diperlukan.",
-      "methodology_en": "This lookup table is not part of any standardised data dictionary; it was custom-made to serve the GDP datasets made available via data.gov.my and OpenDOSM only. Furthermore, the coding employed here is similar to (but not the same as) the coding used in DOSM's GDP publications, because it has been calibrated to ensure consistency across annual and quarterly GDP publications, as well as national and state GDP publications.",
-      "methodology_ms": "Jadual carian ini bukan sebahagian daripada mana-mana _dictionary_ data; ia dihasilkan khas untuk memenuhi keperluan set data GDP yang dibekalkan melalui data.gov.my dan OpenDOSM sahaja. Tambahan, kod yang terkandung dalam jadual carian ini tidak sama dengan kod yang digunakan dalam penerbitan KDNK oleh DOSM, kerana ia telah disesuaikan untuk memastikan penggunaan secara konsisten merentas penerbitan KDNK tahunan dan suku tahunan, serta penerbitan KDNK negara dan negeri.",
-      "caveat_en": "—",
-      "caveat_ms": "—",
-      "data_as_of": "2024-Q1",
-      "last_updated": "2024-05-17 12:00",
-      "next_update": "—",
-      "link_csv": "https://storage.dosm.gov.my/gdp/gdp_lookup.csv",
-      "link_parquet": "https://storage.dosm.gov.my/gdp/gdp_lookup.parquet",
-      "frequency": "INFREQUENT",
-      "geography": [
-        "NATIONAL"
-      ],
-      "demography": [],
-      "dataset_begin": 2024,
-      "dataset_end": 2024,
-      "data_source": [
-        "DOSM"
-      ],
-      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/gdp_lookup.json",
-      "fields": [
-        {
-          "name": "method",
-          "description_en": "[Categorical] Either the production approach ('production'), expenditure approach ('expenditure'), or income approach ('income')"
-        },
-        {
-          "name": "code",
-          "description_en": "[String] Reference for the variable as contained within the dataset"
-        },
-        {
-          "name": "variable_en",
-          "description_en": "[String] Definition of the variable in English"
-        },
-        {
-          "name": "variable_bm",
-          "description_en": "[String] Definition of the variable in Malay"
-        }
-      ]
-    },
     "population_parlimen": {
       "title_en": "Population Table: Parliamentary Constituencies",
       "title_ms": "Jadual Penduduk: Kawasan Parlimen",
@@ -2033,6 +1989,635 @@
         {
           "name": "completion",
           "description_en": "[Float] Proportion of students who complete that stage of education, relative to the total cohort that started that stage"
+        }
+      ]
+    },
+    "gdp_district_real_supply": {
+      "title_en": "Annual Real GDP by District & Economic Sector",
+      "title_ms": "KDNK Sebenar Tahunan mengikut Daerah & Sektor Ekonomi",
+      "description_en": "Annual district-level gross domestic product (GDP) at constant 2015 prices for the 5 main economic sectors.",
+      "description_ms": "Keluaran dalam negeri kasar (KDNK) tahunan peringkat daerah pada harga malar 2015 bagi 5 sektor ekonomi utama.",
+      "methodology_en": "Gross domestic product (GDP) is the total value of goods and services produced within that year, after deducting the cost of goods and services used in production, but before deducting the consumption of fixed capital. In Malaysia, GDP is estimated in compliance with the [System of National Accounts (2008)](https://storage.dosm.gov.my/technotes/sna_2008.pdf).\n\nIn general, GDP can be measured via 3 approaches, namely production, expenditure, and income. Because the measurement employs double entry accounting, the overall value must be the same across all 3 approaches. However, the different approaches allow GDP to be analysed in different ways. The GDP estimates in this dataset were produced using the production method (also known as the value added approach), which allows insight into the specific contribution of each economic sector. For that reason, the results of the production approach are often referenced in economic writing as supply-side GDP. The values were measured at constant 2015 prices, i.e. with price effects removed relative to a base year (2015 = 100). For a full description of the methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/gdp-technotes).",
+      "methodology_ms": "Keluaran dalam negeri kasar (KDNK) adalah jumlah nilai barangan dan perkhidmatan yang dihasilkan dalam tahun tersebut, selepas ditolak kos barangan dan perkhidmatan yang digunakan dalam proses pengeluaran, tetapi sebelum ditolak penggunaan modal tetap. Di Malaysia, anggaran KDNK dihasilkan selaras dengan [Sistem Akaun Nasional (2008)](https://storage.dosm.gov.my/technotes/sna_2008.pdf).\n\nSecara am, KDNK boleh diukur melalui 3 kaedah, iaitu pengeluaran, perbelanjaan, dan pendapatan. Memandangkan bahawa pengukurannya menggunakan sistem perakaunan catatan bergu, angka keseluruhan mesti sama bagi ketiga-tiga kaedah tersebut. Namun, kaedah yang berbeza itu membolehkan analisis KDNK yang berlainan. Anggaran KDNK dalam set data ini dihasilkan melalui kaedah pengeluaran (juga dikenali sebagai kaedah nilai ditambah), yang membolehkan perincian sumbangan setiap sektor ekonomi kepada KDNK keseluruhan. Oleh itu, hasil daripada kaedah pengeluaran juga dirujuk dalam tulisan ekonomi sebagai KDNK dari segi penawaran (_supply-side GDP_). Angka-angka diukur pada harga malar 2015, iaitu dengan mengeluarkan kesan harga berbanding tahun asas (2015 = 100). Untuk mendapat perincian metodologi yang penuh, sila merujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/gdp-technotes).",
+      "caveat_en": "There are several caveats to note:\n- Values for W.P. Putrajaya are subsumed under values for W.P. Kuala Lumpur due to difficulty in separating the attribution of economic value.\n- Sectoral values of less than RM 5 million are intentionally nulled; these are different from values which are explicitly enumerated as 0.\n- The sum of GDP for all sectors may not always equal to the values for overall GDP because of independent rounding to one decimal place. However, the differences are not obvious.",
+      "caveat_ms": "Terdapat beberapa perkara yang perlu diberi perhatian:\n- Nilai bagi W.P. Putrajaya dimasukkan bawah nilai W.P. Kuala Lumpur kerana kesukaran dalam membezakan punca nilai ekonomi.\n- Nilai sektor yang kurang daripada RM 5 juta sengaja dijadikan null. Ini tidak sama dengan angka yang diperincikan sebagai 0.\n- Hasil tambah nilai KDNK bagi semua sektor mungkin tidak sentiasa sama dengan nilai KDNK keseluruhan kerana pembundaran secara bebas. Walau bagaimanapun, perbezaan ini tidak ketara.",
+      "data_as_of": "2020",
+      "last_updated": "2024-11-02 12:00",
+      "next_update": "2025-11-02 12:00",
+      "link_csv": "https://storage.dosm.gov.my/gdp/gdp_district_real_supply.csv",
+      "link_parquet": "https://storage.dosm.gov.my/gdp/gdp_district_real_supply.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE",
+        "DISTRICT"
+      ],
+      "demography": [],
+      "dataset_begin": 2015,
+      "dataset_end": 2020,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/gdp_district_real_supply.json",
+      "fields": [
+        {
+          "name": "series",
+          "description_en": "[String] Series type, either absolute values ('abs') or annual growth ('growth_yoy')"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 15 states (W.P. Putrajaya is subsumed under W.P. Kuala Lumpur), or 'Supranational', which is a catch-all category for GDP data that cannot be attributed to a specific state, especially in the mining and quarrying sector."
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 160 administrative districts, including the 4 states (Perlis and the 3 Federal Territories) which do not have subdivisions. For Sabah and Sarawak, an additional district called 'Supra' is included to capture petroleum & condensate and natural gas activities that cannot be attributed to a specific district."
+        },
+        {
+          "name": "sector",
+          "description_en": "[String] Code for the economic sector, to be mapped using the [Lookup Table](https://open.dosm.gov.my/data-catalogue/gdp_lookup). The lookup table will give you the English and Malay definitions."
+        },
+        {
+          "name": "value",
+          "description_en": "[Float] Either the value of GDP in RM millions (for rows with series type 'abs') or GDP growth as a percentage (for rows with series type 'growth_yoy')"
+        }
+      ]
+    },
+    "wages_state": {
+      "title_en": "Annual Salaries & Wages by State & Sex",
+      "title_ms": "Gaji & Upah Tahunan mengikut Negeri & Jantina",
+      "description_en": "Number of recipients, median and mean monthly salaries & wages of employees who are Malaysian citizens by state and sex.",
+      "description_ms": "Bilangan penerima, penengah dan purata gaji & upah bulanan pekerja warganegara Malaysia mengikut negeri dan jantina.",
+      "methodology_en": "This data is produced from the Salaries & Wages Survey (SWS), which DOSM conducts alongside the Labour Force Survey (LFS) through personal interviews with households in private living quarters, covering urban and rural areas in all states.\n\n**Salaries & wages** refer to the monthly wage rate received by employees in the public and private sectors from their principal job in the reference month, comprising:\n- basic wages\n- cost-of-living allowances\n- other guaranteed and regularly paid allowances in cash or in kind\n- overtime payments\n\nThey exclude bonuses, gratuities, family allowances and social security payments made by employers. The statistics cover employees aged 15-64; employers, own-account workers, unpaid family workers, domestic workers employed by households and casual workers are not covered.",
+      "methodology_ms": "Data ini dihasilkan berdasarkan Survei Gaji & Upah (SGU), yang dijalankan oleh DOSM bersama-sama dengan Survei Tenaga Buruh (STB) melalui temu ramah bersemuka dengan isi rumah di tempat kediaman persendirian, meliputi kawasan bandar dan luar bandar di semua negeri.\n\n**Gaji & upah** merujuk kepada kadar upah bulanan yang diterima oleh pekerja dalam sektor awam dan swasta daripada pekerjaan utama mereka dalam bulan rujukan, merangkumi:\n- gaji pokok\n- elaun sara hidup\n- elaun lain yang dijamin dan dibayar secara tetap dalam bentuk tunai atau barangan\n- bayaran kerja lebih masa\n\nIa tidak termasuk bonus, ganjaran, elaun keluarga dan bayaran keselamatan sosial oleh majikan. Statistik ini meliputi pekerja berumur 15-64 tahun; majikan, pekerja sendiri, pekerja keluarga tanpa gaji, pembantu rumah yang diambil bekerja oleh isi rumah dan pekerja kasual tidak diliputi.",
+      "caveat_en": "",
+      "caveat_ms": "",
+      "data_as_of": "2025",
+      "last_updated": "2026-09-21 12:00",
+      "next_update": "2027-09-30 12:00",
+      "link_csv": "https://storage.dosm.gov.my/labour/wages_state.csv",
+      "link_parquet": "https://storage.dosm.gov.my/labour/wages_state.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE"
+      ],
+      "demography": [
+        "SEX"
+      ],
+      "dataset_begin": 2010,
+      "dataset_end": 2025,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/wages_state.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, or 'Malaysia' for the national figure"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')"
+        },
+        {
+          "name": "recipients",
+          "description_en": "[Float] Number of salaries & wages recipients, in thousands"
+        },
+        {
+          "name": "wages_median",
+          "description_en": "[Integer, RM] Median monthly salaries & wages; half of employees earn less than this amount"
+        },
+        {
+          "name": "wages_mean",
+          "description_en": "[Integer, RM] Mean monthly salaries & wages, i.e. total salaries & wages divided by the number of recipients"
+        }
+      ]
+    },
+    "wages_real_state": {
+      "title_en": "Annual Real Salaries & Wages by State",
+      "title_ms": "Gaji & Upah Benar Tahunan mengikut Negeri",
+      "description_en": "Real median and mean monthly salaries & wages of all employees, both Malaysian citizens and non-citizens, by state, at 2010 prices.",
+      "description_ms": "Penengah dan purata gaji & upah benar bulanan semua pekerja, iaitu warganegara Malaysia dan bukan warganegara, mengikut negeri, pada harga 2010.",
+      "methodology_en": "This data is produced from the Salaries & Wages Survey (SWS), which DOSM conducts alongside the Labour Force Survey (LFS) through personal interviews with households in private living quarters, covering urban and rural areas in all states.\n\n**Salaries & wages** refer to the monthly wage rate received by employees in the public and private sectors from their principal job in the reference month, comprising:\n- basic wages\n- cost-of-living allowances\n- other guaranteed and regularly paid allowances in cash or in kind\n- overtime payments\n\nThey exclude bonuses, gratuities, family allowances and social security payments made by employers. The statistics cover employees aged 15-64; employers, own-account workers, unpaid family workers, domestic workers employed by households and casual workers are not covered.\n\nReal salaries & wages are nominal salaries & wages adjusted for inflation using the Consumer Price Index (CPI) of each state, and are expressed at 2010 prices: real salaries & wages = nominal salaries & wages x CPI (2010) / CPI (year).",
+      "methodology_ms": "Data ini dihasilkan berdasarkan Survei Gaji & Upah (SGU), yang dijalankan oleh DOSM bersama-sama dengan Survei Tenaga Buruh (STB) melalui temu ramah bersemuka dengan isi rumah di tempat kediaman persendirian, meliputi kawasan bandar dan luar bandar di semua negeri.\n\n**Gaji & upah** merujuk kepada kadar upah bulanan yang diterima oleh pekerja dalam sektor awam dan swasta daripada pekerjaan utama mereka dalam bulan rujukan, merangkumi:\n- gaji pokok\n- elaun sara hidup\n- elaun lain yang dijamin dan dibayar secara tetap dalam bentuk tunai atau barangan\n- bayaran kerja lebih masa\n\nIa tidak termasuk bonus, ganjaran, elaun keluarga dan bayaran keselamatan sosial oleh majikan. Statistik ini meliputi pekerja berumur 15-64 tahun; majikan, pekerja sendiri, pekerja keluarga tanpa gaji, pembantu rumah yang diambil bekerja oleh isi rumah dan pekerja kasual tidak diliputi.\n\nGaji & upah benar ialah gaji & upah nominal yang diselaraskan bagi inflasi menggunakan Indeks Harga Pengguna (IHP) setiap negeri, dan dinyatakan pada harga 2010: gaji & upah benar = gaji & upah nominal x IHP (2010) / IHP (tahun).",
+      "caveat_en": "",
+      "caveat_ms": "",
+      "data_as_of": "2025",
+      "last_updated": "2026-09-21 12:00",
+      "next_update": "2027-09-30 12:00",
+      "link_csv": "https://storage.dosm.gov.my/labour/wages_real_state.csv",
+      "link_parquet": "https://storage.dosm.gov.my/labour/wages_real_state.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE"
+      ],
+      "demography": [],
+      "dataset_begin": 2010,
+      "dataset_end": 2025,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/wages_real_state.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, or 'Malaysia' for the national figure"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "wages_median_real",
+          "description_en": "[Integer, RM] Median monthly salaries & wages at 2010 prices"
+        },
+        {
+          "name": "wages_mean_real",
+          "description_en": "[Integer, RM] Mean monthly salaries & wages at 2010 prices"
+        }
+      ]
+    },
+    "cpi_headline": {
+      "title_en": "Monthly CPI by Division (2-digit)",
+      "title_ms": "IHP Bulanan mengikut Bahagian (2-digit)",
+      "description_en": "National-level CPI for 13 main groups of goods and services.",
+      "description_ms": "IHP peringkat nasional bagi 13 kumpulan utama barangan dan perkhidmatan.",
+      "methodology_en": "The CPI measures the cost of purchasing a constant, representative 'basket' of goods and services. The quantity and quality of goods in the basket are kept constant, so that changes in the cost of the basket are purely due to price changes. The changes in the cost of this basket represent the rate of inflation. For a deeper understanding of the price collection and CPI computation methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/cpi-technotes). Finally, it should be noted that Malaysia's CPI classification is deliberately consistent with the United Nations Classification of Individual Consumption According to Purpose (COICOP) to ensure international comparability.",
+      "methodology_ms": "IHP mengukur kos pembelian bagi 'bakul' tetap barangan dan perkhidmatan yang mewakili corak purata pembelian penduduk Malaysia. Perubahan kos bakul adalah disebabkan perubahan harga kerana kualiti dan kuantiti item bakul adalah tetap. Perubahan kos bakul mewakili kadar inflasi. Untuk makluman, klasifikasi IHP Malaysia adalah berpandukan United Nations Classification of Individual Consumption According to Purpose (COICOP) bagi memastikan perbandingan antarabangsa dapat dilaksanakan.",
+      "caveat_en": "When interpreting inflation rates derived from the CPI, it is important to remember that the rate of inflation experienced by a specific individual may be higher or lower than this number. This does not invalidate the CPI, which is meant to be an average value representative of the entire population.",
+      "caveat_ms": "Dalam mentafsirkan kadar inflasi yang dihasilkan berdasarkan IHP, perlu diingati bahawa inflasi yang dirasai oleh mana-mana individu mungkin lebih tinggi atau lebih rendah daripada angka ini. Ini tidak bermaksud bahawa angka IHP tidak betul, kerana IHP dirangka sebagai angka purata yang mewakili seluruh penduduk.",
+      "data_as_of": "2026-08",
+      "last_updated": "2026-09-18 12:25",
+      "next_update": "2026-10-19 12:30",
+      "link_csv": "https://storage.dosm.gov.my/cpi/cpi_2d.csv",
+      "link_parquet": "https://storage.dosm.gov.my/cpi/cpi_2d.parquet",
+      "frequency": "MONTHLY",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [],
+      "dataset_begin": 2000,
+      "dataset_end": 2026,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/cpi_headline.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with DD set to 01 as the data is at monthly frequency"
+        },
+        {
+          "name": "division",
+          "description_en": "[String] 2-digit code from 01-13 or 'overall', to be matched using the 'division' column in the [MCOICOP Lookup](https://open.dosm.gov.my/data-catalogue/mcoicop). The MCOICOP lookup table will give you the English and Malay definitions."
+        },
+        {
+          "name": "index",
+          "description_en": "[Float] Index value, with base 2010 = 100"
+        }
+      ]
+    },
+    "cpi_state": {
+      "title_en": "Monthly CPI by State & Division (2-digit)",
+      "title_ms": "IHP Bulanan mengikut Negeri & Bahagian (2-digit)",
+      "description_en": "State-level CPI for 13 main groups of goods and services.",
+      "description_ms": "IHP peringkat negeri bagi 13 kumpulan utama barangan dan perkhidmatan.",
+      "methodology_en": "The CPI measures the cost of purchasing a constant, representative 'basket' of goods and services. The quantity and quality of goods in the basket are kept constant, so that changes in the cost of the basket are purely due to price changes. The changes in the cost of this basket represent the rate of inflation. For a deeper understanding of the price collection and CPI computation methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/cpi-technotes). Finally, it should be noted that Malaysia's CPI classification is deliberately consistent with the United Nations Classification of Individual Consumption According to Purpose (COICOP) to ensure international comparability.",
+      "methodology_ms": "IHP mengukur kos pembelian bagi 'bakul' tetap barangan dan perkhidmatan yang mewakili corak purata pembelian penduduk Malaysia. Kualiti dan kuantiti item dalam bakul ini tidak berubah, maka perubahan kos bakul ini disebabkan oleh perubahan harga sahaja. Perubahan kos bakul inilah yang mewakili kadar inflasi. Untuk mendapat pemahaman yang lebih mendalam tentang metodologi pemungutan harga dan perangkaan IHP, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/cpi-technotes). Akhirnya, sila ambil maklum bahawa klasifikasi IHP Malaysia dipastikan konsisten dengan United Nations Classification of Individual Consumption According to Purpose (COICOP) demi membolehkan perbandingan antarabangsa.",
+      "caveat_en": "When interpreting inflation rates derived from the CPI, it is important to remember that the rate of inflation experienced by a specific individual may be higher or lower than this number. This does not invalidate the CPI, which is meant to be an average value representative of the entire population.",
+      "caveat_ms": "Dalam mentafsirkan kadar inflasi yang dihasilkan berdasarkan IHP, perlu diingati bahawa inflasi yang dirasai oleh mana-mana individu mungkin lebih tinggi atau lebih rendah daripada angka ini. Ini tidak bermaksud bahawa angka IHP tidak betul, kerana IHP dirangka sebagai angka purata yang mewakili seluruh penduduk.",
+      "data_as_of": "2026-08",
+      "last_updated": "2026-09-18 12:25",
+      "next_update": "2026-10-19 12:30",
+      "link_csv": "https://storage.dosm.gov.my/cpi/cpi_2d_state.csv",
+      "link_parquet": "https://storage.dosm.gov.my/cpi/cpi_2d_state.parquet",
+      "frequency": "MONTHLY",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [],
+      "dataset_begin": 2010,
+      "dataset_end": 2026,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/cpi_state.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with DD set to 01 as the data is at monthly frequency"
+        },
+        {
+          "name": "division",
+          "description_en": "[String] 2-digit code from 01-13 or 'overall', to be matched using the 'division' column in the [MCOICOP Lookup](https://open.dosm.gov.my/data-catalogue/mcoicop). The MCOICOP lookup table will give you the English and Malay definitions."
+        },
+        {
+          "name": "index",
+          "description_en": "[Float] Index value, with base 2010 = 100"
+        }
+      ]
+    },
+    "cpi_headline_inflation": {
+      "title_en": "Monthly CPI Inflation by Division (2-digit)",
+      "title_ms": "Inflasi IHP Bulanan mengikut Bahagian (2-digit)",
+      "description_en": "National-level CPI inflation for 13 main groups of goods and services",
+      "description_ms": "Inflasi IHP peringkat nasional bagi 13 kumpulan utama barangan dan perkhidmatan.",
+      "methodology_en": "The CPI measures the cost of purchasing a constant, representative 'basket' of goods and services. The quantity and quality of goods in the basket are kept constant, so that changes in the cost of the basket are purely due to price changes. The changes in the cost of this basket represent the rate of inflation. For a deeper understanding of the price collection and CPI computation methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/cpi-technotes). Finally, it should be noted that Malaysia's CPI classification is deliberately consistent with the United Nations Classification of Individual Consumption According to Purpose (COICOP) to ensure international comparability.",
+      "methodology_ms": "IHP mengukur kos pembelian bagi 'bakul' tetap barangan dan perkhidmatan yang mewakili corak purata pembelian penduduk Malaysia. Kualiti dan kuantiti item dalam bakul ini tidak berubah, maka perubahan kos bakul ini disebabkan oleh perubahan harga sahaja. Perubahan kos bakul inilah yang mewakili kadar inflasi. Untuk mendapat pemahaman yang lebih mendalam tentang metodologi pemungutan harga dan perangkaan IHP, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/cpi-technotes). Akhirnya, sila ambil maklum bahawa klasifikasi IHP Malaysia dipastikan konsisten dengan United Nations Classification of Individual Consumption According to Purpose (COICOP) demi membolehkan perbandingan antarabangsa.",
+      "caveat_en": "When interpreting inflation rates derived from the CPI, it is important to remember that the rate of inflation experienced by a specific individual may be higher or lower than this number. This does not invalidate the CPI, which is meant to be an average value representative of the entire population.",
+      "caveat_ms": "Dalam mentafsirkan kadar inflasi yang dihasilkan berdasarkan IHP, perlu diingati bahawa inflasi yang dirasai oleh mana-mana individu mungkin lebih tinggi atau lebih rendah daripada angka ini. Ini tidak bermaksud bahawa angka IHP tidak betul, kerana IHP dirangka sebagai angka purata yang mewakili seluruh penduduk.",
+      "data_as_of": "2026-08",
+      "last_updated": "2026-09-18 12:25",
+      "next_update": "2026-10-19 12:30",
+      "link_csv": "https://storage.dosm.gov.my/cpi/cpi_2d_inflation.csv",
+      "link_parquet": "https://storage.dosm.gov.my/cpi/cpi_2d_inflation.parquet",
+      "frequency": "MONTHLY",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [],
+      "dataset_begin": 2001,
+      "dataset_end": 2026,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/cpi_headline_inflation.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with DD set to 01 as the data is at monthly frequency"
+        },
+        {
+          "name": "division",
+          "description_en": "[String] 2-digit code from 01-13 or 'overall', to be matched using the 'division' column in the [MCOICOP Lookup](https://open.dosm.gov.my/data-catalogue/mcoicop). The MCOICOP lookup table will give you the English and Malay definitions."
+        },
+        {
+          "name": "inflation_yoy",
+          "description_en": "[Float] Year-on-year inflation, i.e. the percentage change in the CPI since 12 months ago"
+        },
+        {
+          "name": "inflation_mom",
+          "description_en": "[Float] Month-on-month inflation, i.e. Percentage change in the CPI since 1 month ago"
+        }
+      ]
+    },
+    "cpi_state_inflation": {
+      "title_en": "Monthly CPI Inflation by State & Division (2-digit)",
+      "title_ms": "Inflasi IHP Bulanan mengikut Negeri & Bahagian (2-digit)",
+      "description_en": "State-level CPI inflation for 13 main groups of goods and services",
+      "description_ms": "Inflasi IHP peringkat negeri bagi 13 kumpulan utama barangan dan perkhidmatan.",
+      "methodology_en": "The CPI measures the cost of purchasing a constant, representative 'basket' of goods and services. The quantity and quality of goods in the basket are kept constant, so that changes in the cost of the basket are purely due to price changes. The changes in the cost of this basket represent the rate of inflation. For a deeper understanding of the price collection and CPI computation methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/cpi-technotes). Finally, it should be noted that Malaysia's CPI classification is deliberately consistent with the United Nations Classification of Individual Consumption According to Purpose (COICOP) to ensure international comparability.",
+      "methodology_ms": "IHP mengukur kos pembelian bagi 'bakul' tetap barangan dan perkhidmatan yang mewakili corak purata pembelian penduduk Malaysia. Kualiti dan kuantiti item dalam bakul ini tidak berubah, maka perubahan kos bakul ini disebabkan oleh perubahan harga sahaja. Perubahan kos bakul inilah yang mewakili kadar inflasi. Untuk mendapat pemahaman yang lebih mendalam tentang metodologi pemungutan harga dan perangkaan IHP, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/cpi-technotes). Akhirnya, sila ambil maklum bahawa klasifikasi IHP Malaysia dipastikan konsisten dengan United Nations Classification of Individual Consumption According to Purpose (COICOP) demi membolehkan perbandingan antarabangsa.",
+      "caveat_en": "When interpreting inflation rates derived from the CPI, it is important to remember that the rate of inflation experienced by a specific individual may be higher or lower than this number. This does not invalidate the CPI, which is meant to be an average value representative of the entire population.",
+      "caveat_ms": "Dalam mentafsirkan kadar inflasi yang dihasilkan berdasarkan IHP, perlu diingati bahawa inflasi yang dirasai oleh mana-mana individu mungkin lebih tinggi atau lebih rendah daripada angka ini. Ini tidak bermaksud bahawa angka IHP tidak betul, kerana IHP dirangka sebagai angka purata yang mewakili seluruh penduduk.",
+      "data_as_of": "2026-08",
+      "last_updated": "2026-09-18 12:25",
+      "next_update": "2026-10-19 12:30",
+      "link_csv": "https://storage.dosm.gov.my/cpi/cpi_2d_state_inflation.csv",
+      "link_parquet": "https://storage.dosm.gov.my/cpi/cpi_2d_state_inflation.parquet",
+      "frequency": "MONTHLY",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [],
+      "dataset_begin": 2010,
+      "dataset_end": 2026,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/cpi_state_inflation.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with DD set to 01 as the data is at monthly frequency"
+        },
+        {
+          "name": "division",
+          "description_en": "[String] 2-digit code from 01-13 or 'overall', to be matched using the 'division' column in the [MCOICOP Lookup](https://open.dosm.gov.my/data-catalogue/mcoicop). The MCOICOP lookup table will give you the English and Malay definitions."
+        },
+        {
+          "name": "inflation_yoy",
+          "description_en": "[Float] Year-on-year inflation, i.e. the percentage change in the CPI since 12 months ago"
+        },
+        {
+          "name": "inflation_mom",
+          "description_en": "[Float] Month-on-month inflation, i.e. Percentage change in the CPI since 1 month ago"
+        }
+      ]
+    },
+    "crime_district": {
+      "title_en": "Crimes by District & Crime Type",
+      "title_ms": "Jenayah mengikut Daerah & Jenis Jenayah",
+      "description_en": "Number of crimes in Malaysia by district, crime category, and type of crime.",
+      "description_ms": "Bilangan jenayah di Malaysia mengikut daerah, kategori jenayah, dan jenis jenayah.",
+      "methodology_en": "This dataset is tabulated from transactional report-level data collected by the Police Reporting System administered by the Royal Malaysian Police. Most importantly, it shows the number of **actual crimes** (i.e. where a conviction has already occurred) rather than the number of **reported crimes**, which may include false reports. This dataset can also be used in analyses of sexual crime towards women, because all victims of rape as defined by the laws of Malaysia are female (i.e. there is no need to provide a separate dataset with disaggregation by sex).\n\nFor a deeper understanding of the methodology and associated concepts, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/crime-technotes). Finally, it should be noted that Malaysia's national statistics on crime are compiled in accordance with the International Classification of Crime for Statistical Purpose Version 1.0, which was published by the United Nations Office on Drugs and Crime (UNODC), to ensure international comparability.",
+      "methodology_ms": "Set data ini dihasilkan daripada rekod transaksi peringkat laporan yang dikumpulkan oleh Sistem Pelaporan Polis yang dikendali oleh Polis Diraja Malaysia. Ia menunjukkan bilangan **jenayah sebenar** (iaitu di mana pesalah telah disabitkan) dan bukannya bilangan **jenayah dilaporkan**, yang termasuk laporan palsu. Selain itu, set data ini juga boleh digunakan dalam sebarang analisis jenayah seks terhaps wanita, kerana semua mangsa rogol seperti yang didefinisikan oleh undang-undang Malaysia adalah wanita (maka tiada keperluan untuk menerbitkan set data lain dengan pecahan mengikut jantina).\n\nUntuk mendapat pemahaman yang lebih mendalam tentang metodologi dan konsep berkaitan, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/crime-technotes). Akhirnya, pihak kerajaan ingin maklumkan bahawa statistik jenayah Malaysia disusun selaras dengan Klasifikasi Jenayah untuk Tujuan Statistik (versi 1.0) yang diterbitkan oleh *United Nations Office on Drugs and Crime (UNODC)*, bagi memudahkan perbandingan dan penarafan antarabangsa.",
+      "caveat_en": "Unreported crimes are not included in this dataset. In general, it is acknowledged that the true crime rate may exceed the reported crime rate, especially for crimes where there are significant disincentives or barriers to reporting.",
+      "caveat_ms": "Jenayah yang tidak dilaporkan tidak termasuk dalam set data ini. Secara am, kadar jenayah sebenar mungkin melebihi kadar jenayah dilaporkan, terutamanya bagi jenayah di mana mangsa mengalami kesusahan tertentu dalam membuat laporan secara rasmi.",
+      "data_as_of": "2023-12-31 23:59",
+      "last_updated": "2024-10-16 12:00",
+      "next_update": "2027-12-31 18:00",
+      "link_csv": "https://storage.data.gov.my/publicsafety/crime_district.csv",
+      "link_parquet": "https://storage.data.gov.my/publicsafety/crime_district.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL",
+        "STATE",
+        "DISTRICT"
+      ],
+      "demography": [],
+      "dataset_begin": 2016,
+      "dataset_end": 2023,
+      "data_source": [
+        "PDRM",
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/crime_district.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, or Malaysia; however, data for W.P. Putrajaya and W.P. Labuan are subsumed under W.P. Kuala Lumpur and Sabah respectively."
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] Name of the police district; note that this is different from the administrative district."
+        },
+        {
+          "name": "category",
+          "description_en": "[Categorical] Either violent crime ('assault') or property crime ('property')"
+        },
+        {
+          "name": "type",
+          "description_en": "[Categorical] The specific type of crime in snake case"
+        },
+        {
+          "name": "crimes",
+          "description_en": "[Integer] The number of actual crimes where a conviction was secured"
+        }
+      ]
+    },
+    "crops_state": {
+      "title_en": "Crop Area and Production by State",
+      "title_ms": "Keluasan dan Pengeluaran Tanaman mengikut Negeri",
+      "description_en": "Production and planted area of crops by state from 2014 to 2024, broken down by crop type.",
+      "description_ms": "Pengeluaran dan keluasan kawasan tanaman mengikut negeri dari 2014 hingga 2024, dengan pecahan mengikut jenis tanaman.",
+      "methodology_en": "Data on crops in Malaysia is collected via establishment-level surveys and censuses conducted by the Department of Statistics Malaysia (DOSM) in collaboration with the Department of Agriculture (DOA). This data is then used both for the production of agricultural statistics, as well as in the compilation of Malaysia's Gross Domestic Product (GDP) data.\n\nFor this dataset specifically, the following classifications are helpful to understand (note: paddy, coconut, and flowers are considered self-explanatory):\n- **Cash crops** are crops that can provide quick return (within 1 year) to farmers. They include sweet corn, groundnuts, cassava, yam, sweet potato and sugarcane (juice).\n- **Industrial crops** are crops grown to manufacture raw industrial materials. They are divided into several groups such as fats (coconut), and groups that produce fresheners (coffee and tea). Industrial crops are grown in large quantities with a relatively long period of planting, ranging from one year to many years.\n- **Herbs** refer to shrubs that usually have soft stems and contain plenty of water. This generally means all plants which have value to medicine, food (health and supplements), perfumes, fragrance and cosmetics. \n- **Spices** are aromatic crops used as coloring and flavoring for culinary purposes such as nutmeg and ginger.\n- **Fruits and Vegetables** refer specifically to the tropical species grown in Malaysia, which has an equatorial climate. Examples of tropical fruits are banana, mango, papaya, pineapple, durian, rambutan and jackfruit, while examples of tropical vegetables are spinach, okra, eggplant, water spinach, long beans, loofah and bitter gourd.",
+      "methodology_ms": "Data dikumpulkan melalui survei dan banci di peringkat perusahaan yang dilaksanakan oleh Jabatan Perangkaan Malaysia (DOSM) dengan kerjasama Jabatan Pertanian (DOA). Data ini kemudian digunakan untuk menghasilkan bukan sahaja statistik rasmi pertanian, tetapi juga statistik Keluaran Dalam Negeri Kasar (KDNK) Malaysia.\n\nBagi set data ini secara khusus, pengkelasan yang digunakan adalah seperti berikut (nota: padi, kokonut, dan bunga-bunga dianggap tidak perlu didefinisikan selanjutnya):\n- **Tanaman kontan** adalah tanaman yang boleh memberikan pulangan cepat (dalam tempoh 1 tahun) kepada petani. Ia termasuk jagung manis, kacang tanah, ubi kayu, keladi, ubi keledek dan tebu (jus).\n- **Tanaman industri** adalah tanaman yang ditanam untuk menghasilkan bahan mentah industri. Ia dibahagikan kepada beberapa kumpulan seperti lemak (kelapa), dan kumpulan yang menghasilkan penyegar (kopi dan teh). Tanaman industri ditanam dalam kuantiti yang besar dengan tempoh penanaman yang agak lama, bermula dari satu tahun hingga bertahun-tahun.\n- **Herba** merujuk kepada tumbuhan renek yang biasanya mempunyai batang lembut dan mengandungi banyak air. Secara umumnya, ini bermaksud semua tumbuhan yang mempunyai nilai untuk perubatan, makanan (kesihatan dan suplemen), minyak wangi, wangian dan kosmetik.\n- **Rempah** adalah tanaman aromatik yang digunakan sebagai pewarna dan perisa untuk tujuan masakan seperti buah pala dan halia.\n- **Buah-buahan** dan Sayur-sayuran merujuk khusus kepada spesies tropika yang ditanam di Malaysia, yang mempunyai iklim khatulistiwa. Contoh buah-buahan tropika adalah pisang, mangga, betik, nanas, durian, rambutan dan nangka, manakala contoh sayur-sayuran tropika adalah bayam, bendi, terung, kangkung, kacang panjang, petola dan peria.",
+      "caveat_en": "Values for breakdowns may be slightly different to totals when summed, due to rounding. Figures for 2014 to 2016 are published to the nearest whole number.",
+      "caveat_ms": "Angka-angka terperinci mungkin sedikit berbeza dengan angka keseluruhan apabila dijumlahkan, disebabkan oleh penggenapan. Angka bagi 2014 hingga 2016 diterbitkan kepada nombor bulat terdekat.",
+      "data_as_of": "2024",
+      "last_updated": "2026-10-11 12:00",
+      "next_update": "2026-12-31 18:00",
+      "link_csv": "https://storage.data.gov.my/agriculture/crops_state.csv",
+      "link_parquet": "https://storage.data.gov.my/agriculture/crops_state.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL",
+        "STATE"
+      ],
+      "demography": [],
+      "dataset_begin": 2014,
+      "dataset_end": 2024,
+      "data_source": [
+        "MAFS",
+        "DOA",
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/crops_state.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, or Malaysia. Note that there is no data for W.P. Putrajaya, due to the lack of commercial agriculture in the state."
+        },
+        {
+          "name": "crop_type",
+          "description_en": "[Categorical] The type of crop in snake case, covering cash crops, industrial crops, coconut, paddy, flowers, herbs, spices, fruits and vegetables"
+        },
+        {
+          "name": "planted_area",
+          "description_en": "[Float] The total planted area of the crop in hectares"
+        },
+        {
+          "name": "production",
+          "description_en": "[Float] The total production of the crop in metric tonnes"
+        }
+      ]
+    },
+    "crops_district_area": {
+      "title_en": "Crop Area by District",
+      "title_ms": "Keluasan Tanaman mengikut Daerah",
+      "description_en": "Planted area of crops by district, broken down by crop type and species. The table shows a preview of the dataset using the first 100 rows only, as the full dataset is over 10,000 rows in size.",
+      "description_ms": "Keluasan kawasan tanaman mengikut daerah, dengan pecahan mengikut jenis dan spesies tanaman. Jadual menunjukkan pratonton set data dengan menggunakan 100 baris pertama sahaja, kerana set data penuh melebihi 10,000 baris.",
+      "methodology_en": "Data on crops in Malaysia is collected via establishment-level surveys and censuses conducted by the Department of Statistics Malaysia (DOSM) in collaboration with the Department of Agriculture (DOA). This data is then used both for the production of agricultural statistics, as well as in the compilation of Malaysia's Gross Domestic Product (GDP) data.\n\nFor this dataset specifically, the following classifications are helpful to understand (note: paddy, coconut, and flowers are considered self-explanatory):\n- **Cash crops** are crops that can provide quick return (within 1 year) to farmers. They include sweet corn, groundnuts, cassava, yam, sweet potato and sugarcane (juice).\n- **Industrial crops** are crops grown to manufacture raw industrial materials. They are divided into several groups such as fats (coconut), and groups that produce fresheners (coffee and tea). Industrial crops are grown in large quantities with a relatively long period of planting, ranging from one year to many years.\n- **Herbs** refer to shrubs that usually have soft stems and contain plenty of water. This generally means all plants which have value to medicine, food (health and supplements), perfumes, fragrance and cosmetics. \n- **Spices** are aromatic crops used as coloring and flavoring for culinary purposes such as nutmeg and ginger.\n- **Fruits and Vegetables** refer specifically to the tropical species grown in Malaysia, which has an equatorial climate. Examples of tropical fruits are banana, mango, papaya, pineapple, durian, rambutan and jackfruit, while examples of tropical vegetables are spinach, okra, eggplant, water spinach, long beans, loofah and bitter gourd.",
+      "methodology_ms": "Data dikumpulkan melalui survei dan banci di peringkat perusahaan yang dilaksanakan oleh Jabatan Perangkaan Malaysia (DOSM) dengan kerjasama Jabatan Pertanian (DOA). Data ini kemudian digunakan untuk menghasilkan bukan sahaja statistik rasmi pertanian, tetapi juga statistik Keluaran Dalam Negeri Kasar (KDNK) Malaysia.\n\nBagi set data ini secara khusus, pengkelasan yang digunakan adalah seperti berikut (nota: padi, kokonut, dan bunga-bunga dianggap tidak perlu didefinisikan selanjutnya):\n- **Tanaman kontan** adalah tanaman yang boleh memberikan pulangan cepat (dalam tempoh 1 tahun) kepada petani. Ia termasuk jagung manis, kacang tanah, ubi kayu, keladi, ubi keledek dan tebu (jus).\n- **Tanaman industri** adalah tanaman yang ditanam untuk menghasilkan bahan mentah industri. Ia dibahagikan kepada beberapa kumpulan seperti lemak (kelapa), dan kumpulan yang menghasilkan penyegar (kopi dan teh). Tanaman industri ditanam dalam kuantiti yang besar dengan tempoh penanaman yang agak lama, bermula dari satu tahun hingga bertahun-tahun.\n- **Herba** merujuk kepada tumbuhan renek yang biasanya mempunyai batang lembut dan mengandungi banyak air. Secara umumnya, ini bermaksud semua tumbuhan yang mempunyai nilai untuk perubatan, makanan (kesihatan dan suplemen), minyak wangi, wangian dan kosmetik.\n- **Rempah** adalah tanaman aromatik yang digunakan sebagai pewarna dan perisa untuk tujuan masakan seperti buah pala dan halia.\n- **Buah-buahan** dan Sayur-sayuran merujuk khusus kepada spesies tropika yang ditanam di Malaysia, yang mempunyai iklim khatulistiwa. Contoh buah-buahan tropika adalah pisang, mangga, betik, nanas, durian, rambutan dan nangka, manakala contoh sayur-sayuran tropika adalah bayam, bendi, terung, kangkung, kacang panjang, petola dan peria.",
+      "caveat_en": "Values for breakdowns may be slightly different to totals when summed, due to rounding.",
+      "caveat_ms": "Angka-angka terperinci mungkin sedikit berbeza dengan angka keseluruhan apabila dijumlahkan, disebabkan oleh penggenapan.",
+      "data_as_of": "2017",
+      "last_updated": "2023-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.data.gov.my/agriculture/crops_district_area.csv",
+      "link_parquet": "https://storage.data.gov.my/agriculture/crops_district_area.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DISTRICT"
+      ],
+      "demography": [],
+      "dataset_begin": 2017,
+      "dataset_end": 2017,
+      "data_source": [
+        "MAFS",
+        "DOA",
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/crops_district_area.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, or Malaysia. Note that there is no data for W.P. Putrajaya, due to the lack of commercial agriculture in the state."
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 160 administrative districts; however, districts with zero agricultural activity are removed from the dataset"
+        },
+        {
+          "name": "crop_type",
+          "description_en": "[Categorical] The type of crop in snake case, covering cash crops, industrial crops, coconut, paddy, flowers, herbs, spices, fruits and vegetables"
+        },
+        {
+          "name": "crop_species",
+          "description_en": "[Categorical] The specific species for the crop type in snake case"
+        },
+        {
+          "name": "planted_area",
+          "description_en": "[Float] The total planted area of the crop in hectares"
+        }
+      ]
+    },
+    "crops_district_production": {
+      "title_en": "Crop Production by District",
+      "title_ms": "Pengeluaran Tanaman mengikut Daerah",
+      "description_en": "Production of crops by district, broken down by crop type and species. The table shows a preview of the dataset using the first 100 rows only, as the full dataset is over 10,000 rows in size.",
+      "description_ms": "Pengeluaran tanaman mengikut daerah, dengan pecahan mengikut jenis dan spesies tanaman. Jadual menunjukkan pratonton set data dengan menggunakan 100 baris pertama sahaja, kerana set data penuh melebihi 10,000 baris.",
+      "methodology_en": "Data on crops in Malaysia is collected via establishment-level surveys and censuses conducted by the Department of Statistics Malaysia (DOSM) in collaboration with the Department of Agriculture (DOA). This data is then used both for the production of agricultural statistics, as well as in the compilation of Malaysia's Gross Domestic Product (GDP) data.\n\nFor this dataset specifically, the following classifications are helpful to understand (note: paddy, coconut, and flowers are considered self-explanatory):\n- **Cash crops** are crops that can provide quick return (within 1 year) to farmers. They include sweet corn, groundnuts, cassava, yam, sweet potato and sugarcane (juice).\n- **Industrial crops** are crops grown to manufacture raw industrial materials. They are divided into several groups such as fats (coconut), and groups that produce fresheners (coffee and tea). Industrial crops are grown in large quantities with a relatively long period of planting, ranging from one year to many years.\n- **Herbs** refer to shrubs that usually have soft stems and contain plenty of water. This generally means all plants which have value to medicine, food (health and supplements), perfumes, fragrance and cosmetics. \n- **Spices** are aromatic crops used as coloring and flavoring for culinary purposes such as nutmeg and ginger.\n- **Fruits and Vegetables** refer specifically to the tropical species grown in Malaysia, which has an equatorial climate. Examples of tropical fruits are banana, mango, papaya, pineapple, durian, rambutan and jackfruit, while examples of tropical vegetables are spinach, okra, eggplant, water spinach, long beans, loofah and bitter gourd.",
+      "methodology_ms": "Data dikumpulkan melalui survei dan banci di peringkat perusahaan yang dilaksanakan oleh Jabatan Perangkaan Malaysia (DOSM) dengan kerjasama Jabatan Pertanian (DOA). Data ini kemudian digunakan untuk menghasilkan bukan sahaja statistik rasmi pertanian, tetapi juga statistik Keluaran Dalam Negeri Kasar (KDNK) Malaysia.\n\nBagi set data ini secara khusus, pengkelasan yang digunakan adalah seperti berikut (nota: padi, kokonut, dan bunga-bunga dianggap tidak perlu didefinisikan selanjutnya):\n- **Tanaman kontan** adalah tanaman yang boleh memberikan pulangan cepat (dalam tempoh 1 tahun) kepada petani. Ia termasuk jagung manis, kacang tanah, ubi kayu, keladi, ubi keledek dan tebu (jus).\n- **Tanaman industri** adalah tanaman yang ditanam untuk menghasilkan bahan mentah industri. Ia dibahagikan kepada beberapa kumpulan seperti lemak (kelapa), dan kumpulan yang menghasilkan penyegar (kopi dan teh). Tanaman industri ditanam dalam kuantiti yang besar dengan tempoh penanaman yang agak lama, bermula dari satu tahun hingga bertahun-tahun.\n- **Herba** merujuk kepada tumbuhan renek yang biasanya mempunyai batang lembut dan mengandungi banyak air. Secara umumnya, ini bermaksud semua tumbuhan yang mempunyai nilai untuk perubatan, makanan (kesihatan dan suplemen), minyak wangi, wangian dan kosmetik.\n- **Rempah** adalah tanaman aromatik yang digunakan sebagai pewarna dan perisa untuk tujuan masakan seperti buah pala dan halia.\n- **Buah-buahan** dan Sayur-sayuran merujuk khusus kepada spesies tropika yang ditanam di Malaysia, yang mempunyai iklim khatulistiwa. Contoh buah-buahan tropika adalah pisang, mangga, betik, nanas, durian, rambutan dan nangka, manakala contoh sayur-sayuran tropika adalah bayam, bendi, terung, kangkung, kacang panjang, petola dan peria.",
+      "caveat_en": "Values for breakdowns may be slightly different to totals when summed, due to rounding.",
+      "caveat_ms": "Angka-angka terperinci mungkin sedikit berbeza dengan angka keseluruhan apabila dijumlahkan, disebabkan oleh penggenapan.",
+      "data_as_of": "2017",
+      "last_updated": "2023-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.data.gov.my/agriculture/crops_district_production.csv",
+      "link_parquet": "https://storage.data.gov.my/agriculture/crops_district_production.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DISTRICT"
+      ],
+      "demography": [],
+      "dataset_begin": 2017,
+      "dataset_end": 2017,
+      "data_source": [
+        "MAFS",
+        "DOA",
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/crops_district_production.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, or Malaysia. Note that there is no data for W.P. Putrajaya, due to the lack of commercial agriculture in the state."
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 160 administrative districts; however, districts with zero agricultural activity are removed from the dataset"
+        },
+        {
+          "name": "crop_type",
+          "description_en": "[Categorical] The type of crop in snake case, covering cash crops, industrial crops, coconut, paddy, flowers, herbs, spices, fruits and vegetables"
+        },
+        {
+          "name": "crop_species",
+          "description_en": "[Categorical] The specific species for the crop type in snake case"
+        },
+        {
+          "name": "production",
+          "description_en": "[Float] The total production of the crop in metric tonnes"
+        }
+      ]
+    },
+    "state_finance_revenue": {
+      "title_en": "State Government Revenue",
+      "title_ms": "Hasil Kerajaan Negeri",
+      "description_en": "Annual data on state government revenue by source, covering tax, non-tax, and non-revenue receipts.",
+      "description_ms": "Data tahunan mengenai hasil kerajaan negeri mengikut sumber, merangkumi cukai, bukan cukai, dan penerimaan bukan hasil.",
+      "methodology_en": "This dataset is produced from the financial statements of state governments in Malaysia, as published by the National Audit Department in the Auditor General's Report. Categorisation of revenue is based on the [Classification Codes for Revenue and Expenditure](https://storage.data.gov.my/publicadmin/penjenisan_kod.pdf) published by the Federal Treasury.",
+      "methodology_ms": "Set data in disediakan berdasarkan penyata kewangan kerajaan negeri di Malaysia, seperti yang diterbitkan oleh Jabatan Audit Negara dalam Laporan Ketua Audit Negara. Pengkelasan hasil adalah berdasarkan [Penjenisan Kod Bagi Hasil Dan Perbelanjaan](https://storage.data.gov.my/publicadmin/penjenisan_kod.pdf) yang diterbitkan oleh Perbendaharaan Persekutuan.",
+      "caveat_en": "The latest actual revenue data (rather than projected revenue) is as of 2022, except for Sarawak which is as of 2020. Values for Sarawak will be updated to 2022 when available. Furthermore, it should be noted that because this dataset shows the revenue of state governments, it does not include the Federal Territories of Kuala Lumpur, Labuan, and Putrajaya, which do not have their own State Legislative Assemblies.",
+      "caveat_ms": "Data hasil sebenar terkini (dan bukannya anggaran) adalah setakat 2022, kecuali untuk Sarawak yang adalah setakat 2020. Nilai untuk Sarawak akan dikemaskini ke 2022 apabila tersedia. Selain itu, perlu diingati bahawa set data ini menunjukkan hasil kerajaan negeri, maka tidak mengangundi data bagi Wilayah Persekutuan Kuala Lumpur, Labuan, dan Putrajaya, yang tidak mempunyai Dewan Undangan Negeri sendiri.",
+      "data_as_of": "2022",
+      "last_updated": "2024-09-01 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.data.gov.my/publicadmin/state_finance_revenue.csv",
+      "link_parquet": "https://storage.data.gov.my/publicadmin/state_finance_revenue.parquet",
+      "frequency": "ANNUAL",
+      "geography": [
+        "STATE"
+      ],
+      "demography": [],
+      "dataset_begin": 2022,
+      "dataset_end": 2022,
+      "data_source": [
+        "AUDIT"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/state_finance_revenue.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 13 states with their own State Legislative Assembly (does not include Federal Territories)"
+        },
+        {
+          "name": "category",
+          "description_en": "[Categorical] Either total revenue ('total') or the category of revenue comprising tax revenue ('revenue_60000'), non-tax revenue ('revenue_70000'), and non-revenue receipts ('revenue_80000')"
+        },
+        {
+          "name": "expenditure",
+          "description_en": "[Float, RM mil] Actual revenue for the given category; note that this may be different from the original projection presented in the state budget"
+        }
+      ]
+    },
+    "state_finance_expenditure": {
+      "title_en": "State Government Expenditure",
+      "title_ms": "Perbelanjaan Kerajaan Negeri",
+      "description_en": "Annual data on state government expenditure across various categories, including development expenditure (DE) and operating expenditure (OE).",
+      "description_ms": "Data tahunan mengenai perbelanjaan kerajaan negeri dalam pelbagai kategori, termasuk perbelanjaan pembangunan (DE) dan perbelanjaan mengurus (OE).",
+      "methodology_en": "This dataset is produced from the financial statements of state governments in Malaysia, as published by the National Audit Department in the Auditor General's Report. Categorisation of expenditure is based on the [Classification Codes for Revenue and Expenditure](https://storage.data.gov.my/publicadmin/penjenisan_kod.pdf) published by the Federal Treasury.",
+      "methodology_ms": "Set data in disediakan berdasarkan penyata kewangan kerajaan negeri di Malaysia, seperti yang diterbitkan oleh Jabatan Audit Negara dalam Laporan Ketua Audit Negara. Pengkelasan perbelanjaan adalah berdasarkan [Penjenisan Kod Bagi Hasil Dan Perbelanjaan](https://storage.data.gov.my/publicadmin/penjenisan_kod.pdf) yang diterbitkan oleh Perbendaharaan Persekutuan.",
+      "caveat_en": "The latest actual expenditure data (rather than budgeted expenditure) is as of 2022, except for Sarawak which is as of 2020. Values for Sarawak will be updated to 2022 when available. Furthermore, it should be noted that because this dataset shows the expenditure of state governments, it does not include the Federal Territories of Kuala Lumpur, Labuan, and Putrajaya, which do not have their own State Legislative Assemblies.",
+      "caveat_ms": "Data perbelanjaan sebenar terkini (dan bukannya anggaran diperuntukkan) adalah setakat 2022, kecuali untuk Sarawak yang adalah setakat 2020. Nilai untuk Sarawak akan dikemaskini ke 2022 apabila tersedia. Selain itu, perlu diingati bahawa set data ini menunjukkan perbelanjaan kerajaan negeri, maka tidak mengangundi data bagi Wilayah Persekutuan Kuala Lumpur, Labuan, dan Putrajaya, yang tidak mempunyai Dewan Undangan Negeri sendiri.",
+      "data_as_of": "2022",
+      "last_updated": "2024-09-01 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.data.gov.my/publicadmin/state_finance_expenditure.csv",
+      "link_parquet": "https://storage.data.gov.my/publicadmin/state_finance_expenditure.parquet",
+      "frequency": "ANNUAL",
+      "geography": [
+        "STATE"
+      ],
+      "demography": [],
+      "dataset_begin": 2022,
+      "dataset_end": 2022,
+      "data_source": [
+        "AUDIT"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/state_finance_expenditure.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 13 states with their own State Legislative Assembly (does not include Federal Territories)"
+        },
+        {
+          "name": "category",
+          "description_en": "[Categorical] The category of expenditure; either development expenditure (DE), operating expenditure (OE), or a more detailed OE breakdown covering Emoluments (oe_10000), Services and Supplies (oe_20000), Assets (oe_30000), Fixed Payments (oe_40000), and Other Expenditures (oe_50000)."
+        },
+        {
+          "name": "expenditure",
+          "description_en": "[Float, RM mil] Actual expenditure for the given category; note that this may be different from the originally budgeted amount"
         }
       ]
     }

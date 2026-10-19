@@ -65,7 +65,12 @@ export interface DosmUnit {
   datasets: Record<string, string>;
   pyramid?: { groups: string[]; years: number[]; male: number[][]; female: number[][]; dataset: string };
   ethnicity?: Record<string, Record<string, number>>;
-  gdp_sectors?: Record<string, Array<{ code: string; name_en: string; value: number }>>;
+  /** latest police-district (IPD) table of a state: [name, violent, property] */
+  crime_ipd?: { year: number; rows: Array<[string, number, number]> };
+  /** latest monthly CPI: the current year is not averaged until it is complete */
+  cpi_latest?: { month: string; index: number; inflation_yoy: number | null; dataset: string };
+  /** a district's largest crops by planted area: [species, hectares, tonnes] */
+  crops_top?: { year: number; rows: Array<[string, number | null, number | null]> };
   /** boundary redefinitions detected by the pipeline (figures from `year` are on the new boundary) */
   breaks?: Array<{ year: number; change_pct: number; new_districts: string[] }>;
 }

@@ -9,8 +9,10 @@ import { breakYear } from '../../services/stats';
 
 export const KEY_INDICATORS = ['population', 'population_male', 'population_female', 'density', 'births', 'deaths', 'gdp', 'gdp_per_capita'];
 
-/** The Malaysian agency behind a figure in the DOSM snapshot: school data comes from the Ministry of Education. */
-export const myAgency = (ind: Indicator | null | undefined): string => (ind?.original_source?.startsWith('Ministry of Education') ? 'KPM' : 'DOSM');
+const AGENCIES: Array<[string, string]> = [['Ministry of Education', 'KPM'], ['Royal Malaysian Police', 'PDRM'], ['National Audit Department', 'JAN'], ['Department of Agriculture', 'DOA/DOSM']];
+
+/** The Malaysian agency behind a figure in the DOSM snapshot (schools: Ministry of Education; crime: police; …). */
+export const myAgency = (ind: Indicator | null | undefined): string => AGENCIES.find(([p]) => ind?.original_source?.startsWith(p))?.[1] ?? 'DOSM';
 
 export function shortSource(id: string | undefined, catalog: ReturnType<typeof useAtlas.getState>['catalog']): string {
   if (!id || !catalog) return '';

@@ -1,7 +1,7 @@
 {
   "app": "WorldStat Atlas",
-  "snapshot_built_at": "2026-10-19T03:18:18Z",
-  "run_id": "20261019T031745Z",
+  "snapshot_built_at": "2026-10-19T03:44:00Z",
+  "run_id": "20261019T034348Z",
   "datasets": [
     {
       "source_id": "un_wpp_2024",
@@ -215,10 +215,6 @@
           "last_updated": "2026-07-01 12:30",
           "next_update": "2027-07-01 12:30"
         },
-        "gdp_lookup": {
-          "last_updated": "2024-05-17 12:00",
-          "next_update": "—"
-        },
         "population_parlimen": {
           "last_updated": "2025-10-31 13:00",
           "next_update": "2026-10-31 13:00"
@@ -310,6 +306,58 @@
         "completion_school_state": {
           "last_updated": "2026-10-11 12:00",
           "next_update": "2027-12-31 18:00"
+        },
+        "gdp_district_real_supply": {
+          "last_updated": "2024-11-02 12:00",
+          "next_update": "2025-11-02 12:00"
+        },
+        "wages_state": {
+          "last_updated": "2026-09-21 12:00",
+          "next_update": "2027-09-30 12:00"
+        },
+        "wages_real_state": {
+          "last_updated": "2026-09-21 12:00",
+          "next_update": "2027-09-30 12:00"
+        },
+        "cpi_headline": {
+          "last_updated": "2026-09-18 12:25",
+          "next_update": "2026-10-19 12:30"
+        },
+        "cpi_state": {
+          "last_updated": "2026-09-18 12:25",
+          "next_update": "2026-10-19 12:30"
+        },
+        "cpi_headline_inflation": {
+          "last_updated": "2026-09-18 12:25",
+          "next_update": "2026-10-19 12:30"
+        },
+        "cpi_state_inflation": {
+          "last_updated": "2026-09-18 12:25",
+          "next_update": "2026-10-19 12:30"
+        },
+        "crime_district": {
+          "last_updated": "2024-10-16 12:00",
+          "next_update": "2027-12-31 18:00"
+        },
+        "crops_state": {
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2026-12-31 18:00"
+        },
+        "crops_district_area": {
+          "last_updated": "2023-12-31 12:00",
+          "next_update": "—"
+        },
+        "crops_district_production": {
+          "last_updated": "2023-12-31 12:00",
+          "next_update": "—"
+        },
+        "state_finance_revenue": {
+          "last_updated": "2024-09-01 12:00",
+          "next_update": "—"
+        },
+        "state_finance_expenditure": {
+          "last_updated": "2024-09-01 12:00",
+          "next_update": "—"
         }
       },
       "data_loaded": true

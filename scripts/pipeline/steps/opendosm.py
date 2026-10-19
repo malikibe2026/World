@@ -35,14 +35,19 @@ DATASETS = [
     "births_district_sex", "deaths_state", "deaths_district_sex", "marriages",
     "fertility_state", "fertility", "lfs_district", "lfs_year",
     "hh_income_state", "hh_income_district", "hh_poverty_state", "hh_poverty_district",
-    "gdp_state_real_supply", "gdp_lookup",
+    "gdp_state_real_supply",
     "population_parlimen", "hh_income_parlimen", "hh_poverty_parlimen",
     "hh_expenditure_parlimen", "hh_inequality_parlimen", "lfs_parlimen",
     "hh_inequality", "hh_inequality_state", "hh_inequality_district",
     "population_dun", "hh_income_dun", "hh_poverty_dun", "hh_expenditure_dun", "hh_inequality_dun", "lfs_dun",
     "life_expectancy", "life_expectancy_state", "life_expectancy_district",
     "schools_district", "enrolment_school_district", "teachers_district", "completion_school_district", "completion_school_state",
+    "gdp_district_real_supply", "wages_state", "wages_real_state", "cpi_headline", "cpi_state", "cpi_headline_inflation", "cpi_state_inflation",
+    "crime_district", "crops_state", "crops_district_area", "crops_district_production",
+    "state_finance_revenue", "state_finance_expenditure",
 ]
+# GDP by economic activity (production approach, constant 2015 prices); p6 (import duties) is state/national only
+GDP_SECTORS = {"p1": "agriculture", "p2": "mining", "p3": "manufacturing", "p4": "construction", "p5": "services"}
 # citizen ethnic groups in DOSM's order; DOSM reports ethnic shares of citizens, non-citizens as a share of everyone
 ETH_CITIZEN = ["bumi_malay", "bumi_other", "chinese", "indian", "other_citizen"]
 # states with no district of their own: their single map district takes the state's figures
@@ -98,9 +103,7 @@ class Store:
                 "name": names.get(u, u),
                 "series": {k: [[y, v, q] for y, (v, q) in sorted(s.items())] for k, s in d["series"].items()},
                 "datasets": d["datasets"],
-                **({"pyramid": d["pyramid"]} if "pyramid" in d else {}),
-                **({"ethnicity": d["ethnicity"]} if "ethnicity" in d else {}),
-                **({"breaks": d["breaks"]} if "breaks" in d else {}),
+                **{k: v for k, v in d.items() if k not in ("series", "datasets")},  # pyramid, ethnicity, breaks, crime_ipd, …
             }
         return out
 
@@ -522,22 +525,186 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
     if combined_rates:
         log.info(STEP, "completion rates of districts with several education offices left out (rates cannot be added)", unit_years=combined_rates)
 
-    lookup = {r.get("sector"): r for r in (rows("gdp_lookup") or [])}
-    sectors = defaultdict(lambda: defaultdict(dict))
-    for r in rows("gdp_state_real_supply") or []:
-        sid = state_id(r["state"])
-        v = num(r.get("value"))
-        if sid is None or r.get("series") != "abs" or v is None:
+    # ---- GDP (constant 2015 prices): states to the latest year, districts 2015–2020 only ---------
+    gdp_abs: dict[tuple[str, str, int], dict[str, float]] = defaultdict(dict)  # (level, unit, year) -> sector -> RM
+
+    def gdp(ds: str, key):
+        for r in rows(ds) or []:
+            k = key(r)
+            v = num(r.get("value"))
+            if not k or v is None:
+                continue
+            store, unit = k
+            y = year(r["date"])
+            if r["series"] == "abs":
+                gdp_abs[(id(store), unit, y)][r["sector"]] = v * 1e6
+                if r["sector"] == "p0":
+                    store.put(unit, "gdp_real_myr", y, v * 1e6, "OFFICIAL", ds)
+            elif r["series"] == "growth_yoy" and r["sector"] == "p0":
+                store.put(unit, "gdp_real_growth", y, v, "OFFICIAL", ds)
+
+    by_store = {id(nat): nat, id(st): st, id(di): di}
+    gdp("gdp_state_real_supply", lambda r: (nat, "MYS") if r["state"] == "Malaysia" else (st, state_id(r["state"])) if state_id(r["state"]) else None)
+    # 'Supra' (supranational: offshore activity outside any state or district) is skipped; national GDP stays World Bank's
+    gdp("gdp_district_real_supply", lambda r: (di, district_id(r["state"], r["district"])) if r["district"] != "Supra" and state_id(r["state"]) and district_id(r["state"], r["district"]) else None)
+    putrajaya_gdp = set(st.units["MY-16"]["series"].get("gdp_real_myr", {})) if "MY-16" in st.units else set()
+    for (sk, unit, y), sec in gdp_abs.items():
+        store, total = by_store[sk], sec.get("p0")
+        if not total:
             continue
-        sectors[sid][year(r["date"])][r["sector"]] = v * 1e6
-    if sectors and not lookup:
-        log.error(STEP, "gdp_lookup unavailable: sector codes cannot be labelled, state GDP skipped")
-    elif sectors:
-        for sid, ys in sectors.items():
-            st.units[sid]["gdp_sectors"] = {
-                str(y): [{"code": c, "name_en": lookup.get(c, {}).get("desc_en") or lookup.get(c, {}).get("sector_en") or c, "value": v} for c, v in d.items()]
-                for y, d in ys.items()
-            }
+        for code, name in GDP_SECTORS.items():
+            if sec.get(code) is not None:  # values under RM5 million are blank in the source, never zero
+                store.put(unit, f"gdp_share_{name}", y, sec[code] / total * 100, "DERIVED", "gdp_district_real_supply" if store is di else "gdp_state_real_supply")
+        pop = store.units[unit]["series"].get("population", {}).get(y)
+        # Kuala Lumpur's GDP includes Putrajaya's in the years Putrajaya has no figure of its own
+        if pop and pop[0] > 0 and not (unit.startswith("MY-14") and y not in putrajaya_gdp):
+            store.put(unit, "gdp_real_per_capita_myr", y, total / pop[0], "DERIVED", "gdp_district_real_supply" if store is di else "gdp_state_real_supply")
+
+    # ---- salaries & wages (Salaries & Wages Survey), states and Malaysia ----------------------------
+    wkey = lambda r: (nat, "MYS") if r["state"] == "Malaysia" else (st, state_id(r["state"])) if state_id(r["state"]) else None  # noqa: E731
+    for r in rows("wages_state") or []:
+        k = wkey(r)
+        if not k:
+            continue
+        y = year(r["date"])
+        if r["sex"] == "both":
+            k[0].put(k[1], "wages_median", y, r.get("wages_median"), "OFFICIAL", "wages_state")
+            k[0].put(k[1], "wages_mean", y, r.get("wages_mean"), "OFFICIAL", "wages_state")
+            k[0].put(k[1], "wage_recipients", y, num(r["recipients"]) * 1000 if num(r.get("recipients")) is not None else None, "OFFICIAL", "wages_state")
+        elif r["sex"] in ("male", "female"):
+            k[0].put(k[1], f"wages_median_{r['sex']}", y, r.get("wages_median"), "OFFICIAL", "wages_state")
+    for r in rows("wages_real_state") or []:
+        k = wkey(r)
+        if k:
+            k[0].put(k[1], "wages_median_real", year(r["date"]), r.get("wages_median_real"), "OFFICIAL", "wages_real_state")
+            k[0].put(k[1], "wages_mean_real", year(r["date"]), r.get("wages_mean_real"), "OFFICIAL", "wages_real_state")
+
+    # ---- consumer prices: annual average index and annual inflation from the monthly series --------
+    # Only complete years are averaged (the current year is not); the latest month is kept as it is.
+    def cpi(ds: str, ds_inflation: str, key):
+        months: dict[tuple[int, str], dict[int, float]] = defaultdict(dict)
+        stores = {}
+        for r in rows(ds) or []:
+            k = key(r)
+            v = num(r.get("index"))
+            if not k or r["division"] != "overall" or v is None:
+                continue
+            stores[k[1]] = k[0]
+            months[(id(k[0]), k[1])][r["date"][:7]] = v
+        for (_, unit), m in months.items():
+            store = stores[unit]
+            by_year = defaultdict(list)
+            for ym, v in m.items():
+                by_year[int(ym[:4])].append(v)
+            avg = {y: sum(v) / 12 for y, v in by_year.items() if len(v) == 12}
+            for y, a in avg.items():
+                store.put(unit, "cpi", y, a, "DERIVED", ds)
+                if y - 1 in avg:
+                    store.put(unit, "inflation", y, (a / avg[y - 1] - 1) * 100, "DERIVED", ds)
+            last = max(m)
+            store.units[unit]["cpi_latest"] = {"month": last, "index": m[last], "inflation_yoy": None, "dataset": ds}
+        # the latest month's year-on-year inflation as DOSM publishes it (not recomputed from rounded indices)
+        for r in rows(ds_inflation) or []:
+            k = key(r)
+            if not k or r["division"] != "overall":
+                continue
+            latest_m = k[0].units[k[1]].get("cpi_latest")
+            if latest_m and r["date"][:7] == latest_m["month"] and num(r.get("inflation_yoy")) is not None:
+                latest_m["inflation_yoy"] = num(r["inflation_yoy"])
+
+    cpi("cpi_headline", "cpi_headline_inflation", lambda r: (nat, "MYS"))
+    cpi("cpi_state", "cpi_state_inflation", lambda r: (st, state_id(r["state"])) if state_id(r["state"]) else None)
+
+    # ---- crime (Royal Malaysian Police): states exactly; police districts as a table ---------------
+    # Police districts (IPD) do not follow administrative districts (Petaling has five; Ampang Jaya
+    # spans two), so no figure is put on a district polygon. The source files W.P. Putrajaya under
+    # Kuala Lumpur and W.P. Labuan under Sabah as police districts; they are moved to their own states.
+    CRIME_TYPES = {"murder": "crime_murder", "rape": "crime_rape", "causing_injury": "crime_injury", "break_in": "crime_break_in",
+                   "theft_other": "crime_theft_other"}
+    crime: dict[tuple[str, int], dict[str, float]] = defaultdict(lambda: defaultdict(float))
+    ipd_rows: dict[tuple[str, int], dict[str, list]] = defaultdict(dict)
+    for r in rows("crime_district") or []:
+        v = num(r.get("crimes"))
+        if v is None:
+            continue
+        y = year(r["date"])
+        if r["state"] == "Malaysia":
+            unit = "MYS" if r["district"] == "All" else None
+        elif r["district"] == "All":
+            continue  # rebuilt from police districts below, with Putrajaya and Labuan moved out
+        else:
+            unit = {"W.P. Putrajaya": "MY-16", "W.P. Labuan": "MY-15"}.get(r["district"]) or state_id(r["state"])
+            if r["type"] == "all":
+                row = ipd_rows[(unit, y)].setdefault(r["district"], [r["district"], 0, 0])
+                row[1 if r["category"] == "assault" else 2] = v
+        if not unit:
+            continue
+        t = r["type"]
+        if t == "all":
+            crime[(unit, y)]["crime_violent" if r["category"] == "assault" else "crime_property"] += v
+        elif t.startswith("robbery"):
+            crime[(unit, y)]["crime_robbery"] += v
+        elif t.startswith("theft_vehicle"):
+            crime[(unit, y)]["crime_vehicle_theft"] += v
+        elif t in CRIME_TYPES:
+            crime[(unit, y)][CRIME_TYPES[t]] += v
+    for (unit, y), d in crime.items():
+        store = nat if unit == "MYS" else st
+        for ind, v in d.items():
+            store.put(unit, ind, y, v, "OFFICIAL", "crime_district")
+        if "crime_violent" in d and "crime_property" in d:
+            idx = d["crime_violent"] + d["crime_property"]
+            store.put(unit, "crime_index", y, idx, "DERIVED", "crime_district")
+            pop = store.units[unit]["series"].get("population", {}).get(y)
+            if pop and pop[0] > 0:
+                store.put(unit, "crime_rate", y, idx / pop[0] * 100_000, "DERIVED", "crime_district")
+    for (unit, y), d in ipd_rows.items():
+        if y == max(yy for (u, yy) in ipd_rows if u == unit):
+            st.units[unit]["crime_ipd"] = {"year": y, "rows": sorted(d.values(), key=lambda x: -(x[1] + x[2]))}
+
+    # ---- crops (excluding oil palm, rubber and other plantation crops) -------------------------------
+    for r in rows("crops_state") or []:
+        k = wkey(r)
+        kind = {"paddy": "paddy", "fruits": "fruit", "vegetables": "vegetables"}.get(r["crop_type"])
+        if k and kind:
+            k[0].put(k[1], f"crop_area_{kind}", year(r["date"]), r.get("planted_area"), "OFFICIAL", "crops_state")
+            k[0].put(k[1], f"crop_prod_{kind}", year(r["date"]), r.get("production"), "OFFICIAL", "crops_state")
+    # districts: 2017 only, and no paddy in the district files
+    crop_sum: dict[tuple[str, int, str, str], float] = defaultdict(float)
+    crop_species: dict[tuple[str, int], dict[str, list]] = defaultdict(dict)
+    for ds, col, ix in (("crops_district_area", "planted_area", 1), ("crops_district_production", "production", 2)):
+        for r in rows(ds) or []:
+            v = num(r.get(col))
+            if v is None or r["state"] == "Malaysia" or not state_id(r["state"]):
+                continue
+            did = district_id(r["state"], r["district"])
+            if not did:
+                continue
+            y = year(r["date"])
+            kind = {"fruit": "fruit", "vegetables": "vegetables", "vegetable": "vegetables"}.get(r["crop_type"])  # the two files spell it differently
+            if kind:
+                crop_sum[(did, y, kind, col)] += v
+            sp = crop_species[(did, y)].setdefault(r["crop_species"], [r["crop_species"], None, None])
+            sp[ix] = v
+    for (did, y, kind, col), v in crop_sum.items():
+        di.put(did, f"crop_{'area' if col == 'planted_area' else 'prod'}_{kind}", y, v, "DERIVED", "crops_district_area" if col == "planted_area" else "crops_district_production")
+    for (did, y), d in crop_species.items():
+        top = sorted((x for x in d.values() if x[1]), key=lambda x: -x[1])[:6]
+        if top:
+            di.units[did]["crops_top"] = {"year": y, "rows": top}
+
+    # ---- state government finance (Auditor-General), 13 states; federal territories have none -------
+    for ds, prefix, cats in (("state_finance_revenue", "state_revenue", {"total": "", "revenue_60000": "_tax", "revenue_70000": "_nontax", "revenue_80000": "_nonrevenue"}),
+                             ("state_finance_expenditure", "state_expenditure", {"total": "", "oe": "_operating", "de": "_development"})):
+        for r in rows(ds) or []:
+            sid = state_id(r["state"])
+            v = num(r.get("revenue" if "revenue" in r else "expenditure"))
+            if sid and v is not None and r["category"] in cats:
+                st.put(sid, prefix + cats[r["category"]], year(r["date"]), v * 1e6, "OFFICIAL", ds)
+    for sid, d in st.units.items():
+        rev, oe = d["series"].get("state_revenue", {}), d["series"].get("state_expenditure_operating", {})
+        for y in set(rev) & set(oe):
+            st.put(sid, "state_current_balance", y, rev[y][0] - oe[y][0], "DERIVED", "state_finance_revenue / state_finance_expenditure")
 
     for state, name, boundary in sorted(renamed_n):
         log.info(STEP, "DUN spelling differs between statistics and boundary file (matched on code)", state=state, stats=name, boundary=boundary)

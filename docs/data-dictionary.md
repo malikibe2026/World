@@ -48,6 +48,13 @@ dilihat dalam aplikasi: **Sumber → Kamus indikator**).
 | `eth_*_pct` | Kumpulan etnik / jumlah **warganegara** × 100 (cara DOSM melaporkan komposisi etnik); negeri dan daerah sahaja |
 | `noncitizen_pct` | Bukan warganegara / jumlah penduduk × 100; semua aras termasuk parlimen dan DUN |
 | `ptr_primary`, `ptr_secondary` | Enrolmen / guru (sekolah kerajaan) |
+| `gdp_share_*` | KDNK sektor / KDNK keseluruhan × 100 (harga malar 2015) |
+| `gdp_real_per_capita_myr` | KDNK harga malar / penduduk DOSM pertengahan tahun (daerah: 2020 sahaja; tiada bagi KL pada tahun KDNK-nya termasuk Putrajaya) |
+| `cpi` | Purata 12 indeks bulanan (tahun lengkap sahaja) |
+| `inflation` (Malaysia & negeri) | Perubahan `cpi` tahunan × 100; bulan terkini guna `inflation_yoy` rasmi DOSM |
+| `crime_index` | Jenayah kekerasan + harta benda (PDRM); `crime_rate` = `crime_index` / penduduk × 100,000 |
+| `crop_*_fruit`, `crop_*_vegetables` (daerah) | Jumlah spesies dalam fail daerah 2017 |
+| `state_current_balance` | Hasil − perbelanjaan mengurus kerajaan negeri |
 | `natural_increase` | `births − deaths` |
 | `density` | `population / area_geometry_km2` (keluasan geodesik sempadan, termasuk perairan pedalaman) |
 | `area_geometry_km2` | Keluasan geodesik WGS84 poligon (pyproj) |

@@ -16,7 +16,7 @@ interface Props {
   delta?: { value: number; label: string; goodWhenUp?: boolean | null } | null;
 }
 
-const showUnit = (u: string) => !['persons', 'current US$', 'annual %', 'schools', 'students', 'teachers'].includes(u) && !u.startsWith('% of') && !u.startsWith('births per') && !u.startsWith('deaths per');
+const showUnit = (u: string) => !['persons', 'current US$', 'annual %', 'schools', 'students', 'teachers', 'crimes', 'RM'].includes(u) && !u.startsWith('% of') && !u.startsWith('births per') && !u.startsWith('deaths per');
 
 /** Stat tile: label · value · reference year · quality · source. Missing values say so. */
 export function StatCard({ ind, label, value, year, quality, sourceLabel, hint, big, delta }: Props) {

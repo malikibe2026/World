@@ -13,6 +13,7 @@ const LAYER_GROUPS: Array<{ key: I18nKey; codes: string[] }> = [
   { key: 'economicIntelligence', codes: ['gdp', 'gdp_per_capita', 'gdp_growth', 'inflation', 'unemployment'] },
   // DOSM only: Malaysia's states, districts, parlimen and DUN (no world layer)
   { key: 'malaysiaDosm', codes: ['hh_income_median', 'hh_expenditure_mean', 'gini_coef', 'poverty_absolute'] },
+  { key: 'malaysiaEconomy', codes: ['gdp_real_per_capita_myr', 'gdp_share_manufacturing', 'gdp_share_services', 'gdp_share_agriculture', 'wages_median', 'wages_median_real', 'crime_rate', 'crop_area_paddy'] },
   { key: 'malaysiaPeople', codes: ['noncitizen_pct', 'eth_bumi_malay_pct', 'eth_bumi_other_pct', 'eth_chinese_pct', 'eth_indian_pct', 'ptr_primary', 'completion_secondary_upper'] },
   { key: 'urban', codes: ['urban_pct'] },
   { key: 'tourism', codes: ['tourism_arrivals'] },
