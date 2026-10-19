@@ -6,6 +6,7 @@ import type { Catalog } from './catalog';
 import { loadOptional } from './http';
 import { wbCountrySeries, wbIndicatorUrl, wbLayer } from './worldbank';
 import { wppQuality } from '../utils/quality';
+import type { DosmLevel } from '../utils/geoRefs';
 
 const STOCKS = new Set(['population', 'population_male', 'population_female', 'sex_ratio', 'median_age', 'pop_0_14', 'pop_15_64', 'pop_65_plus', 'pop_0_14_pct', 'pop_15_64_pct', 'pop_65_plus_pct', 'density']);
 
@@ -70,7 +71,7 @@ export interface DosmUnit {
 }
 export interface DosmDoc { source_id: string; level: string; units: Record<string, DosmUnit> }
 
-export function loadDosm(level: 'national' | 'admin1' | 'admin2' | 'parlimen'): Promise<DosmDoc | null> {
+export function loadDosm(level: DosmLevel): Promise<DosmDoc | null> {
   return loadOptional<DosmDoc>(`stats/my/${level}.json`);
 }
 

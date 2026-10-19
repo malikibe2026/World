@@ -15,6 +15,7 @@ import {
   COUNTRY_SOURCES, COUNTRY_ZOOMS, EMPTY_FC, THEME_PAINT, adminFillOpacityExpr, baseStyle, fillColorExpr, fillOpacityExpr, labelLayers, lineLayers, overlayLayers, pointLayers,
 } from './layers';
 import { villagesInView } from '../services/villages';
+import { isDun } from '../utils/geoRefs';
 import { ELEVATION_DEM, satelliteBasemap, streetBasemap, terrainBasemap } from './basemaps';
 import { formatValue } from '../utils/format';
 import { indicatorName, t } from '../utils/i18n';
@@ -188,7 +189,8 @@ export function MapView() {
       if (pts.length) {
         const p = pts[0].properties as Record<string, unknown>;
         const kind = pts[0].layer.id;
-        const sub = kind === 'villages' ? `${useAtlas.getState().myDivision === 'parlimen' && p.parlimen_name ? p.parlimen_name : p.district_name}, ${p.state_name}` : kind === 'peaks' && p.elev ? `${p.elev} m` : kind === 'cities' || kind === 'capitals' ? (p.pop ? `~${Number(p.pop).toLocaleString()} (NE est.)` : undefined) : (p.iata as string) || undefined;
+        const dv = useAtlas.getState().myDivision;
+        const sub = kind === 'villages' ? `${(dv === 'parlimen' && p.parlimen_name) || (dv === 'dun' && p.dun_name) || p.district_name}, ${p.state_name}` : kind === 'peaks' && p.elev ? `${p.elev} m` : kind === 'cities' || kind === 'capitals' ? (p.pop ? `~${Number(p.pop).toLocaleString()} (NE est.)` : undefined) : (p.iata as string) || undefined;
         setTip({ x: e.point.x, y: e.point.y, title: String(p.name), sub });
         return;
       }
@@ -215,14 +217,17 @@ export function MapView() {
         const p = f.properties as Record<string, unknown>;
         const [lon, lat] = (f.geometry as GeoJSON.Point).coordinates;
         if (f.layer.id === 'villages') {
-          // no village-level statistics exist: select the enclosing district (or state) and show the point
+          // no village-level statistics exist: select the enclosing district / constituency (or state) and show the point
           const cat = useAtlas.getState().catalog!;
           const c = cat.countries.MYS;
-          const byParlimen = useAtlas.getState().myDivision === 'parlimen' && p.parlimen;
-          const did = String(byParlimen ? p.parlimen : p.district);
+          const dv = useAtlas.getState().myDivision;
+          // federal-territory points have no DUN: they fall back to the district
+          const by = dv === 'parlimen' && p.parlimen ? 'parlimen' : dv === 'dun' && p.dun ? 'dun' : 'district';
+          const did = String(p[by]);
           const sid = String(p.state);
           const isState = did === sid;
-          select({ id: did, level: isState ? 'admin1' : 'admin2', name: String(isState ? p.state_name : byParlimen ? p.parlimen_name : p.district_name), countryId: 'MYS', parents: ['WORLD', ...(c?.continent_id ? [c.continent_id] : []), 'MYS', ...(isState ? [] : [sid])] });
+          const parents = ['WORLD', ...(c?.continent_id ? [c.continent_id] : []), 'MYS', ...(isState ? [] : [sid]), ...(by === 'dun' && p.parlimen ? [String(p.parlimen)] : [])];
+          select({ id: did, level: isState ? 'admin1' : 'admin2', name: String(isState ? p.state_name : p[`${by}_name`]), countryId: 'MYS', parents });
           setPoint({ kind: 'village', name: String(p.name), lon, lat, countryId: 'MYS', props: p });
           return;
         }
@@ -238,7 +243,8 @@ export function MapView() {
       if (f.source === 'admin1' || f.source === 'admin2') {
         const cid = String(f.properties.country);
         const c = cat.countries[cid];
-        const parents = ['WORLD', ...(c?.continent_id ? [c.continent_id] : []), cid, ...(f.source === 'admin2' ? [String(f.properties.state)] : [])];
+        // a DUN polygon carries its parliamentary constituency: … › state › parlimen › DUN
+        const parents = ['WORLD', ...(c?.continent_id ? [c.continent_id] : []), cid, ...(f.source === 'admin2' ? [String(f.properties.state)] : []), ...(f.source === 'admin2' && isDun(id) && f.properties.parlimen ? [String(f.properties.parlimen)] : [])];
         select({ id, level: f.source, name: String(f.properties.name), countryId: cid, parents });
       } else {
         const c = cat.countries[id];
@@ -297,7 +303,7 @@ export function MapView() {
     }
   }
 
-  /** Malaysia below state level: districts or parliamentary constituencies, per the division switch. */
+  /** Malaysia below state level: districts, parliamentary or DUN constituencies, per the division switch. */
   async function loadMyDivision(map: MlMap): Promise<Feature[]> {
     const L = loaded.current;
     const division = useAtlas.getState().myDivision;
@@ -346,7 +352,8 @@ export function MapView() {
       for (const id of ids) {
         const v = L.values[id];
         const state: Record<string, unknown> = { dim: members ? !members.has(id) : false };
-        state.c = L.indicator ? (v === undefined || !cls ? -1 : classIndex(cls, v)) : null;
+        // no world layer (a DOSM-only indicator): countries stay unpainted rather than "no data"
+        state.c = L.indicator && L.doc ? (v === undefined || !cls ? -1 : classIndex(cls, v)) : null;
         map.setFeatureState({ source: s, id }, state);
       }
     }
@@ -381,7 +388,7 @@ export function MapView() {
     map.setSky({ 'sky-color': theme === 'dark' ? '#061020' : '#bcd6f0', 'horizon-color': theme === 'dark' ? '#123056' : '#e7f0f9', 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 1, 7, 0] });
   }, [theme, ready]);
 
-  // Malaysia division switch: swap districts ⇄ constituencies in place ---------------------------
+  // Malaysia division switch: swap districts ⇄ parlimen ⇄ DUN in place ---------------------------
   const myDivision = useAtlas((st) => st.myDivision);
   const divisionRef = useRef(myDivision);
   useEffect(() => {

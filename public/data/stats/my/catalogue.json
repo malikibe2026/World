@@ -178,9 +178,9 @@
       "methodology_ms": "Kelahiran hidup adalah kelahiran yang bernyawa semasa dilahirkan, walaupun hanya untuk seketika. Data mengenai kelahiran hidup di Malaysia dihasilkan berdasarkan maklumat yang dilaporkan semasa proses pendaftaran kelahiran, khususnya dalam Borang Pendaftaran Kelahiran (JPN.LM01). Khususnya, medan 'daerah' yang dilaporkan dalam set data ini adalah berdasarkan tempat kediaman ibu dan bukannya lokasi geografi di mana bayi itu dilahirkan. Sebagai contoh, bayi yang dilahirkan di sebuah hospital di Petaling kepada ibu yang menetap di Sepang akan dikira sebagai kelahiran hidup bagi Sepang. Untuk memahami metodologi dengan lebih terperinci, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/vitalstats-technotes).",
       "caveat_en": "This data is derived based on births registered with JPN. Accordingly, if a birth is not registered with JPN (for instance, if a foreigner chooses to register their child in their home country, or if a resident in a remote area does not register the birth of their child), it will not count in this dataset.\n\nFurthermore, it should be noted that the number of administrative districts increased from 147 to 160 in 2021, due to the creation of new districts in Kelantan (1), Perak (1), Sabah (2), and Sarawak (9).",
       "caveat_ms": "Data ini dihasilkan berdasarkan kelahiran yang didaftarkan dengan JPN. Oleh itu, sekiranya kelahiran itu tidak didaftarkan dengan JPN (contohnya sekiranya rakyat asing hanya mendaftar kelahiran anaknya di negara asal, ataupun penduduk di kawasan yang sangat terpencil belum mendaftarkan anaknya) maka ia tidak terkandung dalam set data ini.\n\nTambahan lagi, harus diambil perhatian bahawa bilangan daerah pentadbiran telah bertambah dari 147 ke 160 pada tahun 2021, kerana pengwujudan daerah pentadbiran baru di Kelantan (1), Perak (1), Sabah (2), dan Sarawak (9).",
-      "data_as_of": "2024",
-      "last_updated": "2025-10-16 12:00",
-      "next_update": "2026-10-16 12:30",
+      "data_as_of": "2025",
+      "last_updated": "2026-10-15 13:00",
+      "next_update": "2027-10-31 18:00",
       "link_csv": "https://storage.dosm.gov.my/demography/birth_district_sex.csv",
       "link_parquet": "https://storage.dosm.gov.my/demography/birth_district_sex.parquet",
       "frequency": "YEARLY",
@@ -193,7 +193,7 @@
         "SEX"
       ],
       "dataset_begin": 2020,
-      "dataset_end": 2024,
+      "dataset_end": 2025,
       "data_source": [
         "JPN",
         "DOSM"
@@ -235,9 +235,9 @@
       "methodology_ms": "Data mengenai kematian di Malaysia dihasilkan berdasarkan maklumat yang dilaporkan semasa proses pendaftaran kelahiran, khususnya dalam Borang Daftar Kematian (JPN.LM02). Medan 'negeri' yang dilaporan dalam set data ini adalah berdasarkan tempat kediaman biasa simati dan bukannya lokasi geografi di mana simati telah meninggal dunia. Sebagai contoh, jika seseorang itu telah meninggal dunia di sebuah hospital di Kuala Lumpur tetapi telah menetap di Selangor, maka kematian tersebut akan direkodkan sebagai kematian bagi Selangor. Untuk memahami metodologi dengan lebih terperinci, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/vitalstats-technotes).",
       "caveat_en": "This data is derived based on deaths registered with JPN. Therefore, if a death is not registered with JPN (for instance, if the death of a foreigner is registered in their home country, or the death of resident in a remote area is not registered), it will generally not count in this dataset. However, adjustment has been made to the number of deaths in Sabah to account for the under-reporting of deaths detected based on the 'Study of Under Reporting of Deaths in Sabah', which was conducted by DOSM and approved by the Steering Committee on Implementation of Civil Registration and Vital Statistics in 2016.",
       "caveat_ms": "Data ini dihasilkan berdasarkan kematian yang didaftarkan dengan JPN. Oleh itu, sekiranya kematian itu tidak didaftarkan dengan JPN (contohnya sekiranya kematian rakyat asing hanya didaftarkan di negara asal, ataupun kematian penduduk di kawasan yang sangat terpencil tidak didaftarkan) maka ia secara am tidak terkandung dalam set data ini. Namun, penyesuaian data kematian di Sabah telah dilaksanakan kerana kurang liputan pendaftaran yang didapati berdasarkan 'Kajian Kurang Liputan Pendaftaran Kematian di Sabah' yang telah dijalankan oleh DOSM dan diluluskan oleh Jawatankuasa Induk Pelaksanaan _Civil Registration and Vital Statistics_ pada tahun 2016.",
-      "data_as_of": "2024",
-      "last_updated": "2025-10-16 12:00",
-      "next_update": "2026-10-15 12:30",
+      "data_as_of": "2025",
+      "last_updated": "2026-10-15 13:00",
+      "next_update": "2027-10-31 18:00",
       "link_csv": "https://storage.dosm.gov.my/demography/death_state.csv",
       "link_parquet": "https://storage.dosm.gov.my/demography/death_state.parquet",
       "frequency": "YEARLY",
@@ -246,7 +246,7 @@
       ],
       "demography": [],
       "dataset_begin": 2000,
-      "dataset_end": 2024,
+      "dataset_end": 2025,
       "data_source": [
         "JPN",
         "DOSM"
@@ -280,9 +280,9 @@
       "methodology_ms": "Data mengenai kematian di Malaysia dihasilkan berdasarkan maklumat yang dilaporkan semasa proses pendaftaran kelahiran, khususnya dalam Borang Daftar Kematian (JPN.LM02). Medan 'daerah' yang dilaporan dalam set data ini adalah berdasarkan tempat kediaman biasa simati dan bukannya lokasi geografi di mana simati telah meninggal dunia. Sebagai contoh, jika seseorang itu telah meninggal dunia di sebuah hospital di Petaling tetapi telah menetap di Sepang, maka kematian tersebut akan direkodkan sebagai kematian bagi Selangor. Untuk memahami metodologi dengan lebih terperinci, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/vitalstats-technotes).",
       "caveat_en": "This data is derived based on deaths registered with JPN. Therefore, if a death is not registered with JPN (for instance, if the death of a foreigner is registered in their home country, or the death of resident in a remote area is not registered), it will generally not count in this dataset. However, adjustment has been made to the number of deaths in Sabah to account for the under-reporting of deaths detected based on the 'Study of Under Reporting of Deaths in Sabah', which was conducted by DOSM and approved by the Steering Committee on Implementation of Civil Registration and Vital Statistics in 2016.\n\nFurthermore, it should be noted that the number of administrative districts increased from 147 to 160 in 2021, due to the creation of new districts in Kelantan (1), Perak (1), Sabah (2), and Sarawak (9).",
       "caveat_ms": "Data ini dihasilkan berdasarkan kematian yang didaftarkan dengan JPN. Oleh itu, sekiranya kematian itu tidak didaftarkan dengan JPN (contohnya sekiranya kematian rakyat asing hanya didaftarkan di negara asal, ataupun kematian penduduk di kawasan yang sangat terpencil tidak didaftarkan) maka ia secara am tidak terkandung dalam set data ini. Namun, penyesuaian data kematian di Sabah telah dilaksanakan kerana kurang liputan pendaftaran yang didapati berdasarkan 'Kajian Kurang Liputan Pendaftaran Kematian di Sabah' yang telah dijalankan oleh DOSM dan diluluskan oleh Jawatankuasa Induk Pelaksanaan _Civil Registration and Vital Statistics_ pada tahun 2016.\n\nTambahan lagi, harus diambil perhatian bahawa bilangan daerah pentadbiran telah bertambah dari 147 ke 160 pada tahun 2021, kerana pengwujudan daerah pentadbiran baru di Kelantan (1), Perak (1), Sabah (2), dan Sarawak (9).",
-      "data_as_of": "2024",
-      "last_updated": "2025-10-16 12:00",
-      "next_update": "2026-10-15 12:30",
+      "data_as_of": "2025",
+      "last_updated": "2026-10-15 13:00",
+      "next_update": "2027-10-31 18:00",
       "link_csv": "https://storage.dosm.gov.my/demography/death_district_sex.csv",
       "link_parquet": "https://storage.dosm.gov.my/demography/death_district_sex.parquet",
       "frequency": "YEARLY",
@@ -295,7 +295,7 @@
         "SEX"
       ],
       "dataset_begin": 2020,
-      "dataset_end": 2024,
+      "dataset_end": 2025,
       "data_source": [
         "JPN",
         "DOSM"
@@ -337,9 +337,9 @@
       "methodology_ms": "Di Malaysia, terdapat dua sistem untuk pendaftaran perkahwinan; perkahwinan bagi orang bukan Islam didaftarkan dengan Jabatan Pendaftaran Negara (JPN), manakala perkahwinan bagi orang Islam didaftarkan dengan Mahkamah Syariah. Set data ini dihasilkan daripada rekod pentadbiran yang dikumpulkan oleh kedua-dua sistem administratif tersebut.",
       "caveat_en": "The data represents registered marriages only. Unregistered marriages (including couples originally registered outside Malaysia who have not yet registered their marriage with local authorities) are not included in this dataset.",
       "caveat_ms": "Set data ini hanya mewakili perkahwinan yang didaftarkan. Perkahwinan yang tidak didaftarkan (termasuk pasangan yang didaftarkan di luar Malaysia yang belum lagi daftarkan perkahwinan mereka dengan kerajaan Malaysia) tidak terkandung dalam set data ini.",
-      "data_as_of": "2022-12-31 23:59",
-      "last_updated": "2023-11-23 12:00",
-      "next_update": "2024-11-21 12:00",
+      "data_as_of": "2024",
+      "last_updated": "2026-10-11 12:00",
+      "next_update": "2026-11-19 18:00",
       "link_csv": "https://storage.dosm.gov.my/demography/marriages.csv",
       "link_parquet": "https://storage.dosm.gov.my/demography/marriages.parquet",
       "frequency": "YEARLY",
@@ -348,7 +348,7 @@
       ],
       "demography": [],
       "dataset_begin": 2017,
-      "dataset_end": 2022,
+      "dataset_end": 2024,
       "data_source": [
         "DOSM"
       ],
@@ -379,11 +379,11 @@
       "description_ms": "Kadar kesuburan keseluruhan (TFR) dan kadar kesuburan mengikut umur (ASFR) mengikut negeri.",
       "methodology_en": "An age-specific fertility rate (ASFR) is the average number of births per 1,000 women in a specific age group. The ASFRs shown in this dataset are computed from administrative records of births registered with JPN (which record the age of the mother), as well as population data from DOSM as the denominator.\n\nThe total fertility rate (TFR)  is the average number of children born to a woman who goes through her child-bearing years experiencing the ASFR of each age group. It is computed by:\n - Summing the ASFRs of all age groups, then\n - Multiplying the number by 5 to account for the size of each age group, and finally\n - Dividing by 1000 (to convert the figure from per 1000 women to per woman.",
       "methodology_ms": "Kadar kesuburan mengikut umur (ASFR) adalah purata jumlah kelahiran per 1,000 wanita dalam kumpulan umur tertentu. ASFR yang dipaparkan dalam set data ini dihitung berdasarkan rekod pentadbiran kelahiran yang didaftarkan dengan JPN (yang mencatatkan umur ibu), serta data penduduk dari DOSM sebagai denominator.\n\nKadar kesuburan keseluruhan (TFR) adalah purata jumlah anak yang dilahirkan kepada seorang wanita yang melalui hidupnya dengan mengalami ASFR setiap kumpulan umur. Ia dihitung dengan:\n - Menjumlahkan ASFR semua kumpulan umur, kemudian\n - Mengalikan jumlah dengan 5 untuk mengambil kira julat setiap kumpulan umur, dan akhirnya\n - Membahagikan dengan 1000 untuk mengubah angka dari angka bagi setiap 1000 wanita kepada angka bagi seorang wanita.",
-      "caveat_en": "ASFR values are based on the actual number of live births per 1000 women in each 5-year age group. However, when interpreting TFR values, it is important to note that the TFR is based on a hypothetical woman who goes through her child-bearing years experiencing the ASFR of each age group. This is not equivalent to the actual average number of children born to currently-living female citizens aged 15-49, as this number would be a reflection of past rather than current ASFR values.",
-      "caveat_ms": "Nilai ASFR berdasarkan jumlah kelahiran hidup sebenar bagi setiap 1000 wanita dalam setiap kumpulan umur 5 tahun. Walau bagaimanapun, dalam mentafsirkan nilai TFR, perlu diingati bahawa TFR berdasarkan unjuran seorang wanita yang melalui hidupnya dengan mengalami ASFR setiap kumpulan umur. Ini tidak sama dengan purata sebenar jumlah anak yang dilahirkan kepada penduduk wanita berumur 15-49 tahun, kerana angka tersebut sebenarnya dipengaruhi oleh nilai ASFR masa lalu dan bukannya nilai ASFR semasa.",
-      "data_as_of": "2024",
-      "last_updated": "2025-10-16 12:00",
-      "next_update": "2026-10-15 12:30",
+      "caveat_en": "ASFR values are based on the actual number of live births per 1000 women in each 5-year age group. However, when interpreting TFR values, it is important to note that the TFR is based on a hypothetical woman who goes through her child-bearing years experiencing the ASFR of each age group. This is not equivalent to the actual average number of children born to currently-living female citizens aged 15-49, as this number would be a reflection of past rather than current ASFR values. Figures for 2010-2019 will be revised in future updates.",
+      "caveat_ms": "Nilai ASFR berdasarkan jumlah kelahiran hidup sebenar bagi setiap 1000 wanita dalam setiap kumpulan umur 5 tahun. Walau bagaimanapun, dalam mentafsirkan nilai TFR, perlu diingati bahawa TFR berdasarkan unjuran seorang wanita yang melalui hidupnya dengan mengalami ASFR setiap kumpulan umur. Ini tidak sama dengan purata sebenar jumlah anak yang dilahirkan kepada penduduk wanita berumur 15-49 tahun, kerana angka tersebut sebenarnya dipengaruhi oleh nilai ASFR masa lalu dan bukannya nilai ASFR semasa. Angka bagi tahun 2010-2019 akan disemak semula dalam kemas kini akan datang.",
+      "data_as_of": "2025",
+      "last_updated": "2026-10-15 13:00",
+      "next_update": "2027-10-31 18:00",
       "link_csv": "https://storage.dosm.gov.my/demography/fertility_state.csv",
       "link_parquet": "https://storage.dosm.gov.my/demography/fertility_state.parquet",
       "frequency": "YEARLY",
@@ -392,7 +392,7 @@
       ],
       "demography": [],
       "dataset_begin": 2001,
-      "dataset_end": 2024,
+      "dataset_end": 2025,
       "data_source": [
         "DOSM"
       ],
@@ -423,11 +423,11 @@
       "description_ms": "Kadar kesuburan keseluruhan (TFR) dan kadar kesuburan mengikut umur (ASFR) dari 1958 hingga kini di peringkat nasional.",
       "methodology_en": "An age-specific fertility rate (ASFR) is the average number of births per 1,000 women in a specific age group. The ASFRs shown in this dataset are computed from administrative records of births registered with JPN (which record the age of the mother), as well as population data from DOSM as the denominator.\n\nThe total fertility rate (TFR)  is the average number of children born to a woman who goes through her child-bearing years experiencing the ASFR of each age group. It is computed by:\n - Summing the ASFRs of all age groups, then\n - Multiplying the number by 5 to account for the size of each age group, and finally\n - Dividing by 1000 (to convert the figure from per 1000 women to per woman.",
       "methodology_ms": "Kadar kesuburan mengikut umur (ASFR) adalah purata jumlah kelahiran per 1,000 wanita dalam kumpulan umur tertentu. ASFR yang dipaparkan dalam set data ini dihitung berdasarkan rekod pentadbiran kelahiran yang didaftarkan dengan JPN (yang mencatatkan umur ibu), serta data penduduk dari DOSM.\n\nKadar kesuburan keseluruhan (TFR) adalah purata jumlah anak yang dilahirkan kepada seorang wanita yang melalui hidupnya dengan mengalami ASFR setiap kumpulan umur. Ia dihitung dengan:\n - Menjumlahkan ASFR semua kumpulan umur, kemudian\n - Mengalikan jumlah dengan 5 untuk mengambil kira julat setiap kumpulan umur, dan akhirnya\n - Membahagikan dengan 1000 untuk mengubah angka dari angka bagi setiap 1000 wanita kepada angka bagi seorang wanita.",
-      "caveat_en": "ASFR values are based on the actual number of live births per 1000 women in each 5-year age group. However, when interpreting TFR values, it is important to note that the TFR is based on a hypothetical woman who goes through her child-bearing years experiencing the ASFR of each age group. This is not equivalent to the actual average number of children born to currently-living female citizens aged 15-49, as this number would be a reflection of past rather than current ASFR values.",
-      "caveat_ms": "Nilai ASFR berdasarkan jumlah kelahiran hidup sebenar bagi setiap 1000 wanita dalam setiap kumpulan umur 5 tahun. Walau bagaimanapun, dalam mentafsirkan nilai TFR, perlu diingati bahawa TFR berdasarkan unjuran seorang wanita yang melalui hidupnya dengan mengalami ASFR setiap kumpulan umur. Ini tidak sama dengan purata sebenar jumlah anak yang dilahirkan kepada penduduk wanita berumur 15-49 tahun, kerana angka tersebut sebenarnya dipengaruhi oleh nilai ASFR masa lalu dan bukannya nilai ASFR semasa.",
-      "data_as_of": "2024",
-      "last_updated": "2025-10-16 12:00",
-      "next_update": "2026-10-15 12:30",
+      "caveat_en": "ASFR values are based on the actual number of live births per 1000 women in each 5-year age group. However, when interpreting TFR values, it is important to note that the TFR is based on a hypothetical woman who goes through her child-bearing years experiencing the ASFR of each age group. This is not equivalent to the actual average number of children born to currently-living female citizens aged 15-49, as this number would be a reflection of past rather than current ASFR values. Figures for 2010-2019 will be revised in future updates.",
+      "caveat_ms": "Nilai ASFR berdasarkan jumlah kelahiran hidup sebenar bagi setiap 1000 wanita dalam setiap kumpulan umur 5 tahun. Walau bagaimanapun, dalam mentafsirkan nilai TFR, perlu diingati bahawa TFR berdasarkan unjuran seorang wanita yang melalui hidupnya dengan mengalami ASFR setiap kumpulan umur. Ini tidak sama dengan purata sebenar jumlah anak yang dilahirkan kepada penduduk wanita berumur 15-49 tahun, kerana angka tersebut sebenarnya dipengaruhi oleh nilai ASFR masa lalu dan bukannya nilai ASFR semasa. Angka bagi tahun 2010-2019 akan disemak semula dalam kemas kini akan datang.",
+      "data_as_of": "2025",
+      "last_updated": "2026-10-15 13:00",
+      "next_update": "2027-10-31 18:00",
       "link_csv": "https://storage.dosm.gov.my/demography/fertility.csv",
       "link_parquet": "https://storage.dosm.gov.my/demography/fertility.parquet",
       "frequency": "YEARLY",
@@ -436,7 +436,7 @@
       ],
       "demography": [],
       "dataset_begin": 1958,
-      "dataset_end": 2024,
+      "dataset_end": 2025,
       "data_source": [
         "DOSM"
       ],
@@ -534,9 +534,9 @@
       "methodology_ms": "Data ini dihasilkan berdasarkan Survei Tenaga Buruh (STB), yang bertujuan untuk mengumpul data tentang tenaga buruh di peringkat nasional dan negeri. Metodologi survei ini dipastikan konsisten untuk mendapatkan perbandingan statistik siri masa. Data daripada survei ini diterbitkan secara bulanan, suku tahunan dan tahunan. Untuk mendapat perincian metodologi yang penuh, sila merujuk kepada [Nota Teknikal](https://open.dosm.gov.my/publications/technical-notes/lfs-technotes).",
       "caveat_en": "Data for 1991 and 1994 are not available due to limitations in the sample data from those years. Furthermore, the sum of each category may not always equal to the totals shown in related tables because of independent rounding to one decimal place. However, the differences are not obvious.",
       "caveat_ms": "Data bagi 1991 dan 1994 tidak dapat dihasilkan akibat kekangan dalam data survei bagi tahun tersebut. Selain itu, hasil tambah bagi sesuatu kategori mungkin tidak sentiasa sama dengan jumlah yang ditunjukkan dalam jadual yang berkaitan kerana pembundaran secara bebas kepada satu titik perpuluhan. Walau bagaimanapun, perbezaan ini tidak ketara.",
-      "data_as_of": "2023",
-      "last_updated": "2024-02-09 12:00",
-      "next_update": "2025-02-09 12:00",
+      "data_as_of": "2025",
+      "last_updated": "2026-10-11 12:00",
+      "next_update": "2027-06-30 18:00",
       "link_csv": "https://storage.dosm.gov.my/labour/lfs_year.csv",
       "link_parquet": "https://storage.dosm.gov.my/labour/lfs_year.parquet",
       "frequency": "YEARLY",
@@ -545,7 +545,7 @@
       ],
       "demography": [],
       "dataset_begin": 1982,
-      "dataset_end": 2023,
+      "dataset_end": 2025,
       "data_source": [
         "DOSM"
       ],
@@ -1013,6 +1013,613 @@
         {
           "name": "poverty_absolute",
           "description_en": "[Float] Proportion of households with monthly income below the Poverty Line Income (PLI)"
+        }
+      ]
+    },
+    "hh_expenditure_parlimen": {
+      "title_en": "Household Expenditure by Parliament",
+      "title_ms": "Perbelajaan Isi Rumah mengikut Parlimen",
+      "description_en": "Mean gross monthly household expenditure by parliamentary constituency from 2019 to 2024.",
+      "description_ms": "Purata dan penengah perbelajaan kasar bulanan isi rumah mengikut kawasan parlimen dari 2019 hingga 2024.",
+      "methodology_en": "In general, data on household expenditure is difficult to tabulate, as it requires the correct definition of a statistical household, as well as the inclusion of all modes of expenditure. For this reason, it requires the use of a representative survey or census.\n\n In Malaysia, data on household expenditure is collected through the Household Expenditure and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. The data shown here was tabulated from household-level HIES records spanning 2019 to 2024 (the latest edition). For a full description of the methodology, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Secara am, data mengenai perbelanjaan isi rumah agak sukar untuk dihasilkan, kerana ia memerlukan definisi statistik yang tepat bagi isi rumah, serta data mengenai pelbagai mod perbelanjaan. Oleh itu, ia memerlukan penggunaan survei atau banci.\n\nDi Malaysia, data mengenai perbelanjaan isi rumah dikumpul melalui Survei Perbelajaan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Data yang dipaparkan di sini telah dihasilkan daripada rekod HIES peringkat isi rumah dari tahun 2019 hingga 2024 (edisi terkini). Untuk mendapat perincian metodologi yang penuh, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "This data presents nominal values, i.e. they have not been adjusted for inflation. Furthermore, Parliment-level data is only published from 2019 (relative to [state-level data](https://open.dosm.gov.my/data-catalogue/hh_expenditure_state) which is available from 1970) as prior HIES samples were not sufficient to support Parliament-level granularity.",
+      "caveat_ms": "Data ini menunjukkan nilai nominal, iaitu mereka tidak diselaraskan untuk inflasi. Selain itu, data di peringkat Parlimen hanya diterbitkan mulai 2019 (berbanding dengan [data negeri](https://open.dosm.gov.my/data-catalogue/hh_expenditure_state) yang tersedia dari 1970) kerana sampel HIES sebelumnya tidak mencukupi untuk membolehkan pecahan mengikut kawasan Parlimen.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_expenditure_parlimen.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_expenditure_parlimen.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "PARLIMEN"
+      ],
+      "demography": [],
+      "dataset_begin": 2019,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_expenditure_parlimen.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, including the 3 Federal Territories"
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 222 parliamentary constituencies"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "expenditure",
+          "description_en": "[Integer, RM] Average gross monthly household expenditure"
+        }
+      ]
+    },
+    "hh_inequality_parlimen": {
+      "title_en": "Income Inequality by Parliament",
+      "title_ms": "Ketidaksamarataan Pendapatan mengikut Parlimen",
+      "description_en": "Gini coefficient by parliamentary constituency from 2019 to 2024.",
+      "description_ms": "Pekali Gini mengikut kawasan parlimen dari 2019 hingga 2024.",
+      "methodology_en": "The primary Gini coefficient at state-level is computed based on the distribution of households' gross monthly income, where:\n - Gini coefficient values are bounded within 0 and 1, with higher values indicating greater income inequality.\n - A value of 0 indicates perfect equality (i.e. that every household has the same income).\n - A value of 1 indicates total inequality (i.e. that 1 household earns all the income while all others earn nothing).\n\nBecause the computation of the Gini coefficient relies on household income data, Malaysia's Gini coefficient statistics are produced and published together with statistics on household income derived from the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. For full details on the methodology, especially the computation of the PLI and its evolution and nuances, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Pekali Gini utama di peringkat negeri dihasilkan berdasarkan taburan pendapatan kasar bulanan isi rumah:\n - Nilai pekali Gini adalah antara 0 dengan 1.\n - Nilai 0 bermaksud kesamarataan total (iaitu semua isi rumah mempunyai pendapatan sama).\n - Nilai 1 bermaksud ketidaksamarataan total (iaitu 1 isi rumah mempunyai semua pendapatan di samping yang lain tidak mendapat apa-apa).\n\nOleh sebab penghasilan pekali Gini memerlukan data pendapatan isi rumah, statistik pekali Gini Malaysia dihasilkan dan diterbitkan bersama dengan statistik pendapatan isi rumah yang dihasilkan daripada Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Untuk mendapat perincian metodologi yang penuh, terutamanya mengenai pengiraan PGK serta evolusi dan nuansanya, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "Parliament-level data is only published from 2019 (relative to [state-level data](https://open.dosm.gov.my/data-catalogue/hh_inequality_state) which is available from 1970) as prior HIES samples were not sufficient to support Parliament-level granularity.",
+      "caveat_ms": "Data di peringkat Parlimen hanya diterbitkan mulai 2019 (berbanding dengan [data negeri](https://open.dosm.gov.my/data-catalogue/hh_inequality_state) yang tersedia dari 1970) kerana sampel HIES sebelumnya tidak mencukupi untuk membolehkan pecahan mengikut kawasan Parlimen.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_inequality_parlimen.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_inequality_parlimen.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "PARLIMEN"
+      ],
+      "demography": [],
+      "dataset_begin": 2019,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_inequality_parlimen.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, including the 3 Federal Territories"
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 222 parliamentary constituencies"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "gini",
+          "description_en": "[Float] The Gini coefficient based on the distribution of households' gross monthly income"
+        }
+      ]
+    },
+    "lfs_parlimen": {
+      "title_en": "Annual Principal Labour Force Statistics by Parliament",
+      "title_ms": "Statistik Tenaga Buruh Tahunan Utama mengikut Parlimen",
+      "description_en": "Annual principal labour force statistics at Parliament constituency level, including unemployment and participation rates.",
+      "description_ms": "Statistik tahunan utama berkaitan tenaga buruh di peringkat kawasan Parlimen, termasuk kadar pengangguran dan penyertaan.",
+      "methodology_en": "This data is produced based on the Labour Force Survey (LFS), which is designed to collect representative data on the labour force at national, state, and administrative district level. The raw survey data was subsequently aggregated at the parliamentary constituency level. Consistency in methodology has been maintained to ensure that the data is comparable over time. Survey findings are a monthly, quarterly and annual basis. For a full description of the methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/lfs-technotes).",
+      "methodology_ms": "Data ini dihasilkan berdasarkan Survei Tenaga Buruh (STB), yang bertujuan untuk mengumpul data tentang tenaga buruh di peringkat nasional, negeri, dan daerah pentadbiran. Data daripada survei ini kemudian diagregatkan di peringkat kawasan parlimen. Metodologi survei ini dipastikan konsisten untuk mendapatkan perbandingan statistik siri masa. Data daripada survei ini diterbitkan secara bulanan, suku tahunan dan tahunan. Untuk mendapat perincian metodologi yang penuh, sila merujuk kepada [Nota Teknikal](https://open.dosm.gov.my/publications/technical-notes/lfs-technotes).",
+      "caveat_en": "The sum of each category may not always equal to the totals shown in related tables because of independent rounding to one decimal place. However, the differences are not obvious.",
+      "caveat_ms": "Hasil tambah bagi sesuatu kategori mungkin tidak sentiasa sama dengan jumlah yang ditunjukkan dalam jadual yang berkaitan kerana pembundaran secara bebas kepada satu titik perpuluhan. Walau bagaimanapun, perbezaan ini tidak ketara.",
+      "data_as_of": "2023",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "2026-12-31 12:00",
+      "link_csv": "https://storage.dosm.gov.my/labour/lfs_parlimen.csv",
+      "link_parquet": "https://storage.dosm.gov.my/labour/lfs_parlimen.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "PARLIMEN"
+      ],
+      "demography": [],
+      "dataset_begin": 2021,
+      "dataset_end": 2023,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/lfs_parlimen.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states"
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 222 parliamentary constituencies"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "lf",
+          "description_en": "[Float, '000] The number (in thousands) of employed and unemployed individuals. This figure also represents the number of people participating in the labour force."
+        },
+        {
+          "name": "lf_employed",
+          "description_en": "[Float, '000] The number (in thousands) of people who worked at least one hour for pay, profit or family gain, in thousands of people"
+        },
+        {
+          "name": "lf_unemployed",
+          "description_en": "[Float, '000] The number (in thousands) of people who did not work but were looking for work or available to work"
+        },
+        {
+          "name": "lf_outside",
+          "description_en": "[Float, '000] The number (in thousands) of people not classified as employed or unemployed, including housewives, students, early retired, disabled persons and those not interested in looking for a job"
+        },
+        {
+          "name": "u_rate",
+          "description_en": "[Float] Ratio of unemployed to labour force size"
+        },
+        {
+          "name": "p_rate",
+          "description_en": "[Float] Ratio of the labour force size to the working-age (15-64) population"
+        },
+        {
+          "name": "ep_ratio",
+          "description_en": "[Float] Ratio of the number of employed people to the working-age (15-64) population"
+        }
+      ]
+    },
+    "hh_inequality": {
+      "title_en": "Income Inequality",
+      "title_ms": "Ketidaksamarataan Pendapatan",
+      "description_en": "Gini coefficient for Malaysia from 1970 to 2024.",
+      "description_ms": "Pekali Gini untuk Malaysia dari 1970 hingga 2024.",
+      "methodology_en": "The primary Gini coefficient for Malaysia is computed based on the distribution of households' gross monthly income, where:\n - Gini coefficient values are bounded within 0 and 1, with higher values indicating greater income inequality.\n - A value of 0 indicates perfect equality (i.e. that every household has the same income).\n - A value of 1 indicates total inequality (i.e. that 1 household earns all the income while all others earn nothing).\n\nBecause the computation of the Gini coefficient relies on household income data, Malaysia's Gini coefficient statistics are produced and published together with statistics on household income derived from the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. For full details on the methodology, especially the computation of the PLI and its evolution and nuances, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Pekali Gini utama bagi Malaysia dihasilkan berdasarkan taburan pendapatan kasar bulanan isi rumah:\n - Nilai pekali Gini adalah antara 0 dengan 1.\n - Nilai 0 bermaksud kesamarataan total (iaitu semua isi rumah mempunyai pendapatan sama).\n - Nilai 1 bermaksud ketidaksamarataan total (iaitu 1 isi rumah mempunyai semua pendapatan di samping yang lain tidak mendapat apa-apa).\n\nOleh sebab penghasilan pekali Gini memerlukan data pendapatan isi rumah, statistik pekali Gini Malaysia dihasilkan dan diterbitkan bersama dengan statistik pendapatan isi rumah yang dihasilkan daripada Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Untuk mendapat perincian metodologi yang penuh, terutamanya mengenai pengiraan PGK serta evolusi dan nuansanya, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "Given that the data is produced from surveys spanning over half a century, the following methodological changes should be noted:\n - Data for 1970 and 1974 refers to Peninsular Malaysia only. 1976 was the first year in which Sabah and Sarawak were included in the survey.\n - Data from 1989 onwards refers to Malaysian citizens only. Although non-citizens are also included in the surveys, the official statistics (which form the basis for national welfare policy) are based on citizens only.",
+      "caveat_ms": "Memandangkan bahawa data ini dihasilkan daripada survey yang menjangkau lebih dari setengah abad, perubahan metodologi berikut harus diberi perhatian:\n - Data untuk 1970 dan 1974 merujuk kepada Semenanjung Malaysia sahaja. Tahun 1976 adalah tahun pertama di mana Sabah dan Sarawak disekalikan dalam tinjauan.\n - Mulai 1989, data merujuk kepada warganegara Malaysia sahaja. Walaupun warga asing juga disekalikan dalam tinjauan, statistik rasmi (yang menjadi asas untuk dasar nasional) hanya berdasarkan warganegara sahaja.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_inequality.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_inequality.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "NATIONAL"
+      ],
+      "demography": [],
+      "dataset_begin": 1970,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_inequality.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "gini",
+          "description_en": "[Float] The Gini coefficient based on the distribution of households' gross monthly income"
+        }
+      ]
+    },
+    "hh_inequality_state": {
+      "title_en": "Income Inequality by State",
+      "title_ms": "Ketidaksamarataan Pendapatan mengikut Negeri",
+      "description_en": "Gini coefficient by state from 1974 to 2024.",
+      "description_ms": "Pekali Gini mengikut negeri dari 1974 hingga 2024.",
+      "methodology_en": "The primary Gini coefficient at state-level is computed based on the distribution of households' gross monthly income, where:\n - Gini coefficient values are bounded within 0 and 1, with higher values indicating greater income inequality.\n - A value of 0 indicates perfect equality (i.e. that every household has the same income).\n - A value of 1 indicates total inequality (i.e. that 1 household earns all the income while all others earn nothing).\n\nBecause the computation of the Gini coefficient relies on household income data, Malaysia's Gini coefficient statistics are produced and published together with statistics on household income derived from the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. For full details on the methodology, especially the computation of the PLI and its evolution and nuances, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Pekali Gini utama di peringkat negeri dihasilkan berdasarkan taburan pendapatan kasar bulanan isi rumah:\n - Nilai pekali Gini adalah antara 0 dengan 1.\n - Nilai 0 bermaksud kesamarataan total (iaitu semua isi rumah mempunyai pendapatan sama).\n - Nilai 1 bermaksud ketidaksamarataan total (iaitu 1 isi rumah mempunyai semua pendapatan di samping yang lain tidak mendapat apa-apa).\n\nOleh sebab penghasilan pekali Gini memerlukan data pendapatan isi rumah, statistik pekali Gini Malaysia dihasilkan dan diterbitkan bersama dengan statistik pendapatan isi rumah yang dihasilkan daripada Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Untuk mendapat perincian metodologi yang penuh, terutamanya mengenai pengiraan PGK serta evolusi dan nuansanya, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "Given that the data is produced from surveys spanning over half a century, it should be noted that:\n - Kuala Lumpur was gazzeted as a Federal Territory on 1 February 1974. Accordingly, data for W.P. Kuala Lumpur is only available from 1976. Prior to that, data for residents of W.P. Kuala Lumpur was included under Selangor.\n - Labuan was gazetted as a Federal Territory on 16 April 1984. However, due to limitations in sampling, data for W.P. Labuan is only available from 2007. Prior to that, data for residents of W.P. Labuan was included under Sabah.\n - Putrajaya was gazzeted as a Federal Territory on 1 February 2001. However, due to limitations in sampling, data for W.P. Putrajaya is only available from 2007. Prior to that, data for residents of W.P. Putrajaya was included under Selangor.",
+      "caveat_ms": "Memandangkan bahawa data ini dihasilkan daripada survey yang menjangkau lebih dari setengah abad, harus diambil perhatian bahawa:\n - Kuala Lumpur diwartakan sebagai Wilayah Persekutuan pada 1 Februari 1974. Oleh itu, data untuk W.P. Kuala Lumpur hanya tersedia mulai 1976. Sebelum itu, data untuk penduduk W.P. Kuala Lumpur adalah sebahagian daripada Selangor.\n Labuan diwartakan sebagai Wilayah Persekutuan pada 16 April 1984. Namun, disebabkan oleh kekangan dalam pengsampelan, data bagi W.P. Labuan hanya tersedia mulai 2007. Sebelum itu, data untuk penduduk W.P. Labuan adalah sebahagian daripada Sabah.\n - Putrajaya diwartakan sebagai Wilayah Persekutuan pada 1 Februari 2001. Namun, disebabkan oleh kekangan dalam pengsampelan, data bagi W.P. Putrajaya hanya tersedia mulai 2007. Sebelum itu, data untuk penduduk W.P. Putrajaya adalah sebahagian daripada Selangor.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_inequality_state.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_inequality_state.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "STATE"
+      ],
+      "demography": [],
+      "dataset_begin": 1974,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_inequality_state.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, including the 3 Federal Territories"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "gini",
+          "description_en": "[Float] The Gini coefficient based on the distribution of households' gross monthly income"
+        }
+      ]
+    },
+    "hh_inequality_district": {
+      "title_en": "Income Inequality by District",
+      "title_ms": "Ketidaksamarataan Pendapatan mengikut Daerah",
+      "description_en": "Gini coefficient by administrative district from 2019 to 2024.",
+      "description_ms": "Pekali Gini mengikut daerah pentadbiran dari 2019 hingga 2024.",
+      "methodology_en": "The primary Gini coefficient at state-level is computed based on the distribution of households' gross monthly income, where:\n - Gini coefficient values are bounded within 0 and 1, with higher values indicating greater income inequality.\n - A value of 0 indicates perfect equality (i.e. that every household has the same income).\n - A value of 1 indicates total inequality (i.e. that 1 household earns all the income while all others earn nothing).\n\nBecause the computation of the Gini coefficient relies on household income data, Malaysia's Gini coefficient statistics are produced and published together with statistics on household income derived from the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. For full details on the methodology, especially the computation of the PLI and its evolution and nuances, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Pekali Gini utama di peringkat negeri dihasilkan berdasarkan taburan pendapatan kasar bulanan isi rumah:\n - Nilai pekali Gini adalah antara 0 dengan 1.\n - Nilai 0 bermaksud kesamarataan total (iaitu semua isi rumah mempunyai pendapatan sama).\n - Nilai 1 bermaksud ketidaksamarataan total (iaitu 1 isi rumah mempunyai semua pendapatan di samping yang lain tidak mendapat apa-apa).\n\nOleh sebab penghasilan pekali Gini memerlukan data pendapatan isi rumah, statistik pekali Gini Malaysia dihasilkan dan diterbitkan bersama dengan statistik pendapatan isi rumah yang dihasilkan daripada Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Untuk mendapat perincian metodologi yang penuh, terutamanya mengenai pengiraan PGK serta evolusi dan nuansanya, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "District-level data is only published from 2019 (relative to [state-level data](https://open.dosm.gov.my/data-catalogue/hh_poverty_state) which is available from 1970) as prior HIES samples were not sufficient to support district-level granularity.",
+      "caveat_ms": "Data di peringkat daerah hanya diterbitkan mulai 2019 (berbanding dengan [data negeri](https://open.dosm.gov.my/data-catalogue/hh_poverty_state) yang tersedia dari 1970) kerana sampel HIES sebelumnya tidak mencukupi untuk membolehkan pecahan mengikut daerah.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_inequality_district.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_inequality_district.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DISTRICT"
+      ],
+      "demography": [],
+      "dataset_begin": 2019,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_inequality_district.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 16 states, including the 3 Federal Territories"
+        },
+        {
+          "name": "district",
+          "description_en": "[Categorical] One of 160 administrative districts, including the 4 states (Perlis and the 3 Federal Territories) which do not have subdivisions"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "gini",
+          "description_en": "[Float] The Gini coefficient based on the distribution of households' gross monthly income"
+        }
+      ]
+    },
+    "population_dun": {
+      "title_en": "Population Table: State Legislative Assemblies (DUNs)",
+      "title_ms": "Jadual Penduduk: Dewan Undangan Negeri (DUN)",
+      "description_en": "Population at state legislative assembly (DUN) level from 2020 to 2022, with breakdowns by sex and nationality. The preview table shows data for the latest year only, but you may download the data in full.",
+      "description_ms": "Jumlah penduduk di peringkat dewan undangan negeri (DUN) dari 2020 ke 2022, dengan pecahan mengikut jantina dan kewarganegaraan. Jadual pratonton hanya menunjukkan data bagi tahun terkini, tetapi data penuh boleh dimuat turun.",
+      "methodology_en": "The 600 DUNs enumerated in this dataset are based on the most recent electoral boundaries per the redelineation exercises in 2015 (Sabah), 2017 (Sarawak) and 2018 (Peninsular Malaysia). Values for 2020 are based on adjusted data from the Population Census conducted in that year. Values for all other years are intercensal mid-year population estimates. The intercensal estimates were generated using the cohort-component method, which estimates the latest year's population by taking the previous year's value, then adding births, subtracting deaths, and adding net migration. For a deeper understanding of the methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/population-technotes).",
+      "methodology_ms": "600 DUN yang diperincikan dalam set data ini adalah berdasarkan sempadan kawasan parlimen yang terkini selaras dengan kajian semula persempadanan yang dilaksanakan pada tahun 2015 (Sabah), 2017 (Sarawak) dan 2018 (Semenanjung Malaysia). Angka bagi 2020 adalah berdasarkan data daripada Banci Penduduk yang dilaksanakan pada tahun tersebut. Angka bagi semua tahun lain adalah anggaran pertengahan tahun antara banci. Anggaran antara banci dihasilkan dengan kaedah komponen kohort, yang menganggarkan angka bagi tahun terkini dengan mengambil angka bagi tahun sebelumnya, kemudian tambah kelahiran, tolak kematian, dan tambah migrasi bersih. Untuk mendapat pemahaman metodologi yang lebih mendalam, sila rujuk kepada [Nota Teknikal](https://open.dosm.gov.my/ms-MY/publications/technical-notes/population-technotes).",
+      "caveat_en": "Values for breakdowns may be slightly different to totals when summed, due to rounding to one decimal place.",
+      "caveat_ms": "Angka-angka terperinci mungkin sedikit berbeza dengan angka keseluruhan apabila terjumlah, disebabkan oleh penggenapan kepada satu titik perpuluhan.",
+      "data_as_of": "2024",
+      "last_updated": "2025-10-31 13:00",
+      "next_update": "2026-10-31 13:00",
+      "link_csv": "https://storage.dosm.gov.my/population/population_dun.csv",
+      "link_parquet": "https://storage.dosm.gov.my/population/population_dun.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DUN"
+      ],
+      "demography": [
+        "SEX",
+        "ETHNICITY"
+      ],
+      "dataset_begin": 2020,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/population_dun.json",
+      "fields": [
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as this is annual data"
+        },
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 13 states; the 3 federal territories are not present in this dataset because they do not have state legislative assemblies."
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 209 parliamentary constituencies; the remaining 13 constituencies in the 3 federal territories are not present in this dataset because they do not contain state legislative assemblies."
+        },
+        {
+          "name": "dun",
+          "description_en": "[Categorical] One of 600 DUNs; for the avoidance of doubt, every DUN is a subset of exactly 1 Parliament (in geographical terms: every DUN is enclaved within a Parliament)."
+        },
+        {
+          "name": "sex",
+          "description_en": "[Categorical] Either both sexes ('both'), male ('male') or female ('female')"
+        },
+        {
+          "name": "age",
+          "description_en": "[Categorical] Only data for all age groups ('overall') is available for now; the column is included to allow for expansion in future."
+        },
+        {
+          "name": "ethnicity",
+          "description_en": "[Categorical] All ethnic groups ('overall'), citizen ('citizen'), or non-citizen residents ('other_noncitizen')."
+        },
+        {
+          "name": "population",
+          "description_en": "[Float] Thousands of people ('000 people)"
+        }
+      ]
+    },
+    "hh_income_dun": {
+      "title_en": "Household Income by DUN",
+      "title_ms": "Pendapatan Isi Rumah mengikut DUN",
+      "description_en": "Mean and median gross monthly household income by DUN constituency from 2019 to 2024.",
+      "description_ms": "Purata dan penengah pendapatan kasar bulanan isi rumah mengikut kawasan DUN dari 2019 hingga 2024.",
+      "methodology_en": "Data on individual salaries and wages [in the formal economy](https://open.dosm.gov.my/dashboard/formal-sector-wages) is easy to obtain from administrative records. However, data on household income is more difficult to tabulate, as it requires the correct definition of a statistical household, as well as the inclusion of non-salary sources of income such as property income, dividends, and interest. For this reason, it requires the use of a representative survey or census.\n\n In Malaysia, data on household income (as well as expenditure and access to basic amenities) is collected through the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. The data shown here was tabulated from household-level HIES records spanning 2019 to 2024 (the latest edition). For a full description of the methodology, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Data mengenai gaji dan upah individu [dalam ekonomi formal](https://open.dosm.gov.my/ms-MY/dashboard/formal-sector-wages) mudah diperoleh daripada rekod pentadbiran. Sebaliknya, data mengenai pendapatan isi rumah lebih sukar untuk dihasilkan, kerana ia memerlukan definisi statistik yang tepat bagi isi rumah, serta sumber pendapatan bukan gaji seperti pendapatan hartanah, dividen, dan faedah. Oleh itu, ia memerlukan penggunaan survei atau banci.\n\nDi Malaysia, data mengenai pendapatan isi rumah (serta perbelanjaan dan akses kepada kemudahan asas) dikumpul melalui Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Data yang dipaparkan di sini telah dihasilkan daripada rekod HIES peringkat isi rumah dari tahun 2019 hingga 2024 (edisi terkini). Untuk mendapat perincian metodologi yang penuh, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "This data presents nominal values, i.e. they have not been adjusted for inflation. Furthermore, DUN-level data is only published from 2019 (relative to [state-level data](https://open.dosm.gov.my/data-catalogue/hh_income_state) which is available from 1970) as prior HIES samples were not sufficient to support DUN-level granularity.",
+      "caveat_ms": "Data ini menunjukkan nilai nominal, iaitu mereka tidak diselaraskan untuk inflasi. Selain itu, data di peringkat DUN hanya diterbitkan mulai 2019 (berbanding dengan [data negeri](https://open.dosm.gov.my/data-catalogue/hh_income_state) yang tersedia dari 1970) kerana sampel HIES sebelumnya tidak mencukupi untuk membolehkan pecahan mengikut kawasan DUN.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_income_dun.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_income_dun.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DUN"
+      ],
+      "demography": [],
+      "dataset_begin": 2019,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_income_dun.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 13 states with a state legislative assembly; the 3 Federal Territories are excluded as they do not have State Legislative Assemblies."
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 207 parliamentary constituencies; the 15 constituencies in Federal Territories are excluded as they are not subdivided into DUNs."
+        },
+        {
+          "name": "dun",
+          "description_en": "[Categorical] One of 600 DUN constituencies"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "income_mean",
+          "description_en": "[Integer, RM] Average gross monthly household income"
+        },
+        {
+          "name": "income_median",
+          "description_en": "[Integer, RM] Median gross monthly household income; this is generally less than the mean income due to the right-skewed distribution of income"
+        }
+      ]
+    },
+    "hh_poverty_dun": {
+      "title_en": "Poverty by DUN",
+      "title_ms": "Kemiskinan mengikut DUN",
+      "description_en": "Poverty rates by DUN constituency from 2019 to 2024.",
+      "description_ms": "Kadar kemiskinan mengikut kawasan DUN dari 2019 hingga 2024.",
+      "methodology_en": "In general, poverty is defined as having household income below a specific benchmark. Accordingly, statistics on poverty in Malaysia are produced and published together with statistics on household income derived from the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. This dataset presents 2 definitions of poverty:\n 1. **Absolute Poverty**: A household is considered to be in absolute poverty if their gross monthly household income is below the Poverty Line Income (PLI). This indicates that the household does not earn sufficient income to meet basic needs for a dignified life.\n 2. **Relative Poverty**: A household is considered to be in relative poverty if their gross monthly household income is below half the national median income. This measure is used to assess relative deprivation within the district, especially as absolute and hardcore poverty rates approach 0, as is the case for Malaysia.\n\n For full details on the methodology, especially the computation of the PLI and its evolution and nuances, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Secara am, definisi kemiskinan adalah pendapatan isi rumah di bawah sesuatu aras pendapatan. Oleh itu, statistik mengenai kemiskinan di Malaysia dihasilkan dan diterbitkan bersama dengan statistik pendapatan isi rumah yang dihasilkan daripada Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Set data ini memaparkan 3 definisi kemiskinan:\n 1. **Kemiskinan Mutlak**: Sebuah isi rumah dianggap berada dalam kemiskinan mutlak jika pendapatan kasar bulanan isi rumah mereka berada di bawah Pendapatan Garis Kemiskinan (PGK). Ini menunjukkan bahawa isi rumah tersebut tidak mempunyai pendapatan yang cukup untuk memenuhi keperluan asas.\n 2 **Kemiskinan Relatif**: Sebuah isi rumah dianggap berada dalam kemiskinan relatif jika pendapatan kasar bulanan isi rumah mereka berada di bawah separuh pendapatan penengah daerah. Indikator ini digunakan untuk menganalisis ketersisihan relatif dalam negara, terutamanya apabila kadar kemiskinan mutlak dan tegar semakin mendekati kosong seperti mana yang berlaku di Malaysia.\n\n Untuk mendapat perincian metodologi yang penuh, terutamanya mengenai pengiraan PGK serta evolusi dan nuansanya, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "Data on hardcore poverty is not available at DUN constituency level. Furthermore, DUN-level data is only published from 2019 (relative to [state-level data](https://open.dosm.gov.my/data-catalogue/hh_poverty_state) which is available from 1970) as prior HIES samples were not sufficient to support DUN-level granularity.",
+      "caveat_ms": "Data mengenai kadar kemiskinan tegar tidak dapat disediakan di peringkat DUN. Selain itu, data DUN hanya diterbitkan mulai 2019 (berbanding dengan [data negeri](https://open.dosm.gov.my/data-catalogue/hh_poverty_state) yang tersedia dari 1970) kerana sampel HIES sebelumnya tidak mencukupi untuk membolehkan pecahan mengikut kawasan DUN.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_poverty_dun.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_poverty_dun.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DUN"
+      ],
+      "demography": [],
+      "dataset_begin": 2019,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_poverty_dun.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 13 states with a state legislative assembly; the 3 Federal Territories are excluded as they do not have State Legislative Assemblies."
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 207 parliamentary constituencies; the 15 constituencies in Federal Territories are excluded as they are not subdivided into DUNs."
+        },
+        {
+          "name": "dun",
+          "description_en": "[Categorical] One of 600 DUN constituencies"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "poverty_absolute",
+          "description_en": "[Float] Proportion of households with monthly income below the Poverty Line Income (PLI)"
+        }
+      ]
+    },
+    "hh_expenditure_dun": {
+      "title_en": "Household Expenditure by DUN",
+      "title_ms": "Perbelajaan Isi Rumah mengikut DUN",
+      "description_en": "Mean gross monthly household expenditure by DUN constituency from 2019 to 2024.",
+      "description_ms": "Purata dan penengah perbelajaan kasar bulanan isi rumah mengikut kawasan DUN dari 2019 hingga 2024.",
+      "methodology_en": "In general, data on household expenditure is difficult to tabulate, as it requires the correct definition of a statistical household, as well as the inclusion of all modes of expenditure. For this reason, it requires the use of a representative survey or census.\n\n In Malaysia, data on household expenditure is collected through the Household Expenditure and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. The data shown here was tabulated from household-level HIES records spanning 2019 to 2024 (the latest edition). For a full description of the methodology, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Secara am, data mengenai perbelanjaan isi rumah agak sukar untuk dihasilkan, kerana ia memerlukan definisi statistik yang tepat bagi isi rumah, serta data mengenai pelbagai mod perbelanjaan. Oleh itu, ia memerlukan penggunaan survei atau banci.\n\nDi Malaysia, data mengenai perbelanjaan isi rumah dikumpul melalui Survei Perbelajaan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Data yang dipaparkan di sini telah dihasilkan daripada rekod HIES peringkat isi rumah dari tahun 2019 hingga 2024 (edisi terkini). Untuk mendapat perincian metodologi yang penuh, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "This data presents nominal values, i.e. they have not been adjusted for inflation. Furthermore, DUN-level data is only published from 2019 (relative to [state-level data](https://open.dosm.gov.my/data-catalogue/hh_expenditure_state) which is available from 1970) as prior HIES samples were not sufficient to support DUN-level granularity.",
+      "caveat_ms": "Data ini menunjukkan nilai nominal, iaitu mereka tidak diselaraskan untuk inflasi. Selain itu, data di peringkat DUN hanya diterbitkan mulai 2019 (berbanding dengan [data negeri](https://open.dosm.gov.my/data-catalogue/hh_expenditure_state) yang tersedia dari 1970) kerana sampel HIES sebelumnya tidak mencukupi untuk membolehkan pecahan mengikut kawasan DUN.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_expenditure_dun.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_expenditure_dun.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DUN"
+      ],
+      "demography": [],
+      "dataset_begin": 2019,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_expenditure_dun.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 13 states with a state legislative assembly; the 3 Federal Territories are excluded as they do not have State Legislative Assemblies."
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 207 parliamentary constituencies; the 15 constituencies in Federal Territories are excluded as they are not subdivided into DUNs."
+        },
+        {
+          "name": "dun",
+          "description_en": "[Categorical] One of 600 DUN constituencies"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "expenditure",
+          "description_en": "[Integer, RM] Average gross monthly household expenditure"
+        }
+      ]
+    },
+    "hh_inequality_dun": {
+      "title_en": "Income Inequality by DUN",
+      "title_ms": "Ketidaksamarataan Pendapatan mengikut DUN",
+      "description_en": "Gini coefficient at DUN constituency level from 2019 to 2024.",
+      "description_ms": "Pekali Gini di peringkat kawasan DUN dari 2019 hingga 2024.",
+      "methodology_en": "The primary Gini coefficient at state-level is computed based on the distribution of households' gross monthly income, where:\n - Gini coefficient values are bounded within 0 and 1, with higher values indicating greater income inequality.\n - A value of 0 indicates perfect equality (i.e. that every household has the same income).\n - A value of 1 indicates total inequality (i.e. that 1 household earns all the income while all others earn nothing).\n\nBecause the computation of the Gini coefficient relies on household income data, Malaysia's Gini coefficient statistics are produced and published together with statistics on household income derived from the Household Income and Expenditure Survey (HIES), which is conducted at least twice within any 5-year period. For full details on the methodology, especially the computation of the PLI and its evolution and nuances, please refer to the [technical notes](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "methodology_ms": "Pekali Gini utama di peringkat negeri dihasilkan berdasarkan taburan pendapatan kasar bulanan isi rumah:\n - Nilai pekali Gini adalah antara 0 dengan 1.\n - Nilai 0 bermaksud kesamarataan total (iaitu semua isi rumah mempunyai pendapatan sama).\n - Nilai 1 bermaksud ketidaksamarataan total (iaitu 1 isi rumah mempunyai semua pendapatan di samping yang lain tidak mendapat apa-apa).\n\nOleh sebab penghasilan pekali Gini memerlukan data pendapatan isi rumah, statistik pekali Gini Malaysia dihasilkan dan diterbitkan bersama dengan statistik pendapatan isi rumah yang dihasilkan daripada Survei Pendapatan dan Perbelanjaan Isi Rumah (HIES), yang dilaksanakan sekurang-kurangnya dua kali dalam mana-mana tempoh 5 tahun. Untuk mendapat perincian metodologi yang penuh, terutamanya mengenai pengiraan PGK serta evolusi dan nuansanya, sila rujuk kepada [nota teknikal](https://open.dosm.gov.my/publications/technical-notes/hies-technotes).",
+      "caveat_en": "DUN-level data is only published from 2019 (relative to [state-level data](https://open.dosm.gov.my/data-catalogue/hh_inequality_state) which is available from 1970) as prior HIES samples were not sufficient to support DUN-level granularity.",
+      "caveat_ms": "Data di peringkat DUN hanya diterbitkan mulai 2019 (berbanding dengan [data negeri](https://open.dosm.gov.my/data-catalogue/hh_inequality_state) yang tersedia dari 1970) kerana sampel HIES sebelumnya tidak mencukupi untuk membolehkan pecahan mengikut kawasan DUN.",
+      "data_as_of": "2024",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "—",
+      "link_csv": "https://storage.dosm.gov.my/hies/hh_inequality_dun.csv",
+      "link_parquet": "https://storage.dosm.gov.my/hies/hh_inequality_dun.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DUN"
+      ],
+      "demography": [],
+      "dataset_begin": 2019,
+      "dataset_end": 2024,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/hh_inequality_dun.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 13 states with a state legislative assembly; the 3 Federal Territories are excluded as they do not have State Legislative Assemblies."
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 207 parliamentary constituencies; the 15 constituencies in Federal Territories are excluded as they are not subdivided into DUNs."
+        },
+        {
+          "name": "dun",
+          "description_en": "[Categorical] One of 600 DUN constituencies"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 as the data is at annual frequency"
+        },
+        {
+          "name": "gini",
+          "description_en": "[Float] The Gini coefficient based on the distribution of households' gross monthly income"
+        }
+      ]
+    },
+    "lfs_dun": {
+      "title_en": "Annual Principal Labour Force Statistics by DUN",
+      "title_ms": "Statistik Tenaga Buruh Tahunan Utama mengikut DUN",
+      "description_en": "Annual principal labour force statistics at DUN constituency level, including unemployment and participation rates.",
+      "description_ms": "Statistik tahunan utama berkaitan tenaga buruh di peringkat kawasan DUN, termasuk kadar pengangguran dan penyertaan.",
+      "methodology_en": "This data is produced based on the Labour Force Survey (LFS), which is designed to collect representative data on the labour force at national, state, and administrative district level. The raw survey data was subsequently aggregated at the DUN constituency level. Consistency in methodology has been maintained to ensure that the data is comparable over time. Survey findings are a monthly, quarterly and annual basis. For a full description of the methodology, please refer to the [Technical Notes](https://open.dosm.gov.my/publications/technical-notes/lfs-technotes).",
+      "methodology_ms": "Data ini dihasilkan berdasarkan Survei Tenaga Buruh (STB), yang bertujuan untuk mengumpul data tentang tenaga buruh di peringkat nasional, negeri, dan daerah pentadbiran. Data daripada survei ini kemudian diagregatkan di peringkat kawasan DUN. Metodologi survei ini dipastikan konsisten untuk mendapatkan perbandingan statistik siri masa. Data daripada survei ini diterbitkan secara bulanan, suku tahunan dan tahunan. Untuk mendapat perincian metodologi yang penuh, sila merujuk kepada [Nota Teknikal](https://open.dosm.gov.my/publications/technical-notes/lfs-technotes).",
+      "caveat_en": "The sum of each category may not always equal to the totals shown in related tables because of independent rounding to one decimal place. However, the differences are not obvious.",
+      "caveat_ms": "Hasil tambah bagi sesuatu kategori mungkin tidak sentiasa sama dengan jumlah yang ditunjukkan dalam jadual yang berkaitan kerana pembundaran secara bebas kepada satu titik perpuluhan. Walau bagaimanapun, perbezaan ini tidak ketara.",
+      "data_as_of": "2023",
+      "last_updated": "2025-12-31 12:00",
+      "next_update": "2026-12-31 12:00",
+      "link_csv": "https://storage.dosm.gov.my/labour/lfs_dun.csv",
+      "link_parquet": "https://storage.dosm.gov.my/labour/lfs_dun.parquet",
+      "frequency": "YEARLY",
+      "geography": [
+        "DUN"
+      ],
+      "demography": [],
+      "dataset_begin": 2021,
+      "dataset_end": 2023,
+      "data_source": [
+        "DOSM"
+      ],
+      "metadata_url": "https://raw.githubusercontent.com/data-gov-my/datagovmy-meta/main/data-catalogue/lfs_dun.json",
+      "fields": [
+        {
+          "name": "state",
+          "description_en": "[Categorical] One of 13 states with a state legislative assembly; the 3 Federal Territories are excluded as they do not have State Legislative Assemblies."
+        },
+        {
+          "name": "parlimen",
+          "description_en": "[Categorical] One of 207 parliamentary constituencies; the 15 constituencies in Federal Territories are excluded as they are not subdivided into DUNs."
+        },
+        {
+          "name": "dun",
+          "description_en": "[Categorical] One of 600 DUN constituencies"
+        },
+        {
+          "name": "date",
+          "description_en": "[Date] The date in YYYY-MM-DD format, with MM-DD set to 01-01 since the data is at annual frequency"
+        },
+        {
+          "name": "lf",
+          "description_en": "[Float, '000] The number (in thousands) of employed and unemployed individuals. This figure also represents the number of people participating in the labour force."
+        },
+        {
+          "name": "lf_employed",
+          "description_en": "[Float, '000] The number (in thousands) of people who worked at least one hour for pay, profit or family gain, in thousands of people"
+        },
+        {
+          "name": "lf_unemployed",
+          "description_en": "[Float, '000] The number (in thousands) of people who did not work but were looking for work or available to work"
+        },
+        {
+          "name": "lf_outside",
+          "description_en": "[Float, '000] The number (in thousands) of people not classified as employed or unemployed, including housewives, students, early retired, disabled persons and those not interested in looking for a job"
+        },
+        {
+          "name": "u_rate",
+          "description_en": "[Float] Ratio of unemployed to labour force size"
+        },
+        {
+          "name": "p_rate",
+          "description_en": "[Float] Ratio of the labour force size to the working-age (15-64) population"
+        },
+        {
+          "name": "ep_ratio",
+          "description_en": "[Float] Ratio of the number of employed people to the working-age (15-64) population"
         }
       ]
     }

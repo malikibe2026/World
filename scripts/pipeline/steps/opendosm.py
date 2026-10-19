@@ -1,4 +1,5 @@
-"""Step (network): OpenDOSM — Malaysia national, state (negeri) and district (daerah) statistics.
+"""Step (network): OpenDOSM — Malaysia national, state (negeri), district (daerah), parliamentary
+(parlimen) and state assembly (DUN) constituency statistics.
 
 1. Catalogue metadata is read from github.com/data-gov-my/datagovmy-meta (title, methodology,
    caveats, last_updated, next_update, CSV link). This always runs and feeds the source panel.
@@ -6,6 +7,7 @@
    metadata), validated and standardised to the atlas schema:
 
      public/data/stats/my/national.json  public/data/stats/my/admin1.json  public/data/stats/my/admin2.json
+     public/data/stats/my/parlimen.json  public/data/stats/my/dun.json
 
 Rules
 * DOSM is the priority source for Malaysia; UN WPP stays available for comparison.
@@ -35,6 +37,9 @@ DATASETS = [
     "hh_income_state", "hh_income_district", "hh_poverty_state", "hh_poverty_district",
     "gdp_state_real_supply", "gdp_lookup",
     "population_parlimen", "hh_income_parlimen", "hh_poverty_parlimen",
+    "hh_expenditure_parlimen", "hh_inequality_parlimen", "lfs_parlimen",
+    "hh_inequality", "hh_inequality_state", "hh_inequality_district",
+    "population_dun", "hh_income_dun", "hh_poverty_dun", "hh_expenditure_dun", "hh_inequality_dun", "lfs_dun",
 ]
 AGE5 = ["0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49",
         "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80-84", "85+"]
@@ -213,6 +218,24 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
     population("population_state", st, lambda r: state_id(r["state"]))
     population("population_district", di, lambda r: district_id(r["state"], r["district"]))
 
+    def lfs(data: list[dict] | None, store: Store, key, ds: str):
+        """Labour force survey by area: rates in %, labour force published in thousands."""
+        for r in data or []:
+            u = key(r)
+            if u:
+                y = year(r["date"])
+                store.put(u, "unemployment", y, r.get("u_rate"), "OFFICIAL", ds)
+                store.put(u, "lfpr", y, r.get("p_rate"), "OFFICIAL", ds)
+                store.put(u, "labour_force", y, num(r["lf"]) * 1000 if num(r.get("lf")) is not None else None, "OFFICIAL", ds)
+
+    def hies_extra(level: str, store: Store, key):
+        """Household Income and Expenditure Survey: mean consumption expenditure and the Gini coefficient."""
+        for ds, col, ind in ((f"hh_expenditure_{level}", "expenditure", "hh_expenditure_mean"), (f"hh_inequality_{level}", "gini", "gini_coef")):
+            for r in rows(ds) or []:
+                u = key(r)
+                if u:
+                    store.put(u, ind, year(r["date"]), r.get(col), "OFFICIAL", ds)
+
     # parliamentary constituencies (a separate division at district depth)
     pa = Store()
     p_by_name = {u["name"]: u["id"] for u in admin.get("parlimen", {}).get("MYS", [])}
@@ -237,7 +260,43 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
             u = parlimen_id(r["parlimen"])
             if u:
                 pa.put(u, "poverty_absolute", year(r["date"]), r.get("poverty_absolute"), "OFFICIAL", "hh_poverty_parlimen")
+        hies_extra("parlimen", pa, lambda r: parlimen_id(r["parlimen"]))
+        lfs(rows("lfs_parlimen"), pa, lambda r: parlimen_id(r["parlimen"]), "lfs_parlimen")
         log.info(STEP, "source note: population_parlimen stores citizenship in 'ethnicity' (2020) but in 'age' (2021+); totals unaffected")
+
+    # state assembly constituencies, DUN (one level below parlimen; none in the federal territories)
+    du = Store()
+    # matched on state + N code: the codes are stable, the spellings differ between files
+    # (stats "N.22 Tanjung Aru" vs boundary "N.22 Tanjong Aru")
+    d_units = {(u["state"], u["code"]): u for u in admin.get("dun", {}).get("MYS", [])}
+    unmatched_n: set[tuple[str, str]] = set()
+    renamed_n: set[tuple[str, str, str]] = set()
+
+    def dun_id(state: str, name: str) -> str | None:
+        sid = state_id(state)
+        u = d_units.get((sid, name.strip().split(" ", 1)[0])) if sid else None
+        if u is None:
+            unmatched_n.add((state, name))
+            return None
+        if u["name"] != name.strip():
+            renamed_n.add((state, name.strip(), u["name"]))
+        return u["id"]
+
+    if d_units:
+        key = lambda r: dun_id(r["state"], r["dun"])  # noqa: E731 — N codes repeat in every state
+        # totals and sex only (no age groups); citizenship sits in 'age'/'ethnicity' as for parlimen
+        population("population_dun", du, key, ethnicity=False)
+        for r in rows("hh_income_dun") or []:
+            u = key(r)
+            if u:
+                du.put(u, "hh_income_mean", year(r["date"]), r.get("income_mean"), "OFFICIAL", "hh_income_dun")
+                du.put(u, "hh_income_median", year(r["date"]), r.get("income_median"), "OFFICIAL", "hh_income_dun")
+        for r in rows("hh_poverty_dun") or []:
+            u = key(r)
+            if u:
+                du.put(u, "poverty_absolute", year(r["date"]), r.get("poverty_absolute"), "OFFICIAL", "hh_poverty_dun")
+        hies_extra("dun", du, key)
+        lfs(rows("lfs_dun"), du, key, "lfs_dun")
 
     def district_breaks(data: list[dict] | None, store: Store):
         """Boundary changes: a district that first appears after the series start (e.g. Sarawak's
@@ -309,13 +368,7 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
                 u = key(r)
                 if u:
                     store.put(u, "tfr", year(r["date"]), r["fertility_rate"], "OFFICIAL", ds)
-    for r in rows("lfs_district") or []:
-        did = district_id(r["state"], r["district"])
-        if did:
-            y = year(r["date"])
-            di.put(did, "unemployment", y, r["u_rate"], "OFFICIAL", "lfs_district")
-            di.put(did, "lfpr", y, r["p_rate"], "OFFICIAL", "lfs_district")
-            di.put(did, "labour_force", y, num(r["lf"]) * 1000 if num(r["lf"]) is not None else None, "OFFICIAL", "lfs_district")
+    lfs(rows("lfs_district"), di, lambda r: district_id(r["state"], r["district"]), "lfs_district")
     for r in rows("lfs_year") or []:
         y = year(r["date"])
         nat.put("MYS", "unemployment", y, r.get("u_rate"), "OFFICIAL", "lfs_year")
@@ -336,6 +389,13 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
             if u:
                 store.put(u, "poverty_absolute", year(r["date"]), r.get("poverty_absolute"), "OFFICIAL", ds)
 
+    for ds, store, key in (("hh_inequality", nat, lambda r: "MYS"), ("hh_inequality_state", st, lambda r: state_id(r["state"])),
+                           ("hh_inequality_district", di, lambda r: district_id(r["state"], r["district"]))):
+        for r in rows(ds) or []:
+            u = key(r)
+            if u:
+                store.put(u, "gini_coef", year(r["date"]), r.get("gini"), "OFFICIAL", ds)
+
     lookup = {r.get("sector"): r for r in (rows("gdp_lookup") or [])}
     sectors = defaultdict(lambda: defaultdict(dict))
     for r in rows("gdp_state_real_supply") or []:
@@ -353,6 +413,10 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
                 for y, d in ys.items()
             }
 
+    for state, name, boundary in sorted(renamed_n):
+        log.info(STEP, "DUN spelling differs between statistics and boundary file (matched on code)", state=state, stats=name, boundary=boundary)
+    for state, name in sorted(unmatched_n):
+        log.warning(STEP, "geographic mismatch: DOSM DUN not matched to a boundary polygon", state=state, dun=name)
     for name in sorted(unmatched_p):
         log.warning(STEP, "geographic mismatch: DOSM constituency not matched to a boundary polygon", parlimen=name)
     for state, district in sorted(unmatched_d):
@@ -362,7 +426,8 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
     names_a2 = {u["id"]: u["name"] for u in admin["admin2"]["MYS"]}
     wrote = 0
     names_pa = {u["id"]: u["name"] for u in admin.get("parlimen", {}).get("MYS", [])}
-    for fname, store, names in (("national", nat, {"MYS": "Malaysia"}), ("admin1", st, names_a1), ("admin2", di, names_a2), ("parlimen", pa, names_pa)):
+    names_du = {u["id"]: u["name"] for u in admin.get("dun", {}).get("MYS", [])}
+    for fname, store, names in (("national", nat, {"MYS": "Malaysia"}), ("admin1", st, names_a1), ("admin2", di, names_a2), ("parlimen", pa, names_pa), ("dun", du, names_du)):
         if store.units:
             write_json(PUBLIC_DATA / "stats" / "my" / f"{fname}.json",
                        {"source_id": "dosm_opendosm", "level": fname, "units": store.dump(names)}, ndigits=3)

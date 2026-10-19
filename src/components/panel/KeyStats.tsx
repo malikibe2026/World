@@ -4,7 +4,7 @@ import { StatCard } from '../StatCard';
 import { latest, resolveSeries, type SourcePref } from '../../hooks/resolve';
 import type { LocationBundle, WbState } from '../../hooks/useLocation';
 import { t } from '../../utils/i18n';
-import { isParlimen } from '../../utils/geoRefs';
+import { divisionOf } from '../../utils/geoRefs';
 import { breakYear } from '../../services/stats';
 
 export const KEY_INDICATORS = ['population', 'population_male', 'population_female', 'density', 'births', 'deaths', 'gdp', 'gdp_per_capita'];
@@ -39,7 +39,7 @@ export function KeyStats({ b, wb, pref, codes = KEY_INDICATORS }: { b: LocationB
         return <StatCard key={code} ind={ind} value={p?.value} year={p?.year} quality={p?.quality} sourceLabel={shortSource(s?.sourceId, catalog)} delta={code === 'population' ? delta : null} big={code === 'population'} />;
       })}
       {b.areaKm2 ? (
-        <StatCard label={t(lang, 'area')} ind={inds.area_geometry_km2} value={b.areaKm2} quality="DERIVED" sourceLabel={isParlimen(b.geo.id) ? 'DOSM (sempadan parlimen)' : 'Natural Earth / geoBoundaries'} hint={inds.area_geometry_km2?.notes} />
+        <StatCard label={t(lang, 'area')} ind={inds.area_geometry_km2} value={b.areaKm2} quality="DERIVED" sourceLabel={{ parlimen: 'DOSM (sempadan parlimen)', dun: 'DOSM (sempadan DUN)', district: 'Natural Earth / geoBoundaries' }[divisionOf(b.geo.id)]} hint={inds.area_geometry_km2?.notes} />
       ) : null}
     </div>
   );

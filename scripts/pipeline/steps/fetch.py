@@ -14,6 +14,8 @@ GB = "https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/main/rele
 FONTS = "https://raw.githubusercontent.com/protomaps/basemaps-assets/main/fonts/{font}/{range}.pbf"
 # DOSM open geodata (DOSM Open Data Licence): parliamentary constituency boundaries, P.001–P.222
 DOSM_PARLIMEN = "https://raw.githubusercontent.com/dosm-malaysia/data-open/main/datasets/geodata/electoral_0_parlimen.geojson"
+# state assembly constituency (DUN) boundaries, N codes per state; none in the three federal territories
+DOSM_DUN = "https://raw.githubusercontent.com/dosm-malaysia/data-open/main/datasets/geodata/electoral_1_dun.geojson"
 
 NE_LAYERS = [
     "ne_110m_admin_0_countries", "ne_50m_admin_0_countries", "ne_10m_admin_0_countries", "ne_10m_admin_1_states_provinces",
@@ -43,6 +45,7 @@ def run(log: ImportLog) -> None:
     jobs += [(WPP.format(f), RAW / "wpp" / f) for f in WPP_FILES]
     jobs += [(GB.format(lvl=lvl), RAW / "gb" / f"MYS_{lvl}.geojson") for lvl in ("ADM0", "ADM1", "ADM2")]
     jobs += [(DOSM_PARLIMEN, RAW / "dosm" / "electoral_0_parlimen.geojson")]
+    jobs += [(DOSM_DUN, RAW / "dosm" / "electoral_1_dun.geojson")]
     jobs += [(FONTS.format(font=f.replace(" ", "%20"), range=r), RAW / "fonts" / f / f"{r}.pbf") for f in FONT_STACKS for r in FONT_RANGES]
     errors = 0
     for url, dest in jobs:

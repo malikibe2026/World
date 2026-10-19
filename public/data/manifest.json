@@ -1,7 +1,7 @@
 {
   "app": "WorldStat Atlas",
-  "snapshot_built_at": "2026-10-08T03:41:34Z",
-  "run_id": "20261008T034125Z",
+  "snapshot_built_at": "2026-10-19T01:48:40Z",
+  "run_id": "20261019T014834Z",
   "datasets": [
     {
       "source_id": "un_wpp_2024",
@@ -164,36 +164,36 @@
           "next_update": "2027-10-31 12:00"
         },
         "births_district_sex": {
-          "last_updated": "2025-10-16 12:00",
-          "next_update": "2026-10-16 12:30"
+          "last_updated": "2026-10-15 13:00",
+          "next_update": "2027-10-31 18:00"
         },
         "deaths_state": {
-          "last_updated": "2025-10-16 12:00",
-          "next_update": "2026-10-15 12:30"
+          "last_updated": "2026-10-15 13:00",
+          "next_update": "2027-10-31 18:00"
         },
         "deaths_district_sex": {
-          "last_updated": "2025-10-16 12:00",
-          "next_update": "2026-10-15 12:30"
+          "last_updated": "2026-10-15 13:00",
+          "next_update": "2027-10-31 18:00"
         },
         "marriages": {
-          "last_updated": "2023-11-23 12:00",
-          "next_update": "2024-11-21 12:00"
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2026-11-19 18:00"
         },
         "fertility_state": {
-          "last_updated": "2025-10-16 12:00",
-          "next_update": "2026-10-15 12:30"
+          "last_updated": "2026-10-15 13:00",
+          "next_update": "2027-10-31 18:00"
         },
         "fertility": {
-          "last_updated": "2025-10-16 12:00",
-          "next_update": "2026-10-15 12:30"
+          "last_updated": "2026-10-15 13:00",
+          "next_update": "2027-10-31 18:00"
         },
         "lfs_district": {
           "last_updated": "2025-06-30 12:00",
           "next_update": "2026-12-31 12:00"
         },
         "lfs_year": {
-          "last_updated": "2024-02-09 12:00",
-          "next_update": "2025-02-09 12:00"
+          "last_updated": "2026-10-11 12:00",
+          "next_update": "2027-06-30 18:00"
         },
         "hh_income_state": {
           "last_updated": "2025-12-31 12:00",
@@ -230,6 +230,54 @@
         "hh_poverty_parlimen": {
           "last_updated": "2025-12-31 12:00",
           "next_update": "—"
+        },
+        "hh_expenditure_parlimen": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_inequality_parlimen": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "lfs_parlimen": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "2026-12-31 12:00"
+        },
+        "hh_inequality": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_inequality_state": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_inequality_district": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "population_dun": {
+          "last_updated": "2025-10-31 13:00",
+          "next_update": "2026-10-31 13:00"
+        },
+        "hh_income_dun": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_poverty_dun": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_expenditure_dun": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "hh_inequality_dun": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "—"
+        },
+        "lfs_dun": {
+          "last_updated": "2025-12-31 12:00",
+          "next_update": "2026-12-31 12:00"
         }
       },
       "data_loaded": true

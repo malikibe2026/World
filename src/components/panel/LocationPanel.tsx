@@ -33,6 +33,8 @@ const VITAL = ['births', 'deaths', 'cbr', 'cdr', 'tfr', 'imr', 'e0', 'natural_in
 const ECON = ['gdp', 'gdp_per_capita', 'gdp_growth', 'inflation', 'unemployment', 'labour_force', 'exports', 'imports', 'trade_balance', 'gni_per_capita', 'poverty', 'hh_income_median'];
 const TOURISM = ['tourism_arrivals', 'tourism_receipts', 'tourism_receipts_pct_exports', 'tourism_departures'];
 const SOCIAL = ['urban_pct', 'urban_population', 'rural_population', 'electricity_access', 'renewable_energy'];
+// Malaysia below national level: DOSM household survey (HIES) and labour force survey (LFS) by area
+const MY_SOCIO = ['hh_income_median', 'hh_income_mean', 'hh_expenditure_mean', 'gini_coef', 'poverty_absolute', 'unemployment', 'lfpr', 'labour_force'];
 
 export function LocationPanel() {
   const { selection, point, lang, catalog, year, projection, addCompare, removeCompare, compare, setModal, setDashTab, select } = useAtlas();
@@ -136,6 +138,15 @@ export function LocationPanel() {
                 {VITAL.map((c) => { const ss = s(c); const p = latest(ss, year, projection); return <StatCard key={c} ind={inds[c]} value={p?.value} year={p?.year} quality={p?.quality} sourceLabel={ss ? sourceShort(ss.sourceId) : undefined} />; })}
                 {['marriages_male', 'divorces'].map((c) => { const ss = s(c); const p = latest(ss, year); return <StatCard key={c} ind={inds[c]} value={p?.value} year={p?.year} quality={p?.quality} sourceLabel={ss ? 'DOSM' : undefined} hint={inds[c]?.notes} />; })}
               </div>
+            </Section>
+          )}
+
+          {isMys && statsLevel && b.dosm && MY_SOCIO.some((c) => b.dosm!.series[c]?.length) && (
+            <Section id="socio" title={lang === 'ms' ? 'Sosioekonomi isi rumah & tenaga buruh' : 'Household economy & labour'}>
+              <div className="stat-grid stat-grid-3">
+                {MY_SOCIO.map((c) => { const ss = s(c); const p = latest(ss, year); return <StatCard key={c} ind={inds[c]} value={p?.value} year={p?.year} quality={p?.quality} sourceLabel={ss ? 'DOSM' : undefined} hint={inds[c]?.notes} />; })}
+              </div>
+              <SourceNote sourceId="dosm_opendosm" note={lang === 'ms' ? 'Pendapatan, perbelanjaan, Gini dan kemiskinan: Penyiasatan Pendapatan dan Perbelanjaan Isi Rumah (HIES, 2019/2022/2024). Tenaga buruh: Survei Tenaga Buruh (LFS). Nilai nominal.' : 'Income, expenditure, Gini and poverty: Household Income and Expenditure Survey (HIES, 2019/2022/2024). Labour: Labour Force Survey (LFS). Nominal values.'} />
             </Section>
           )}
 

@@ -221,6 +221,17 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
                 pa.append({**u, "level": "admin2", "towns": tw, **{k: p.get(k) for k in ("peaks", "rivers", "lakes", "islands", "seas", "cities", "airports", "ports", "highest_listed_peak", "area_geometry_km2")}})
                 n_admin += 1
             write_json(PUBLIC_DATA / "profiles" / "admin" / "MYS-parlimen.json", {"country": cid, "division": "parlimen", "admin1": out, "admin2": pa})
+        if cid == "MYS" and admin.get("dun", {}).get("MYS"):
+            # state assembly constituencies (DUN): same shape again; each unit names its parlimen
+            d_geoms = {f["properties"]["id"]: f["geometry"] for f in read_json(WORK / "geo" / "dun.geojson")["features"]}
+            du = []
+            for u in admin["dun"]["MYS"]:
+                g = shape(d_geoms[u["id"]])
+                p = profile(g, cid, u["area_km2"])
+                tw = sorted({t["name"] for t in _within(prep(g), g.bounds, towns)})
+                du.append({**u, "level": "admin2", "towns": tw, **{k: p.get(k) for k in ("peaks", "rivers", "lakes", "islands", "seas", "cities", "airports", "ports", "highest_listed_peak", "area_geometry_km2")}})
+                n_admin += 1
+            write_json(PUBLIC_DATA / "profiles" / "admin" / "MYS-dun.json", {"country": cid, "division": "dun", "admin1": out, "admin2": du})
 
     log.step_end(STEP, country_profiles=n, admin_profiles=n_admin)
     return {"countries": n}

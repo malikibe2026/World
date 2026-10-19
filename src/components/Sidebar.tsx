@@ -10,6 +10,8 @@ const LAYER_GROUPS: Array<{ key: I18nKey; codes: string[] }> = [
   { key: 'population', codes: ['population', 'density', 'population_male', 'population_female', 'sex_ratio', 'median_age', 'pop_0_14_pct', 'pop_65_plus_pct', 'growth_rate'] },
   { key: 'vitalStatistics', codes: ['cbr', 'cdr', 'tfr', 'e0', 'imr'] },
   { key: 'economicIntelligence', codes: ['gdp', 'gdp_per_capita', 'gdp_growth', 'inflation', 'unemployment'] },
+  // DOSM only: Malaysia's states, districts, parlimen and DUN (no world layer)
+  { key: 'malaysiaDosm', codes: ['hh_income_median', 'hh_expenditure_mean', 'gini_coef', 'poverty_absolute'] },
   { key: 'urban', codes: ['urban_pct'] },
   { key: 'tourism', codes: ['tourism_arrivals'] },
   { key: 'climate', codes: ['precipitation'] },
@@ -17,7 +19,7 @@ const LAYER_GROUPS: Array<{ key: I18nKey; codes: string[] }> = [
 
 const OVERLAYS: Array<{ k: OverlayKey; en: string; ms: string }> = [
   { k: 'admin1', en: 'State / province boundaries', ms: 'Sempadan negeri / wilayah' },
-  { k: 'admin2', en: 'District / constituency boundaries', ms: 'Sempadan daerah / parlimen' },
+  { k: 'admin2', en: 'District / constituency / DUN boundaries', ms: 'Sempadan daerah / parlimen / DUN' },
   { k: 'capitals', en: 'Capitals', ms: 'Ibu negara' },
   { k: 'cities', en: 'Major cities', ms: 'Bandar utama' },
   { k: 'villages', en: 'Villages & settlements (Malaysia, zoom in)', ms: 'Kampung & penempatan (Malaysia, zum dekat)' },
@@ -45,7 +47,7 @@ export function Sidebar() {
       <section className="sb-sec">
         <h3>🇲🇾 {lang === 'ms' ? 'Malaysia: paparan bawah negeri' : 'Malaysia: below state level'}</h3>
         <MyDivisionSwitch />
-        <p className="fineprint">{lang === 'ms' ? 'Daerah atau 222 kawasan parlimen (P.001–P.222). Statistik DOSM.' : 'Districts or the 222 parliamentary constituencies (P.001–P.222). DOSM statistics.'}</p>
+        <p className="fineprint">{lang === 'ms' ? 'Daerah, 222 kawasan parlimen (P.001–P.222) atau 600 kawasan DUN (N, dalam parlimen; tiada di Wilayah Persekutuan). Statistik DOSM.' : 'Districts, the 222 parliamentary constituencies (P.001–P.222) or the 600 state seats (DUN, inside parlimen; none in the federal territories). DOSM statistics.'}</p>
       </section>
 
       <section className="sb-sec">
@@ -57,9 +59,9 @@ export function Sidebar() {
             {g.codes.filter((c) => catalog.indicators[c]).map((c) => {
               const ind = catalog.indicators[c];
               return (
-                <button key={c} className={`layer-opt ${layer === c ? 'on' : ''}`} onClick={() => setLayer(c)} title={`${ind.unit} · ${ind.source_id === 'wb_wdi' ? 'World Bank WDI' : ind.source_id === 'un_wpp_2024' || ind.inputs_source_id === 'un_wpp_2024' ? 'UN WPP 2024' : ind.source_id}`}>
+                <button key={c} className={`layer-opt ${layer === c ? 'on' : ''}`} onClick={() => setLayer(c)} title={`${ind.unit} · ${ind.source_id === 'wb_wdi' ? 'World Bank WDI' : ind.source_id === 'un_wpp_2024' || ind.inputs_source_id === 'un_wpp_2024' ? 'UN WPP 2024' : ind.source_id === 'dosm_opendosm' ? 'DOSM (Malaysia sahaja / Malaysia only)' : ind.source_id}`}>
                   <span>{indicatorName(lang, ind)}</span>
-                  <span className="layer-src">{ind.source_id === 'wb_wdi' ? 'WB' : 'UN'}</span>
+                  <span className="layer-src">{ind.source_id === 'wb_wdi' ? 'WB' : ind.source_id === 'dosm_opendosm' ? 'DOSM' : 'UN'}</span>
                 </button>
               );
             })}

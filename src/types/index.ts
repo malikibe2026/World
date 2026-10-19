@@ -131,6 +131,10 @@ export interface AdminUnit {
   iso?: string | null;
   country: string;
   state?: string;
+  /** constituencies: "P.094" / "N.01"; a DUN also names its parliamentary constituency */
+  code?: string;
+  parlimen?: string;
+  parlimen_name?: string;
   wikidata?: string | null;
   area_km2: number;
   label: [number, number];
@@ -267,7 +271,7 @@ export interface HistoryDoc {
 }
 
 export type SearchEntryType =
-  | 'continent' | 'country' | 'admin1' | 'admin2' | 'parlimen' | 'city' | 'town' | 'village'
+  | 'continent' | 'country' | 'admin1' | 'admin2' | 'parlimen' | 'dun' | 'city' | 'town' | 'village'
   | 'peak' | 'physical' | 'sea' | 'airport' | 'port' | 'landmark';
 
 export interface SearchEntry {

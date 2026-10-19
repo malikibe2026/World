@@ -88,9 +88,14 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
     pa_feats = read_json(pa_path)["features"] if pa_path.exists() else []
     pa_geoms, pa_ids, pa_tree = index_of(pa_feats, lambda p: p["id"]) if pa_feats else ([], [], None)
     pa_state = {f["properties"]["id"]: f["properties"]["state"] for f in pa_feats}
+    du_path = WORK / "geo" / "dun.geojson"
+    du_feats = read_json(du_path)["features"] if du_path.exists() else []
+    du_geoms, du_ids, du_tree = index_of(du_feats, lambda p: p["id"]) if du_feats else ([], [], None)
+    du_state = {f["properties"]["id"]: f["properties"]["state"] for f in du_feats}
     names = {u["id"]: u["name"] for u in admin["admin2"]["MYS"]}
     names.update({u["id"]: u["name"] for u in admin["admin1"]["MYS"]})
     names.update({u["id"]: u["name"] for u in admin.get("parlimen", {}).get("MYS", [])})
+    names.update({u["id"]: u["name"] for u in admin.get("dun", {}).get("MYS", [])})
 
     def locate(geoms, ids, tree, pt, ok=lambda _id: True):
         hit = next((ids[i] for i in tree.query(pt) if ok(ids[i]) and geoms[i].contains(pt)), None)
@@ -129,8 +134,9 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
         # Putrajaya has no district polygon, so its points carry the state id instead
         did, s2 = locate(a2_geoms, a2_ids, a2_tree, pt, lambda d: a2_state[d] == sid)
         pid = locate(pa_geoms, pa_ids, pa_tree, pt, lambda q: pa_state[q] == sid)[0] if pa_tree is not None else None
+        nid = locate(du_geoms, du_ids, du_tree, pt, lambda q: du_state[q] == sid)[0] if du_tree is not None else None  # none in the federal territories
         snapped += s1 or s2
-        by_state[sid].append([r["gid"], r["name"], r["fcode"], round(r["lon"], 5), round(r["lat"], 5), did or sid, pid])
+        by_state[sid].append([r["gid"], r["name"], r["fcode"], round(r["lon"], 5), round(r["lat"], 5), did or sid, pid, nid])
         data_as_of = max(data_as_of, r["modified"])
 
     if dropped["duplicate"]:
@@ -146,16 +152,16 @@ def run(log: ImportLog, registry: dict, admin: dict) -> dict:
     known = {g for g, *_ in read_json(WORK / "reference" / "geonames-places.json")["places"]}  # already in search/places.json
     for sid, items in sorted(by_state.items()):
         items.sort(key=lambda x: x[1])
-        write_json(out / f"{sid}.json", {"state": sid, "source_id": "geonames", "fields": ["gid", "name", "fcode", "lon", "lat", "district", "parlimen"], "items": items})
+        write_json(out / f"{sid}.json", {"state": sid, "source_id": "geonames", "fields": ["gid", "name", "fcode", "lon", "lat", "district", "parlimen", "dun"], "items": items})
         xs, ys = [i[3] for i in items], [i[4] for i in items]
         index[sid] = {"name": names.get(sid, sid), "count": len(items), "bbox": [min(xs), min(ys), max(xs), max(ys)]}
-        for gid, name, fcode, lon, lat, did, _pid in items:
+        for gid, name, fcode, lon, lat, did, _pid, _nid in items:
             if gid in known:
                 continue
             search_rows.append(["village", f"gn:{gid}", name, alt_spelling(name), "MYS", [*root, sid] + ([did] if did != sid else []), round(lon, 4), round(lat, 4), 12 if fcode == "PPLX" else 15])
     # no download timestamp here: it would change every run and make each scheduled refresh look like an update
     write_json(out / "index.json", {"source_id": "geonames", "source_url": prov["url"], "data_as_of": data_as_of or None,
-                                    "license": "CC BY 4.0", "fields": ["gid", "name", "fcode", "lon", "lat", "district", "parlimen"], "states": index, "names": names})
+                                    "license": "CC BY 4.0", "fields": ["gid", "name", "fcode", "lon", "lat", "district", "parlimen", "dun"], "states": index, "names": names})
     size = write_json(PUBLIC_DATA / "search" / "villages-my.json",
                       {"fields": ["type", "id", "name", "alt", "country", "parents", "lon", "lat", "importance"], "source_id": "geonames", "entries": search_rows})
     total = sum(v["count"] for v in index.values())
