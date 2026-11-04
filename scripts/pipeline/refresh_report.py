@@ -78,7 +78,9 @@ def main(out: Path) -> int:
     if breaks:
         lines += ["", "**Perubahan sempadan dikesan** (graf diputuskan, tiada kepadatan merentasinya):", ""]
         lines += [f"- {i['message']}" for i in breaks[:20]]
-    lines += ["", "Semak laman pratonton PR ini sebelum digabungkan. Gabung = terbit ke laman utama."]
+    # no preview site any more (Netlify credits): the build check in the refresh run is the review
+    lines += ["", "Aplikasi sudah dibina dan diuji dengan data ini dalam larian kemas kini. "
+              "Semak ringkasan di atas sebelum digabungkan. Gabung = terbit ke laman utama."]
 
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
     gh_out = os.environ.get("GITHUB_OUTPUT")
